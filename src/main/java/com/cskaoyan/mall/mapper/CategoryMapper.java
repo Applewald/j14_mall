@@ -1,7 +1,7 @@
 package com.cskaoyan.mall.mapper;
 
-import com.erp.bean.Category;
-import com.erp.bean.CategoryExample;
+import com.cskaoyan.mall.bean.Category;
+import com.cskaoyan.mall.bean.CategoryExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
