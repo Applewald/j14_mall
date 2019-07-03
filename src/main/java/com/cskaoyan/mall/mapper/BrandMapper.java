@@ -1,5 +1,6 @@
 package com.cskaoyan.mall.mapper;
 
+
 import com.cskaoyan.mall.bean.Brand;
 import com.cskaoyan.mall.bean.BrandExample;
 import org.apache.ibatis.annotations.Param;
