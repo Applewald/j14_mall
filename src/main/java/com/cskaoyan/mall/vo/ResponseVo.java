@@ -1,7 +1,5 @@
 package com.cskaoyan.mall.vo;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-
 /**
  * author lixiaolong
  * date: 2019-07-03 15:03
