@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 
 @SpringBootApplication
-@MapperScan("com.cskaoyan.mall.mapper")
 @ServletComponentScan
+@MapperScan(basePackages = "com.cskaoyan.mall.mapper")
 public class MallApplication {
 
     public static void main(String[] args) {

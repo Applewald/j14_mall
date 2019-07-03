@@ -9,10 +9,6 @@ admin:
     perms: ["*"]
     avastar: "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"
 
-spring:
-  profiles:
-    active: dev
-
 pagehelper:
   helper-dialect: mysql
   reasonable: true
@@ -20,14 +16,10 @@ pagehelper:
   params: count=countSql
   rowBoundsWithCount: true
 
----
 spring:
-  profiles:  dev
   datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mall?characterencoding=utf8
     username: root
     password: 123456
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/mall?characterEcoding=Utf-8
-
-
 
