@@ -19,9 +19,9 @@ public class GoodsServiceImpl implements GoodsService {
     GoodsMapper goodsMapper;
 
     @Override
-    public DataVo<Goods> findGoodsList(int page, int limit, String sort, String order) {
+    public DataVo<Goods> findGoodsList(int page, int limit, String sort, String order,String goodsSn) {
         PageHelper.startPage(page,limit);
-        List<Goods> items =  goodsMapper.findGoodsList(sort,order);
+        List<Goods> items =  goodsMapper.findGoodsList(sort,order,goodsSn);
         PageInfo<Goods> pageInfo = new PageInfo<Goods>(items);
         DataVo<Goods> goodsDataVo = new DataVo<Goods>();
         goodsDataVo.setTotal((int)pageInfo.getTotal());

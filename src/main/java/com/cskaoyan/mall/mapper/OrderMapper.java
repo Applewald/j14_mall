@@ -1,7 +1,8 @@
 package com.cskaoyan.mall.mapper;
 
-import com.erp.bean.Order;
-import com.erp.bean.OrderExample;
+
+import com.cskaoyan.mall.bean.Order;
+import com.cskaoyan.mall.bean.OrderExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

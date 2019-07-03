@@ -17,8 +17,8 @@ public class GoodsController {
     GoodsService goodsService;
 
     @RequestMapping("goods/list")
-    public ResponseVo<DataVo<Goods>> goodsList(int page , int limit , String sort , String order){
-        DataVo<Goods> goodsDataVo = goodsService.findGoodsList(page,limit,sort,order);
+    public ResponseVo<DataVo<Goods>> goodsList(int page , int limit , String sort , String order,String goodsSn){
+        DataVo<Goods> goodsDataVo = goodsService.findGoodsList(page,limit,sort,order,goodsSn);
         ResponseVo<DataVo<Goods>> dataVoResponse = new ResponseVo<DataVo<Goods>>() ;
         dataVoResponse.setErrno(0);
         dataVoResponse.setErrmsg("成功");

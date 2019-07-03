@@ -1,7 +1,8 @@
 package com.cskaoyan.mall.mapper;
 
-import com.erp.bean.Region;
-import com.erp.bean.RegionExample;
+
+import com.cskaoyan.mall.bean.Region;
+import com.cskaoyan.mall.bean.RegionExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

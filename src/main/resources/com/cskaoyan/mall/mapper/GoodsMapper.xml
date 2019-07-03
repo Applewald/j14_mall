@@ -33,6 +33,10 @@
     sort_order, pic_url, share_url, is_new, is_hot, unit, counter_price, retail_price,
     add_time, update_time, deleted
     from cskaoyan_mall_goods
+    <if  test="#{goodsSn} != null and #{goodsSn} != '' ">
+        where goods_sn = #{goodsSn}
+    </if>
+
     order by #{sort} #{order}
   </select>
 </mapper>
