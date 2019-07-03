@@ -1,7 +1,13 @@
 server:
-  servlet:
-    context-path: /
   port: 80
+  servlet:
+    context-path: /admin
+admin:
+  login:
+    roles: ["超级管理员"]
+    name: "admin123"
+    perms: ["*"]
+    avastar: "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
