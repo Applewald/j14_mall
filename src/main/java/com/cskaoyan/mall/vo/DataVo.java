@@ -4,14 +4,14 @@ import java.util.List;
 
 public class DataVo<T> {
 
-    long total;
+    Long total;
     List<T> items;
 
-    public long getTotal() {
+    public Long getTotal() {
         return total;
     }
 
-    public void setTotal(long total) {
+    public void setTotal(Long total) {
         this.total = total;
     }
 

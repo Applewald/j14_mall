@@ -19,6 +19,6 @@ pagehelper:
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/mall?characterencoding=utf8
+    url: jdbc:mysql://localhost:3306/mall?useSSL=false&characterEncoding=utf8
     username: root
     password: 123456
