@@ -24,7 +24,7 @@ public class GoodsServiceImpl implements GoodsService {
         List<Goods> items =  goodsMapper.findGoodsList(sort,order);
         PageInfo<Goods> pageInfo = new PageInfo<Goods>(items);
         DataVo<Goods> goodsDataVo = new DataVo<Goods>();
-        goodsDataVo.setTotal((int)pageInfo.getTotal());
+        goodsDataVo.setTotal(pageInfo.getTotal());
         goodsDataVo.setItems(pageInfo.getList());
         return goodsDataVo;
     }

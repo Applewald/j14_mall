@@ -1,39 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cskaoyan.mall.mapper.GoodsMapper">
-  <resultMap id="findGoodsList" type="com.cskaoyan.mall.bean.Goods">
-    <result column="id" jdbcType="INTEGER" property="id" />
-    <result column="goods_sn" jdbcType="VARCHAR" property="goodsSn" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="category_id" jdbcType="INTEGER" property="categoryId" />
-    <result column="brand_id" jdbcType="INTEGER" property="brandId" />
+    <resultMap id="findGoodsList" type="com.cskaoyan.mall.bean.Goods">
+        <result column="id" jdbcType="INTEGER" property="id"/>
+        <result column="goods_sn" jdbcType="VARCHAR" property="goodsSn"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="category_id" jdbcType="INTEGER" property="categoryId"/>
+        <result column="brand_id" jdbcType="INTEGER" property="brandId"/>
 
-    <result column="keywords" jdbcType="VARCHAR" property="keywords" />
-    <result column="brief" jdbcType="VARCHAR" property="brief" />
-    <result column="is_on_sale" jdbcType="BIT" property="isOnSale" />
-    <result column="sort_order" jdbcType="SMALLINT" property="sortOrder" />
-    <result column="pic_url" jdbcType="VARCHAR" property="picUrl" />
-    <result column="share_url" jdbcType="VARCHAR" property="shareUrl" />
-    <result column="is_new" jdbcType="BIT" property="isNew" />
-    <result column="is_hot" jdbcType="BIT" property="isHot" />
-    <result column="unit" jdbcType="VARCHAR" property="unit" />
-    <result column="counter_price" jdbcType="DECIMAL" property="counterPrice" />
-    <result column="retail_price" jdbcType="DECIMAL" property="retailPrice" />
-    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-    <result column="deleted" jdbcType="BIT" property="deleted" />
-    <result column="detail" jdbcType="BIT" property="detail" />
-    <collection  jdbcType="VARCHAR" property="gallery" ofType="java.lang.String" >
-      <result column="gallery" />
-    </collection>
-  </resultMap>
+        <result column="keywords" jdbcType="VARCHAR" property="keywords"/>
+        <result column="brief" jdbcType="VARCHAR" property="brief"/>
+        <result column="is_on_sale" jdbcType="BIT" property="isOnSale"/>
+        <result column="sort_order" jdbcType="SMALLINT" property="sortOrder"/>
+        <result column="pic_url" jdbcType="VARCHAR" property="picUrl"/>
+        <result column="share_url" jdbcType="VARCHAR" property="shareUrl"/>
+        <result column="is_new" jdbcType="BIT" property="isNew"/>
+        <result column="is_hot" jdbcType="BIT" property="isHot"/>
+        <result column="unit" jdbcType="VARCHAR" property="unit"/>
+        <result column="counter_price" jdbcType="DECIMAL" property="counterPrice"/>
+        <result column="retail_price" jdbcType="DECIMAL" property="retailPrice"/>
+        <result column="add_time" jdbcType="TIMESTAMP" property="addTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="deleted" jdbcType="BIT" property="deleted"/>
+        <result column="detail" jdbcType="BIT" property="detail"/>
+        <collection jdbcType="VARCHAR" property="gallery" ofType="java.lang.String">
+            <result column="gallery"/>
+        </collection>
+    </resultMap>
 
-  <select id="findGoodsList" resultMap="findGoodsList" >
+    <select id="findGoodsList" resultMap="findGoodsList">
     select id, goods_sn, name, category_id, brand_id, gallery, keywords, brief, is_on_sale,
     sort_order, pic_url, share_url, is_new, is_hot, unit, counter_price, retail_price,
     add_time, update_time, deleted
     from cskaoyan_mall_goods
-
     order by #{sort} #{order}
   </select>
 </mapper>

@@ -1,6 +1,8 @@
 package com.cskaoyan.mall.bean;
 
-public class Region {
+import java.util.List;
+
+public class RegionChildren {
     private Integer id;
 
     private String name;
@@ -9,6 +11,8 @@ public class Region {
 
     private Integer code;
 
+    private List<RegionChildren> children;
+
     public Integer getId() {
         return id;
     }
@@ -16,7 +20,6 @@ public class Region {
     public void setId(Integer id) {
         this.id = id;
     }
-
 
     public String getName() {
         return name;
@@ -42,14 +45,22 @@ public class Region {
         this.code = code;
     }
 
+    public List<RegionChildren> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<RegionChildren> children) {
+        this.children = children;
+    }
 
     @Override
     public String toString() {
-        return "Region{" +
+        return "RegionChildren{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", type=" + type +
                 ", code=" + code +
+                ", children=" + children +
                 '}';
     }
 }
