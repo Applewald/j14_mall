@@ -6,6 +6,7 @@ import com.cskaoyan.mall.vo.DataVo;
 import com.cskaoyan.mall.vo.ResponseVo;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,7 +34,7 @@ public class AdController {
     }
     
     @RequestMapping("ad/update")
-    public ResponseVo<Ad> update(Ad ad){
+    public ResponseVo<Ad> update(@RequestBody Ad ad){
         ResponseVo<Ad> vo = new ResponseVo<>();
         int i = adService.updateByAdId(ad);
         vo.setData(ad);
