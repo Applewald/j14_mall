@@ -23,3 +23,8 @@ spring:
     username: root
     password: 123456
 
+myoss:
+  bucket: cskaoyan
+  endpoint: oss-cn-beijing.aliyuncs.com
+  access-key: LTAI8EgTxlc4QQZr
+  secret: RBDvSGZOR8DaUJxlLrW4Ed46RVnAkR
