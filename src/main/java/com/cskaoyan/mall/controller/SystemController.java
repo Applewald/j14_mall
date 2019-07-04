@@ -4,8 +4,7 @@ import com.cskaoyan.mall.bean.MallSystem;
 import com.cskaoyan.mall.service.SystemService;
 import com.cskaoyan.mall.vo.ResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,35 +20,71 @@ public class SystemController {
     @Autowired
     SystemService systemService;
 
+//1商场配置
+    @GetMapping("config/mall")
+    public ResponseVo findMallConfig(){
 
-    @RequestMapping("config/mall")
-    public ResponseVo<List> findMallConfig(String prefix){
+            return findMall("cskaoyan_mall_mall");
+        }
 
-        Map<String,String> systemMap = new HashMap<>();
+    @PostMapping("config/mall")
+    public ResponseVo updateMall(@RequestBody Map<String, String> systemMap){
+        return certain(systemMap);
+    }
+//2运费配置
+    @GetMapping("config/express")
+    public ResponseVo findFreightConfig(){
+        return findMall("cskaoyan_mall_express");
+    }
+    @PostMapping("config/express")
+    public ResponseVo updateFreight(@RequestBody Map<String, String> systemMap){
+        return certain(systemMap);
+    }
+//3订单配置
+    @GetMapping("config/order")
+    public ResponseVo findOrderConfig(){
+        return findMall("cskaoyan_mall_order");
+    }
+    @PostMapping("config/order")
+    public ResponseVo updateOrder(@RequestBody Map<String, String> systemMap){
+        return certain(systemMap);
+    }
+//4小程序配置config/wx
+    @GetMapping("config/wx")
+    public ResponseVo findWxConfig(){
+        return findMall("cskaoyan_mall_wx");
+    }
+    @PostMapping("config/wx")
+    public ResponseVo updateWx(@RequestBody Map<String, String> systemMap){
+        return certain(systemMap);
+    }
+    public ResponseVo findMall(String prefix){
+        Map<String, String> systemMap = new HashMap<>();
         List<MallSystem> mall = systemService.selectMallSystemByPrefix(prefix);
         for (MallSystem mallSystem : mall) {
             systemMap.put(mallSystem.getKeyName(), mallSystem.getKeyValue());
         }
         ResponseVo responseVo = new ResponseVo();
         responseVo.setData(systemMap);
-        responseVo.setErrno(0);
         responseVo.setErrmsg("成功");
+        responseVo.setErrno(0);
         return responseVo;
-
     }
 
-    @RequestMapping("config/express")
-    public ResponseVo<List> findFreightConfig(){
-        Map<String,String> freightMap = new HashMap<>();
-        List<MallSystem> mall = systemService.selectFreightConfig();
-        for(MallSystem mallSystem : mall){
-            freightMap.put(mallSystem.getKeyName(),mallSystem.getKeyValue());
-        }
+    public ResponseVo certain(Map<String, String> systemMap){
+        boolean b = systemService.updateMallSystemBykeyName(systemMap);
         ResponseVo responseVo = new ResponseVo();
-        responseVo.setData(freightMap);
-        responseVo.setErrmsg("成功");
-        responseVo.setErrno(0);
+        if (b){
+            responseVo.setErrmsg("成功");
+            responseVo.setErrno(0);
+        }else {
+            responseVo.setErrmsg("修改失败！");
+            responseVo.setErrno(500);
+        }
         return responseVo;
     }
+
+
+
 
 }
