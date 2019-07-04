@@ -5,7 +5,7 @@
 
 
 
-  <insert id="insertCreategory" parameterType="com.cskaoyan.mall.bean.CreateStorge">
+  <insert id="insertCreategory" parameterType="com.cskaoyan.mall.bean.CreateStorge"  useGeneratedKeys="true" keyProperty="id">
     insert into cskaoyan_mall_storage (id, `key`, `name`,
       `type`, `size`, url, add_time,
       update_time)

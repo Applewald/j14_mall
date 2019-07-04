@@ -55,6 +55,7 @@ public class GoodsServiceImpl implements GoodsService {
     public void goodsCreate(CreateGoods createGoods) {
         int addGoods = goodsMapper.addGoods(createGoods.getGoods());
 
+
     }
 
 
