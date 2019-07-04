@@ -58,6 +58,11 @@ public class SystemController {
     public ResponseVo updateWx(@RequestBody Map<String, String> systemMap){
         return certain(systemMap);
     }
+
+
+
+
+
     public ResponseVo findMall(String prefix){
         Map<String, String> systemMap = new HashMap<>();
         List<MallSystem> mall = systemService.selectMallSystemByPrefix(prefix);
