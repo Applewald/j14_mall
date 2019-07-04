@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cskaoyan.mall.mapper.AdMapper">
+
+    <resultMap id="AdMap" type="com.cskaoyan.mall.bean.Ad">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="link" jdbcType="VARCHAR" property="link"/>
+        <result column="url" jdbcType="VARCHAR" property="url"/>
+        <result column="position" jdbcType="TINYINT" property="position"/>
+        <result column="content" jdbcType="VARCHAR" property="content"/>
+        <result column="start_time" jdbcType="TIMESTAMP" property="startTime"/>
+        <result column="end_time" jdbcType="TIMESTAMP" property="endTime"/>
+        <result column="enabled" jdbcType="TINYINT" property="enabled"/>
+        <result column="add_time" jdbcType="TIMESTAMP" property="addTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="deleted" jdbcType="TINYINT" property="deleted"/>
+    </resultMap>
+    
+    <select id="getAllAd" resultMap="AdMap">
+        select
+          id,
+          name,
+          link,
+          url,
+          position,
+          content,
+          start_time,
+          end_time,
+          enabled,
+          add_time,
+          update_time,
+          deleted
+        from cskaoyan_mall_ad
+        order by #{sort} #{order}
+    </select>
+
+    <update id="updateById" parameterType="com.cskaoyan.mall.bean.Ad">
+        update cskaoyan_mall_ad
+        set
+          name = #{name},
+          link = #{link},
+          url = #{url},
+          position = #{position},
+          content = #{content},
+          start_time = #{startTime},
+          end_time = #{endTime},
+          enabled = #{enabled},
+          add_time = #{addTime},
+          update_time = #{updateTime},
+          deleted = #{deleted}
+        WHERE id = #{id}
+    </update>
+</mapper>
