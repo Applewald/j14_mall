@@ -18,7 +18,7 @@
     )
     values
     <foreach collection="products" item="item" separator="," >
-      (null,#{goodsId},#{item.specifications typeHandler = com.cskaoyan.mall.typehandler.StringToStringArrary}
+      (null,#{goodsId},#{item.specifications ,typeHandler = com.cskaoyan.mall.typehandler.StringToStringArrary}
       ,#{item.price},#{item.number},#{item.url},now(),now())
     </foreach>
   </insert>
@@ -26,14 +26,14 @@
 
   <insert id="addAttributes" >
     insert into cskaoyan_mall_goods_attribute (id, goods_id, attribute,
-      value, add_time, update_time)
+      `value`, add_time, update_time)
     values
     <foreach collection="attributes" item="item" separator="," >
       (null,#{goodsId},#{item.attribute},#{item.value},now(),now())
     </foreach>
   </insert>
 
-  
+
 
 
   <resultMap id="findGoodsList" type="com.cskaoyan.mall.bean.Goods">

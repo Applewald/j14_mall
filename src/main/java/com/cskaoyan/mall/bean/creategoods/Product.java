@@ -8,7 +8,7 @@ public class Product {
     int id;
     int  number;
     BigDecimal price;
-    List<String> specifications;
+    String[] specifications;
     String url;
 
 
@@ -36,11 +36,11 @@ public class Product {
         this.price = price;
     }
 
-    public List<String> getSpecifications() {
+    public String[] getSpecifications() {
         return specifications;
     }
 
-    public void setSpecifications(List<String> specifications) {
+    public void setSpecifications(String[] specifications) {
         this.specifications = specifications;
     }
 

@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface CreateStorgeMapper {
     int insertCreategory(CreateStorge createStorge);
 
-    CreateStorge findCreategoryBy(@Param("id") int id);
+    CreateStorge findCreategoryBy(@Param("url") String url);
 }
 

@@ -80,7 +80,6 @@ public class GoodsController {
     public MessageVo goodsCreate(@RequestBody CreateGoods createGoods){
         goodsService.goodsCreate(createGoods);
 
-        System.out.println(createGoods);
 
         return new MessageVo(0,"成功");
     }

@@ -67,11 +67,19 @@ public class GoodsServiceImpl implements GoodsService {
 
         int goodsId = goodsMapper.addGoods(goods);
 
-        int addsf = goodsMapper.addSpecifications(specifications,goodsId);
+      /*  if (specifications != null && specifications.size() != 0){
+            int addsf = goodsMapper.addSpecifications(specifications,goodsId);
+        }
 
-        int addProducts = goodsMapper.addProducts(products,goodsId);
+        if (products != null && products.size() !=0 ){
+            int addProducts = goodsMapper.addProducts(products,goodsId);
+        }
 
-        int addAttributes = goodsMapper.addAttributes(attributes,goodsId);
+        if (attributes != null && attributes.size() != 0){
+            int addAttributes = goodsMapper.addAttributes(attributes,goodsId);
+        }*/
+
+
 
 
 
@@ -81,6 +89,6 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     public CreateStorge insertCreategory(CreateStorge createStorge) {
         int id = createStorgeMapper.insertCreategory(createStorge);
-        return createStorgeMapper.findCreategoryBy(id);
+        return createStorgeMapper.findCreategoryBy(createStorge.getUrl());
     }
 }
