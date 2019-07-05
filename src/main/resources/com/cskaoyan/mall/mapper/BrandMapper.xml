@@ -10,7 +10,7 @@
         <result column="floor_price" jdbcType="DECIMAL" property="floorPrice"/>
         <result column="add_time" jdbcType="TIMESTAMP" property="addTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
-        <result column="deleted" jdbcType="BIT" property="deleted"/>
+        <result column="deleted" typeHandler="com.cskaoyan.mall.typeHandler.BooleanTypeHandler" property="deleted"/>
     </resultMap>
     <sql id="Example_Where_Clause">
         <where>
@@ -105,16 +105,21 @@
             <include refid="Example_Where_Clause"/>
         </if>
     </delete>
-    <insert id="insert" parameterType="com.cskaoyan.mall.bean.Brand">
-    insert into cskaoyan_mall_brand (id, name, desc, 
-      pic_url, sort_order, floor_price, 
-      add_time, update_time, deleted
-      )
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{desc,jdbcType=VARCHAR}, 
-      #{picUrl,jdbcType=VARCHAR}, #{sortOrder,jdbcType=TINYINT}, #{floorPrice,jdbcType=DECIMAL}, 
-      #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}
-      )
-  </insert>
+    <insert id="insert" useGeneratedKeys="true" keyColumn="id" keyProperty="id"
+            parameterType="com.cskaoyan.mall.bean.Brand">
+        <selectKey keyProperty="id" order="AFTER" resultType="int">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into cskaoyan_mall_brand (id, `name`, `desc`,
+        pic_url, sort_order, floor_price,
+        add_time, update_time, deleted
+        )
+        values (null , #{name,jdbcType=VARCHAR}, #{desc,jdbcType=VARCHAR},
+        #{picUrl,jdbcType=VARCHAR}, #{sortOrder,jdbcType=TINYINT}, #{floorPrice,jdbcType=DECIMAL},
+        now(), now(),
+        #{deleted,typeHandler=com.cskaoyan.mall.typeHandler.BooleanTypeHandler}
+        )
+    </insert>
     <insert id="insertSelective" parameterType="com.cskaoyan.mall.bean.Brand">
         insert into cskaoyan_mall_brand
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -172,7 +177,7 @@
                 #{updateTime,jdbcType=TIMESTAMP},
             </if>
             <if test="deleted != null">
-                #{deleted,jdbcType=BIT},
+                #{deleted,typeHandler=com.cskaoyan.mall.typeHandler.BooleanTypeHandler},
             </if>
         </trim>
     </insert>
@@ -210,7 +215,7 @@
                 update_time = #{record.updateTime,jdbcType=TIMESTAMP},
             </if>
             <if test="record.deleted != null">
-                deleted = #{record.deleted,jdbcType=BIT},
+                deleted = #{record.deleted,typeHandler=com.cskaoyan.mall.typeHandler.BooleanTypeHandler},
             </if>
         </set>
         <if test="_parameter != null">
@@ -227,7 +232,7 @@
         floor_price = #{record.floorPrice,jdbcType=DECIMAL},
         add_time = #{record.addTime,jdbcType=TIMESTAMP},
         update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-        deleted = #{record.deleted,jdbcType=BIT}
+        deleted = #{record.deleted,typeHandler=com.cskaoyan.mall.typeHandler.BooleanTypeHandler}
         <if test="_parameter != null">
             <include refid="Update_By_Example_Where_Clause"/>
         </if>
@@ -257,21 +262,21 @@
                 update_time = #{updateTime,jdbcType=TIMESTAMP},
             </if>
             <if test="deleted != null">
-                deleted = #{deleted,jdbcType=BIT},
+                deleted = #{deleted,typeHandler=com.cskaoyan.mall.typeHandler.BooleanTypeHandler},
             </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.cskaoyan.mall.bean.Brand">
     update cskaoyan_mall_brand
-    set name = #{name,jdbcType=VARCHAR},
-      desc = #{desc,jdbcType=VARCHAR},
+    set `name` = #{name,jdbcType=VARCHAR},
+      `desc` = #{desc,jdbcType=VARCHAR},
       pic_url = #{picUrl,jdbcType=VARCHAR},
       sort_order = #{sortOrder,jdbcType=TINYINT},
       floor_price = #{floorPrice,jdbcType=DECIMAL},
       add_time = #{addTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      deleted = #{deleted,jdbcType=BIT}
+      update_time = now(),
+      deleted = #{deleted,typeHandler=com.cskaoyan.mall.typeHandler.BooleanTypeHandler}
     where id = #{id,jdbcType=INTEGER}
   </update>
     <select id="findBrandList" resultMap="BaseResultMap">

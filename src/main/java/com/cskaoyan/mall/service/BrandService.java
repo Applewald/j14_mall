@@ -18,4 +18,9 @@ public interface BrandService {
     DataVo<Brand> findBrandList(int page, int limit, Integer id, String name, String sort, String order);
 
     ResponseVo delete(int id);
+
+    ResponseVo update(Brand brand);
+
+    ResponseVo insert(Brand brand);
+
 }

@@ -24,7 +24,7 @@ import java.util.UUID;
 @RequestMapping("storage")
 public class StorageController {
 
-    @Autowired
+    /*@Autowired
     StorageService storageService;
     @Autowired
     Storage storage;
@@ -54,5 +54,5 @@ public class StorageController {
         storage.setUrl("http://localhost:8080/wx/storage/fetch/" + key);
         ResponseVo vo = storageService.insert(storage);
         return vo;
-    }
+    }*/
 }

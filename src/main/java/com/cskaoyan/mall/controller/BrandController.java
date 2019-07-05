@@ -1,7 +1,6 @@
 package com.cskaoyan.mall.controller;
 
 import com.cskaoyan.mall.bean.Brand;
-import com.cskaoyan.mall.bean.Storage;
 import com.cskaoyan.mall.service.BrandService;
 import com.cskaoyan.mall.vo.DataVo;
 import com.cskaoyan.mall.vo.ResponseVo;
@@ -9,13 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-
-import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.IOException;
-import java.util.Date;
-import java.util.UUID;
 
 /**
  * author lixiaolong
@@ -23,13 +15,13 @@ import java.util.UUID;
  * description:
  */
 @RestController
-//@RequestMapping("brand")
+@RequestMapping("brand")
 public class BrandController {
 
     @Autowired
     BrandService brandService;
 
-    @RequestMapping("brand/list")
+    @RequestMapping("list")
     public ResponseVo brandList(int page, int limit, Integer id, String name, String sort, String order) {
         ResponseVo<DataVo<Brand>> vo = new ResponseVo<>();
         DataVo<Brand> dataVo = brandService.findBrandList(page, limit, id, name, sort, order);
@@ -39,11 +31,25 @@ public class BrandController {
         return vo;
     }
 
-    @RequestMapping("brand/delete")
+    @RequestMapping("delete")
     public ResponseVo brandDelete(@RequestBody Brand brand) {
         System.out.println(brand);
         ResponseVo<String> vo = brandService.delete(brand.getId());
         return vo;
     }
 
+    @RequestMapping("update")
+    public ResponseVo brandUpdate(@RequestBody Brand brand) {
+        System.out.println(brand);
+        ResponseVo<String> vo = brandService.update(brand);
+        return vo;
+    }
+
+    //brand/create
+    @RequestMapping("create")
+    public ResponseVo brandCreate(@RequestBody Brand brand) {
+        System.out.println(brand);
+        ResponseVo<String> vo = brandService.insert(brand);
+        return vo;
+    }
 }

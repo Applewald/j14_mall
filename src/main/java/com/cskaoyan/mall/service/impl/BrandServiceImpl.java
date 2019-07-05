@@ -50,4 +50,43 @@ public class BrandServiceImpl implements BrandService {
         }
         return vo;
     }
+
+    @Override
+    public ResponseVo update(Brand brand) {
+        ResponseVo<Object> vo = new ResponseVo<>();
+        int update = brandMapper.updateByPrimaryKey(brand);
+        if (update == 1) {
+            vo.setErrno(0);
+            vo.setErrmsg("成功");
+        } else {
+            vo.setErrno(-1);
+            vo.setErrmsg("失败");
+        }
+        return vo;
+    }
+
+    @Override
+    public ResponseVo insert(Brand brand) {
+        ResponseVo<Object> vo = new ResponseVo<>();
+        if (brand.getDeleted() == null) {
+            brand.setDeleted(false);
+        }
+        if (brand.getSortOrder() == null) {
+            brand.setSortOrder((byte) 0);
+        }
+        System.out.println("前：" + brand.getId());
+        try {
+            int insert = brandMapper.insert(brand);
+            System.out.println("后：" + brand.getId());
+            if (insert == 1) {
+                vo.setErrno(0);
+                vo.setErrmsg("成功");
+            }
+        } catch (Exception e) {
+            vo.setErrno(-1);
+            vo.setErrmsg("添加品牌商失败");
+        }
+        return vo;
+    }
+
 }

@@ -17,8 +17,6 @@ public class StorageServiceImpl implements StorageService {
 
     @Autowired
     StorageMapper storageMapper;
-    @Autowired
-    Storage storage;
 
     @Override
     public ResponseVo insert(Storage storage) {

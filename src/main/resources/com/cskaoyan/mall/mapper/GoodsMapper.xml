@@ -7,7 +7,6 @@
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="category_id" jdbcType="INTEGER" property="categoryId"/>
         <result column="brand_id" jdbcType="INTEGER" property="brandId"/>
-
         <result column="keywords" jdbcType="VARCHAR" property="keywords"/>
         <result column="brief" jdbcType="VARCHAR" property="brief"/>
         <result column="is_on_sale" jdbcType="BIT" property="isOnSale"/>
@@ -23,16 +22,38 @@
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
         <result column="deleted" jdbcType="BIT" property="deleted"/>
         <result column="detail" jdbcType="BIT" property="detail"/>
-        <collection jdbcType="VARCHAR" property="gallery" ofType="java.lang.String">
-            <result column="gallery"/>
-        </collection>
+        <result column="gallery" property="gallery" typeHandler="com.cskaoyan.mall.typehandler.StringToStringArrary"/>
+        <!--<collection  jdbcType="VARCHAR" property="gallery" ofType="java.lang.String" >
+          <result column="gallery" />
+        </collection>-->
     </resultMap>
 
     <select id="findGoodsList" resultMap="findGoodsList">
-    select id, goods_sn, name, category_id, brand_id, gallery, keywords, brief, is_on_sale,
-    sort_order, pic_url, share_url, is_new, is_hot, unit, counter_price, retail_price,
-    add_time, update_time, deleted
-    from cskaoyan_mall_goods
-    order by #{sort} #{order}
-  </select>
+        select id, goods_sn, name, category_id, brand_id, gallery, keywords, brief, is_on_sale,
+        sort_order, pic_url, share_url, is_new, is_hot, unit, counter_price, retail_price,
+        add_time, update_time, deleted
+        from cskaoyan_mall_goods
+        <if test="goodsSn != null and goodsSn != ''">
+            where goods_sn = #{goodsSn}
+        </if>
+        order by #{sort} #{order}
+    </select>
+
+
+    <insert id="addGoods" parameterType="com.cskaoyan.mall.bean.Goods">
+    insert into cskaoyan_mall_goods ( goods_sn, `name`,
+      category_id, brand_id, gallery,
+      keywords, brief, is_on_sale,
+      sort_order, pic_url, share_url,
+      is_new, is_hot, unit, counter_price,
+      retail_price, add_time, update_time,
+       detail)
+    values ( #{goodsSn}, #{name},
+      #{categoryId}, #{brandId}, #{gallery,typeHandler = com.cskaoyan.mall.typehandler.StringToStringArrary },
+      #{keywords}, #{brief}, #{isOnSale},
+      #{sortOrder}, #{picUrl}, #{shareUrl},
+      #{isNew}, #{isHot}, #{unit}, #{counterPrice},
+      #{retailPrice}, now(), now(),
+       #{detail})
+  </insert>
 </mapper>

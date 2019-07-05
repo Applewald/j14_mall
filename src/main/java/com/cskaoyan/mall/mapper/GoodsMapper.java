@@ -8,5 +8,7 @@ import java.util.List;
 
 @Repository
 public interface GoodsMapper {
-    List<Goods> findGoodsList(@Param("sort") String sort, @Param("order") String order);
+    List<Goods> findGoodsList(@Param("sort") String sort, @Param("order") String order,@Param("goodsSn") String goodsSn);
+
+    int addGoods( Goods goods);
 }
