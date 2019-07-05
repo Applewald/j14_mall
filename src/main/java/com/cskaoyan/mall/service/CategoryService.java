@@ -18,8 +18,8 @@ public interface CategoryService {
 
     ResponseVo delete(int id);
 
-    ResponseVo update(Category brand);
+    ResponseVo update(Category category);
 
-    ResponseVo insert(Category brand);
+    ResponseVo insert(Category category);
 
 }

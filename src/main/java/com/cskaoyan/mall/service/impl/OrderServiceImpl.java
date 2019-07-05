@@ -1,9 +1,21 @@
 package com.cskaoyan.mall.service.impl;
 
+import com.cskaoyan.mall.bean.Order;
+import com.cskaoyan.mall.bean.OrderGoods;
+import com.cskaoyan.mall.bean.User;
+import com.cskaoyan.mall.mapper.OrderGoodsMapper;
 import com.cskaoyan.mall.mapper.OrderMapper;
+import com.cskaoyan.mall.mapper.UserMapper;
 import com.cskaoyan.mall.service.OrderService;
+import com.cskaoyan.mall.vo.DataVo;
+import com.cskaoyan.mall.vo.ResponseVo;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * author lixiaolong
@@ -18,5 +30,44 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public int orderTotal() {
         return orderMapper.orderTotal();
+    }
+
+    @Override
+    public ResponseVo orderList(int page, int limit, String sort, String order,Integer userId,String orderSn,Integer[] orderStatusArray) {
+        ResponseVo<DataVo> vo = new ResponseVo<>();
+        DataVo<Order> orderDataVo = new DataVo<>();
+        PageHelper.startPage(page, limit);
+        List<Order> orderList=orderMapper.orderList(sort,order,userId,orderSn,orderStatusArray);
+        PageInfo<Order> pageInfo = new PageInfo<>(orderList);
+        orderDataVo.setTotal(pageInfo.getTotal());
+        orderDataVo.setItems(pageInfo.getList());
+        vo.setErrmsg("成功");
+        vo.setData(orderDataVo);
+        vo.setErrno(0);
+        return vo;
+    }
+
+    @Autowired
+    UserMapper userMapper;
+    @Autowired
+    OrderGoodsMapper orderGoodsMapper;
+    @Override
+    public ResponseVo orderDetail(int id) {
+        ResponseVo vo = new ResponseVo();
+        Order order = orderMapper.selectByPrimaryKey(id);
+        User user = userMapper.selectByPrimaryKey(order.getUserId());
+        List<OrderGoods> orderGoods = orderGoodsMapper.orderGoods(order.getId());
+        /*for (OrderGoods orderGood : orderGoods) {
+            orderGood.getProductId()
+        }*/
+        HashMap<Object, Object> map = new HashMap<Object, Object>();
+        map.put("order", order);
+        map.put("user", user);
+        map.put("orderGoods", orderGoods);
+
+        vo.setData(map);
+        vo.setErrno(0);
+        vo.setErrmsg("成功");
+        return vo;
     }
 }

@@ -33,4 +33,6 @@ public interface OrderMapper {
     int updateByPrimaryKey(Order record);
 
     int orderTotal();
+
+    List<Order> orderList(@Param("sort") String sort, @Param("order") String order, @Param("userId") Integer userId, @Param("orderSn") String orderSn, @Param("orderStatusArray") Integer[] orderStatusArray);
 }

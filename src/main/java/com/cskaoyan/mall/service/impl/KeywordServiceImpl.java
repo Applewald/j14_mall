@@ -1,8 +1,8 @@
 package com.cskaoyan.mall.service.impl;
 
-import com.cskaoyan.mall.bean.Issue;
-import com.cskaoyan.mall.mapper.IssueMapper;
-import com.cskaoyan.mall.service.IssueService;
+import com.cskaoyan.mall.bean.Keyword;
+import com.cskaoyan.mall.mapper.KeywordMapper;
+import com.cskaoyan.mall.service.KeywordService;
 import com.cskaoyan.mall.vo.DataVo;
 import com.cskaoyan.mall.vo.ResponseVo;
 import com.github.pagehelper.PageHelper;
@@ -13,22 +13,22 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class IssueServiceImpl implements IssueService {
+public class KeywordServiceImpl implements KeywordService {
 
 
     @Autowired
-    IssueMapper issueMapper;
+    KeywordMapper keywordMapper;
 
     @Override
-    public ResponseVo findIssueList(int page, int limit, String question, String sort, String order) {
+    public ResponseVo findKeywordList(int page, int limit, String keyword,String url, String sort, String order) {
         PageHelper.startPage(page, limit);
         ResponseVo<Object> vo = new ResponseVo<>();
-        List<Issue> items = issueMapper.findIssueList(question, sort, order);
-        PageInfo<Issue> pageInfo = new PageInfo<>(items);
-        DataVo<Issue> issueDataVo = new DataVo<>();
-        issueDataVo.setTotal(pageInfo.getTotal());
-        issueDataVo.setItems(pageInfo.getList());
-        vo.setData(issueDataVo);
+        List<Keyword> items = keywordMapper.findKeywordList(keyword,url, sort, order);
+        PageInfo<Keyword> pageInfo = new PageInfo<>(items);
+        DataVo<Keyword> keywordDataVo = new DataVo<>();
+        keywordDataVo.setTotal(pageInfo.getTotal());
+        keywordDataVo.setItems(pageInfo.getList());
+        vo.setData(keywordDataVo);
         vo.setErrmsg("成功");
         vo.setErrno(0);
         return vo;
@@ -37,7 +37,7 @@ public class IssueServiceImpl implements IssueService {
     @Override
     public ResponseVo delete(int id) {
         ResponseVo<Object> vo = new ResponseVo<>();
-        int delete = issueMapper.deleteByPrimaryKey(id);
+        int delete = keywordMapper.deleteByPrimaryKey(id);
         if (delete == 1) {
             vo.setErrno(0);
             vo.setErrmsg("成功");
@@ -49,9 +49,9 @@ public class IssueServiceImpl implements IssueService {
     }
 
     @Override
-    public ResponseVo update(Issue issue) {
+    public ResponseVo update(Keyword keyword) {
         ResponseVo<Object> vo = new ResponseVo<>();
-        int update = issueMapper.updateByPrimaryKey(issue);
+        int update = keywordMapper.updateByPrimaryKey(keyword);
         if (update == 1) {
             vo.setErrno(0);
             vo.setErrmsg("成功");
@@ -63,11 +63,12 @@ public class IssueServiceImpl implements IssueService {
     }
 
     @Override
-    public ResponseVo insert(Issue issue) {
+    public ResponseVo insert(Keyword keyword) {
         ResponseVo<Object> vo = new ResponseVo<>();
-        int insert = issueMapper.insert(issue);
+        keyword.setSortOrder(0);
+        int insert = keywordMapper.insert(keyword);
         if (insert == 1) {
-            vo.setData(issue);
+            vo.setData(keyword);
             vo.setErrno(0);
             vo.setErrmsg("成功");
         }else  {

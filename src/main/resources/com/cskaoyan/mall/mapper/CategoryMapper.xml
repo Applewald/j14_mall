@@ -307,21 +307,38 @@
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.cskaoyan.mall.bean.Category">
+    <!--修改一级类目-->
+    <update id="update1ByPrimaryKey" parameterType="com.cskaoyan.mall.bean.Category">
     update cskaoyan_mall_category
-    set name = #{name,jdbcType=VARCHAR},
+    set `name` = #{name,jdbcType=VARCHAR},
       keywords = #{keywords,jdbcType=VARCHAR},
-      desc = #{desc,jdbcType=VARCHAR},
-      pid = #{pid,jdbcType=INTEGER},
+      `desc` = #{desc,jdbcType=VARCHAR},
+      pid = 0,
       icon_url = #{iconUrl,jdbcType=VARCHAR},
       pic_url = #{picUrl,jdbcType=VARCHAR},
-      level = #{level,jdbcType=VARCHAR},
+      `level` = #{level,jdbcType=VARCHAR},
       sort_order = #{sortOrder,jdbcType=TINYINT},
       add_time = #{addTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      update_time = now(),
       deleted = #{deleted,typeHandler=com.cskaoyan.mall.typeHandler.BooleanTypeHandler}
     where id = #{id,jdbcType=INTEGER}
   </update>
+    <!--修改二级类目-->
+    <update id="update2ByPrimaryKey" parameterType="com.cskaoyan.mall.bean.Category">
+    update cskaoyan_mall_category
+    set `name` = #{name,jdbcType=VARCHAR},
+    keywords = #{keywords,jdbcType=VARCHAR},
+    `desc` = #{desc,jdbcType=VARCHAR},
+    pid = #{pid,jdbcType=INTEGER},
+    icon_url = #{iconUrl,jdbcType=VARCHAR},
+    pic_url = #{picUrl,jdbcType=VARCHAR},
+    `level` = #{level,jdbcType=VARCHAR},
+    sort_order = #{sortOrder,jdbcType=TINYINT},
+    add_time = #{addTime,jdbcType=TIMESTAMP},
+    update_time = now(),
+    deleted = #{deleted,typeHandler=com.cskaoyan.mall.typeHandler.BooleanTypeHandler}
+    where id = #{id,jdbcType=INTEGER}
+   </update>
     <select id="findCategoryList" resultMap="CategoryListMap">
         SELECT
             c1.id as c1id,c1.`name` as c1name,c1.keywords as c1key,

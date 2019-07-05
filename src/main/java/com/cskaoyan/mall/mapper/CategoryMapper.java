@@ -32,7 +32,9 @@ public interface CategoryMapper {
 
     int updateByPrimaryKeySelective(Category record);
 
-    int updateByPrimaryKey(Category record);
+    int update1ByPrimaryKey(Category record);
+
+    int update2ByPrimaryKey(Category record);
 
     List<Category> findCategoryList();
 

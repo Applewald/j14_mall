@@ -56,7 +56,14 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public ResponseVo update(Category category) {
         ResponseVo<Object> vo = new ResponseVo<>();
-        int update = categoryMapper.updateByPrimaryKey(category);
+        int update;
+        //一级类目
+        if (category.getPid() == null) {
+            update = categoryMapper.update1ByPrimaryKey(category);
+        }else {
+            //二级类目
+            update = categoryMapper.update2ByPrimaryKey(category);
+        }
         if (update == 1) {
             vo.setErrno(0);
             vo.setErrmsg("成功");

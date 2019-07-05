@@ -1,7 +1,6 @@
 package com.cskaoyan.mall.service;
 
 import com.cskaoyan.mall.bean.Issue;
-import com.cskaoyan.mall.vo.DataVo;
 import com.cskaoyan.mall.vo.ResponseVo;
 
 /**
@@ -12,7 +11,11 @@ import com.cskaoyan.mall.vo.ResponseVo;
  */
 public interface IssueService {
 
-    DataVo<Issue> findIssueList(int page, int limit, String question, String sort, String order);
+    ResponseVo findIssueList(int page, int limit, String question, String sort, String order);
 
     ResponseVo delete(int id);
+
+    ResponseVo update(Issue issue);
+
+    ResponseVo insert(Issue issue);
 }

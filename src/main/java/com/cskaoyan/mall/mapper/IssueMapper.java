@@ -4,9 +4,11 @@ package com.cskaoyan.mall.mapper;
 import com.cskaoyan.mall.bean.Issue;
 import com.cskaoyan.mall.bean.IssueExample;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface IssueMapper {
     long countByExample(IssueExample example);
 
@@ -30,5 +32,5 @@ public interface IssueMapper {
 
     int updateByPrimaryKey(Issue record);
 
-    List<Issue> findIssueList(String question, String sort, String order);
+    List<Issue> findIssueList(@Param("question")String question,@Param("sort") String sort,@Param("order") String order);
 }
