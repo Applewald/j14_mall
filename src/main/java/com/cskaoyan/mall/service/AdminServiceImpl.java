@@ -2,16 +2,19 @@ package com.cskaoyan.mall.service;
 
 
 
-import com.cskaoyan.mall.bean.Admin;
-import com.cskaoyan.mall.bean.AdminResp;
+import com.cskaoyan.mall.bean.admin.Admin;
+import com.cskaoyan.mall.bean.admin.AdminResp;
+import com.cskaoyan.mall.bean.admin.AdminOptions;
 import com.cskaoyan.mall.mapper.AdminMapper;
-import com.cskaoyan.mall.vo.Data;
-import com.cskaoyan.mall.vo.ReVo;
+import com.cskaoyan.mall.mapper.RoleMapper;
+import com.cskaoyan.mall.util.MD5Util;
+import com.cskaoyan.mall.vo.DataVo;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 
@@ -27,15 +30,53 @@ public class AdminServiceImpl implements AdminService {
     @Autowired
     AdminMapper adminMapper;
 
+    @Autowired
+    RoleMapper roleMapper;
+
     @Override
-    public ReVo selectAllAdmin(Integer page, Integer limit, String sort, String order) {
+    public Admin selectByPrimaryKey(Integer id) {
+        return adminMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public Admin selectByUserName(String username) {
+        return adminMapper.selectByUserName(username);
+    }
+
+    @Override
+    public List<AdminOptions> selectAllRoleIdAndName() {
+        return roleMapper.selectAllRoleIdAndName();
+    }
+
+    @Override
+    public int insert(Admin record) {
+        // 用户密码 md5加密
+        String password = record.getPassword();
+        String md5Password = "123";
+        try {
+            md5Password = MD5Util.getMD5(password);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        record.setPassword(md5Password);
+
+        return adminMapper.insert(record);
+    }
+
+    @Override
+    public int deleteByPrimaryKey(Integer id) {
+        return adminMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public DataVo selectAllAdminList(Integer page, Integer limit, String sort, String order, String username) {
         PageHelper.startPage(page, limit);
-        List<AdminResp> admins = adminMapper.selectAllAdmin();
+        List<AdminResp> admins = adminMapper.selectAllAdmin(sort, order, username);
         PageInfo<AdminResp> pageInfo = new PageInfo<>(admins);
 
-        Data<AdminResp> adminData = new Data<>(pageInfo.getList(), pageInfo.getTotal());
-
-        ReVo reVo = new ReVo(adminData, "成功", 0);
-        return reVo;
+        DataVo<AdminResp> dataVo = new DataVo<>();
+        dataVo.setItems(pageInfo.getList());
+        dataVo.setTotal(pageInfo.getTotal());
+        return dataVo;
     }
 }

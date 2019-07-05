@@ -1,6 +1,7 @@
 package com.cskaoyan.mall.mapper;
 
 import com.cskaoyan.mall.bean.Role;
+import com.cskaoyan.mall.bean.admin.AdminOptions;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -22,5 +23,8 @@ public interface RoleMapper {
 
     int updateByPrimaryKey(Role record);
 
+    List<AdminOptions> selectAllRoleIdAndName();
+
     List<Role> selectAllRole(@Param("sort") String sort, @Param("order") String order, @Param("name") String name);
+
 }
