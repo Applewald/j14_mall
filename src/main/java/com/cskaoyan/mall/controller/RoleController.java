@@ -49,8 +49,8 @@ public class RoleController {
         return object;
     }
 
-    /*添加新的角色*/
-    /*@RequestMapping("/create")
+    /*添加新的角色*//*
+    @RequestMapping("/create")
     @ResponseBody
     public Object create(@RequestBody Role role) {
         int i = roleService.insert(role);

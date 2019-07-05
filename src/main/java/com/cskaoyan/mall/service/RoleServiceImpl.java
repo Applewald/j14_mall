@@ -4,9 +4,7 @@ package com.cskaoyan.mall.service;
 import com.cskaoyan.mall.bean.Role;
 import com.cskaoyan.mall.bean.admin.AdminOptions;
 import com.cskaoyan.mall.mapper.RoleMapper;
-
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +30,7 @@ public class RoleServiceImpl implements RoleService {
         return i;
     }
 
-    @Override
+    /*@Override
     public ReVo selectAllRole(Integer page, Integer limit, String sort, String order, String name) {
         PageHelper.startPage(page, limit);
         //OrderByHelper.orderBy(sort + " " + order);
@@ -46,7 +44,7 @@ public class RoleServiceImpl implements RoleService {
         reVo.setErrmsg("成功");
         reVo.setErrno(0);
         return reVo;
-    }
+    }*/
 
     @Override
     public List<AdminOptions> selectAllRoleIdAndName() {

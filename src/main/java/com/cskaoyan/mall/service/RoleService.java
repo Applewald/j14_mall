@@ -18,7 +18,6 @@ public interface RoleService {
 
     int insert(Role record);
 
-    ReVo selectAllRole(Integer page, Integer limit, String sort, String order, String name);
 
     List<AdminOptions> selectAllRoleIdAndName();
 
