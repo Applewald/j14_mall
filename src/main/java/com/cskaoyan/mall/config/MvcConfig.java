@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.convert.support.ConfigurableConversionService;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
@@ -28,6 +29,7 @@ public class MvcConfig implements WebMvcConfigurer {
     /*处理器（数据转换器）*/
     @Autowired
     ConfigurableConversionService configurableConversionService;
+
     @PostConstruct
     public void addConverter() {
         /*模板，将自己定义的转换器类放在后面即可*/
@@ -45,5 +47,11 @@ public class MvcConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         /*模板，自己添加的拦截器放在后面即可*/
         //registry.addInterceptor(new)
+    }
+
+    /*静态资源映射*/
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/wx/storage/fetch/**").addResourceLocations("/static/upload/**");
     }
 }

@@ -3,35 +3,35 @@
 <mapper namespace="com.cskaoyan.mall.mapper.GoodsMapper">
 
 
-  <insert id="addSpecifications" >
-    insert into cskaoyan_mall_goods_specification (id, goods_id, specification,
-      `value`, pic_url, add_time, update_time) values
-      <foreach collection="specifications" item="item" separator="," >
-        (null,#{goodsId},#{item.specification},#{item.value},#{item.picUrl},now(),now())
-      </foreach>
-  </insert>
+    <insert id="addSpecifications" >
+        insert into cskaoyan_mall_goods_specification (id, goods_id, specification,
+        `value`, pic_url, add_time, update_time) values
+        <foreach collection="specifications" item="item" separator="," >
+            (null,#{goodsId},#{item.specification},#{item.value},#{item.picUrl},now(),now())
+        </foreach>
+    </insert>
 
 
-  <insert id="addProducts" >
-    insert into cskaoyan_mall_goods_product (id, goods_id, specifications,
-    price, `number`, url, add_time, update_time
-    )
-    values
-    <foreach collection="products" item="item" separator="," >
-      (null,#{goodsId},#{item.specifications ,typeHandler = com.cskaoyan.mall.typehandler.StringToStringArrary}
-      ,#{item.price},#{item.number},#{item.url},now(),now())
-    </foreach>
-  </insert>
+    <insert id="addProducts" >
+        insert into cskaoyan_mall_goods_product (id, goods_id, specifications,
+        price, `number`, url, add_time, update_time
+        )
+        values
+        <foreach collection="products" item="item" separator="," >
+            (null,#{goodsId},#{item.specifications ,typeHandler = com.cskaoyan.mall.typehandler.StringToStringArrary}
+            ,#{item.price},#{item.number},#{item.url},now(),now())
+        </foreach>
+    </insert>
 
 
-  <insert id="addAttributes" >
-    insert into cskaoyan_mall_goods_attribute (id, goods_id, attribute,
-      `value`, add_time, update_time)
-    values
-    <foreach collection="attributes" item="item" separator="," >
-      (null,#{goodsId},#{item.attribute},#{item.value},now(),now())
-    </foreach>
-  </insert>
+    <insert id="addAttributes" >
+        insert into cskaoyan_mall_goods_attribute (id, goods_id, attribute,
+        `value`, add_time, update_time)
+        values
+        <foreach collection="attributes" item="item" separator="," >
+            (null,#{goodsId},#{item.attribute},#{item.value},now(),now())
+        </foreach>
+    </insert>
 
 
   <select id="findGoodsBypicUrl" resultMap="findGoodsList" >
@@ -51,42 +51,41 @@
   </select>
 
 
-  <resultMap id="findGoodsList" type="com.cskaoyan.mall.bean.Goods">
-    <result column="id" jdbcType="INTEGER" property="id" />
-    <result column="goods_sn" jdbcType="VARCHAR" property="goodsSn" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="category_id" jdbcType="INTEGER" property="categoryId" />
-    <result column="brand_id" jdbcType="INTEGER" property="brandId" />
-    <result column="keywords" jdbcType="VARCHAR" property="keywords" />
-    <result column="brief" jdbcType="VARCHAR" property="brief" />
-    <result column="is_on_sale" jdbcType="BIT" property="isOnSale" />
-    <result column="sort_order" jdbcType="SMALLINT" property="sortOrder" />
-    <result column="pic_url" jdbcType="VARCHAR" property="picUrl" />
-    <result column="share_url" jdbcType="VARCHAR" property="shareUrl" />
-    <result column="is_new" jdbcType="BIT" property="isNew" />
-    <result column="is_hot" jdbcType="BIT" property="isHot" />
-    <result column="unit" jdbcType="VARCHAR" property="unit" />
-    <result column="counter_price" jdbcType="DECIMAL" property="counterPrice" />
-    <result column="retail_price" jdbcType="DECIMAL" property="retailPrice" />
-    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-    <result column="deleted" jdbcType="BIT" property="deleted" />
-    <result column="detail" jdbcType="BIT" property="detail" />
-    <result column="gallery" property="gallery" typeHandler="com.cskaoyan.mall.typehandler.StringToStringArrary"/>
-    <!--<collection  jdbcType="VARCHAR" property="gallery" ofType="java.lang.String" >
-      <result column="gallery" />
-    </collection>-->
-  </resultMap>
+    <resultMap id="findGoodsList" type="com.cskaoyan.mall.bean.Goods">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="goods_sn" jdbcType="VARCHAR" property="goodsSn" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="category_id" jdbcType="INTEGER" property="categoryId" />
+        <result column="brand_id" jdbcType="INTEGER" property="brandId" />
+        <result column="keywords" jdbcType="VARCHAR" property="keywords" />
+        <result column="brief" jdbcType="VARCHAR" property="brief" />
+        <result column="is_on_sale" jdbcType="BIT" property="isOnSale" />
+        <result column="sort_order" jdbcType="SMALLINT" property="sortOrder" />
+        <result column="pic_url" jdbcType="VARCHAR" property="picUrl" />
+        <result column="share_url" jdbcType="VARCHAR" property="shareUrl" />
+        <result column="is_new" jdbcType="BIT" property="isNew" />
+        <result column="is_hot" jdbcType="BIT" property="isHot" />
+        <result column="unit" jdbcType="VARCHAR" property="unit" />
+        <result column="counter_price" jdbcType="DECIMAL" property="counterPrice" />
+        <result column="retail_price" jdbcType="DECIMAL" property="retailPrice" />
+        <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+        <result column="deleted" jdbcType="BIT" property="deleted" />
+        <result column="detail" jdbcType="BIT" property="detail" />
+        <result column="gallery" property="gallery" typeHandler="com.cskaoyan.mall.typehandler.StringToStringArrary"/>
+        <!--<collection  jdbcType="VARCHAR" property="gallery" ofType="java.lang.String" >
+          <result column="gallery" />
+        </collection>-->
+    </resultMap>
 
-  <select id="findGoodsList" resultMap="findGoodsList" >
-    select id, goods_sn, name, category_id, brand_id, gallery, keywords, brief, is_on_sale,
-    sort_order, pic_url, share_url, is_new, is_hot, unit, counter_price, retail_price,
-    add_time, update_time, deleted
-    from cskaoyan_mall_goods
-    <if  test="goodsSn != null and goodsSn != ''">
-        where goods_sn = #{goodsSn}
-    </if>
-
+    <select id="findGoodsList" resultMap="findGoodsList" >
+        select id, goods_sn, name, category_id, brand_id, gallery, keywords, brief, is_on_sale,
+        sort_order, pic_url, share_url, is_new, is_hot, unit, counter_price, retail_price,
+        add_time, update_time, deleted
+        from cskaoyan_mall_goods
+        <if  test="goodsSn != null and goodsSn != ''">
+            where goods_sn = #{goodsSn}
+        </if>
     <if  test="name != null and name != ''">
       where `name` like concat('%',concat(#{name}),'%')
     </if>
@@ -95,24 +94,30 @@
   </select>
 
 
-  <insert id="addGoods" parameterType="com.cskaoyan.mall.bean.Goods">
-    <selectKey order="AFTER"   keyProperty="id"   resultType="java.lang.Integer">
-      select last_insert_id()
-    </selectKey>
-    insert into cskaoyan_mall_goods ( goods_sn, `name`,
-      category_id, brand_id, gallery,
-      keywords, brief, is_on_sale,
-      sort_order, pic_url, share_url,
-      is_new, is_hot, unit, counter_price,
-      retail_price, add_time, update_time,
-       detail)
-    values ( #{goodsSn}, #{name},
-      #{categoryId}, #{brandId}, #{gallery,typeHandler = com.cskaoyan.mall.typehandler.StringToStringArrary },
-      #{keywords}, #{brief}, #{isOnSale},
-      #{sortOrder}, #{picUrl}, #{shareUrl},
-      #{isNew}, #{isHot}, #{unit}, #{counterPrice},
-      #{retailPrice}, now(), now(),
-       #{detail})
-  </insert>
+    <insert id="addGoods" parameterType="com.cskaoyan.mall.bean.Goods">
+        <selectKey order="AFTER"   keyProperty="id"   resultType="java.lang.Integer">
+            select last_insert_id()
+        </selectKey>
+        insert into cskaoyan_mall_goods ( goods_sn, `name`,
+        category_id, brand_id, gallery,
+        keywords, brief, is_on_sale,
+        sort_order, pic_url, share_url,
+        is_new, is_hot, unit, counter_price,
+        retail_price, add_time, update_time,
+        detail)
+        values ( #{goodsSn}, #{name},
+        #{categoryId}, #{brandId}, #{gallery,typeHandler = com.cskaoyan.mall.typehandler.StringToStringArrary },
+        #{keywords}, #{brief}, #{isOnSale},
+        #{sortOrder}, #{picUrl}, #{shareUrl},
+        #{isNew}, #{isHot}, #{unit}, #{counterPrice},
+        #{retailPrice}, now(), now(),
+        #{detail})
+    </insert>
+    <select id="goodsTotal" resultType="_int">
+        SELECT count(id) FROM `cskaoyan_mall_goods`
+    </select>
+    <select id="productTotal" resultType="_int">
+        SELECT count(id) FROM `cskaoyan_mall_goods_product`
+    </select>
 
 </mapper>

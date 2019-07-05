@@ -94,4 +94,14 @@ public class GoodsServiceImpl implements GoodsService {
         int id = createStorgeMapper.insertCreategory(createStorge);
         return createStorgeMapper.findCreategoryBy(createStorge.getUrl());
     }
+
+    @Override
+    public int goodsTotal() {
+        return goodsMapper.goodsTotal();
+    }
+
+    @Override
+    public int productTotal() {
+        return goodsMapper.productTotal();
+    }
 }

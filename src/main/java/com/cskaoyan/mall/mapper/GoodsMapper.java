@@ -22,6 +22,9 @@ public interface GoodsMapper {
 
     int addAttributes(@Param("attributes") List<Attribute> attributes, @Param("goodsId") int goodsId);
 
+    int goodsTotal();
+
+    int productTotal();
     Goods findGoodsBypicUrl(@Param("picUrl") String picUrl);
 
     Goods findGoodsByName(@Param("name") String name);
