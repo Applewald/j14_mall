@@ -1,6 +1,6 @@
 package com.cskaoyan.mall.controller;
 
-import com.cskaoyan.mall.bean.Ad;
+import com.cskaoyan.mall.bean.promotion.Ad;
 import com.cskaoyan.mall.service.AdService;
 import com.cskaoyan.mall.vo.DataVo;
 import com.cskaoyan.mall.vo.ResponseVo;
@@ -23,12 +23,6 @@ public class AdController {
     @RequestMapping("ad/list")
     public ResponseVo<DataVo> list(int page,int limit,String name,String content,String sort,String order){
         ResponseVo<DataVo> vo = new ResponseVo<>();
-        if(name == null){
-            name = "";
-        }
-        if(content == null){
-            content = "";
-        }
         DataVo<Ad> dataVo = new DataVo<>();
         PageInfo<Ad> pageInfo = adService.getAllAd(page,limit,name,content,sort,order);
         dataVo.setItems(pageInfo.getList());

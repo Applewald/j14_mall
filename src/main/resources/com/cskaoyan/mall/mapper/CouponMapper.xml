@@ -5,7 +5,7 @@
     delete from cskaoyan_mall_coupon
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.cskaoyan.mall.bean.Coupon">
+  <insert id="insert" parameterType="com.cskaoyan.mall.bean.promotion.Coupon">
     insert into cskaoyan_mall_coupon (id, name, desc, 
       tag, total, discount, 
       min, limit, type, 
@@ -22,7 +22,7 @@
       #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT})
   </insert>
 
-  <update id="updateByPrimaryKey" parameterType="com.cskaoyan.mall.bean.Coupon">
+  <update id="updateByPrimaryKey" parameterType="com.cskaoyan.mall.bean.promotion.Coupon">
     update cskaoyan_mall_coupon
     set name = #{name,jdbcType=VARCHAR},
       desc = #{desc,jdbcType=VARCHAR},
@@ -46,7 +46,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <resultMap id="CouponMap" type="com.cskaoyan.mall.bean.Coupon">
+  <resultMap id="CouponMap" type="com.cskaoyan.mall.bean.promotion.Coupon">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="desc" jdbcType="VARCHAR" property="desc" />
@@ -92,6 +92,85 @@
       update_time,
       deleted
     from cskaoyan_mall_coupon
+    <where>
+      <if test="type != null">
+        type = #{type,jdbcType=SMALLINT}
+      </if>
+      <if test="status != null">
+        and status = #{status,jdbcType=SMALLINT}
+      </if>
+      <if test="name != null">
+        and name like #{name}
+      </if>
+    </where>
+    order by #{sort} #{order}
+  </select>
+  
+  <select id="selectById" resultMap="CouponMap">
+    select
+       id,
+       name,
+       `desc`,
+       tag,
+       total,
+       discount,
+       min,
+       `limit`,
+       type,
+       status,
+       goods_type,
+       goods_value,
+       code,
+       time_type,
+       days,
+       start_time,
+       end_time,
+       add_time,
+       update_time,
+       deleted
+    from cskaoyan_mall_coupon
+    where id = #{id}
+  </select>
+
+  <resultMap id="CouponUserMap" type="com.cskaoyan.mall.bean.promotion.CouponUser">
+    <id column="id" jdbcType="INTEGER" property="id"/>
+    <result column="user_id" jdbcType="INTEGER" property="userId"/>
+    <result column="Coupon_id" jdbcType="INTEGER" property="couponId"/>
+    <result column="status" jdbcType="SMALLINT" property="status"/>
+    <result column="used_time" jdbcType="TIMESTAMP" property="usedTime"/>
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime"/>
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime"/>
+    <result column="order_id" jdbcType="INTEGER" property="orderId"/>
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime"/>
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    <result column="deleted" jdbcType="BIT" property="deleted"/>
+  </resultMap>
+  
+  <select id="getCouponUserByCouponId" resultMap="CouponUserMap">
+    select
+      id,
+      user_id,
+      Coupon_id,
+      status,
+      used_time,
+      start_time,
+      end_time,
+      order_id,
+      add_time,
+      update_time,
+      deleted
+    from cskaoyan_mall_coupon_user
+    <where>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER}
+      </if>
+      <if test="status != null">
+        and status = #{status,jdbcType=SMALLINT}
+      </if>
+      <if test="couponId != null">
+        and coupon_id = #{couponId,jdbcType=INTEGER}
+      </if>
+    </where>
     order by #{sort} #{order}
   </select>
 </mapper>
