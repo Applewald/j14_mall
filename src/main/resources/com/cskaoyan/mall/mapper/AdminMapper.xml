@@ -23,15 +23,31 @@
     select * from cskaoyan_mall_admin where id = #{id}
   </select>
 
-  <select id="selectByUserName" resultType="com.cskaoyan.mall.bean.admin.Admin">
+
+
+  <resultMap id="byUserName" type="com.cskaoyan.mall.bean.admin.Admin">
+    <result column="id" property="id"/>
+    <result column="username" property="username"/>
+    <result column="avatar" property="avatar"/>
+    <result column="role_ids" property="roleIds" typeHandler="com.cskaoyan.mall.typeHandler.IntArrayTypeHandler"/>
+    <result column="add_time" property="addTime"/>
+    <result column="update_time" property="updateTime"/>
+  </resultMap>
+  <select id="selectByUserName" resultMap="byUserName">
     select * from cskaoyan_mall_admin where username = #{username}
   </select>
 
 
 
   <insert id="insert" >
-    insert into cskaoyan_mall_admin (username, password, avatar, role_ids)
-    values (#{admin.username}, #{admin.password}, #{admin.avatar}, #{admin.roleIds, typeHandler = com.cskaoyan.mall.typeHandler.IntArrayTypeHandler})
+    insert into cskaoyan_mall_admin (username, password, avatar, role_ids, add_time, update_time)
+    values (
+    #{admin.username},
+    #{admin.password},
+    #{admin.avatar},
+    #{admin.roleIds, typeHandler = com.cskaoyan.mall.typeHandler.IntArrayTypeHandler},
+    now(), now()
+    )
   </insert>
 
   <!--删除管理员-->

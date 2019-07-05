@@ -1,21 +1,17 @@
 package com.cskaoyan.mall.controller;
 
-import com.cskaoyan.mall.bean.ReceiveRole;
+
 import com.cskaoyan.mall.bean.Role;
 import com.cskaoyan.mall.bean.admin.AdminOptions;
 import com.cskaoyan.mall.service.RoleService;
-import com.cskaoyan.mall.util.ResponseUtil;
-import com.cskaoyan.mall.vo.ReVo;
+
 import com.cskaoyan.mall.vo.ResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
+
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,7 +53,7 @@ public class RoleController {
         return object;
     }
 
-    /*添加新的角色*/
+    /*添加新的角色*//*
     @RequestMapping("/create")
     @ResponseBody
     public Object create(@RequestBody Role role) {
@@ -69,5 +65,5 @@ public class RoleController {
             ReVo reVo = new ReVo("角色已经存在",640);
             return reVo;
         }
-    }
+    }*/
 }

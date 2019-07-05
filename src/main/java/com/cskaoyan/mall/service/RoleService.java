@@ -3,7 +3,6 @@ package com.cskaoyan.mall.service;
 
 import com.cskaoyan.mall.bean.Role;
 import com.cskaoyan.mall.bean.admin.AdminOptions;
-import com.cskaoyan.mall.vo.ReVo;
 
 
 import java.util.List;
@@ -19,7 +18,6 @@ public interface RoleService {
 
     int insert(Role record);
 
-    ReVo selectAllRole(Integer page, Integer limit, String sort, String order, String name);
 
     List<AdminOptions> selectAllRoleIdAndName();
 
