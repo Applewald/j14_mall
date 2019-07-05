@@ -14,4 +14,8 @@ public interface GoodsService {
     void goodsCreate(CreateGoods createGoods);
 
     CreateStorge insertCreategory(CreateStorge createStorge);
+
+    int goodsTotal();
+
+    int productTotal();
 }

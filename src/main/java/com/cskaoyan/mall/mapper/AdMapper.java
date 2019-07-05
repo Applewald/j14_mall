@@ -11,7 +11,12 @@ import java.util.List;
  */
 public interface AdMapper {
     
-    List<Ad> getAllAd(@Param("sort") String sort, @Param("order")String order);
+    List<Ad> getAllAd(@Param("name")String name,
+                      @Param("content")String content,
+                      @Param("sort") String sort,
+                      @Param("order")String order);
     
     int updateById(Ad ad);
+    
+    int deleteByAdId(@Param("id") int id);
 }

@@ -46,4 +46,9 @@ public class UserServiceImpl implements UserService {
         }
         return pageVoResponseVo;
     }
+
+    @Override
+    public int userTotal() {
+        return userMapper.userTotal();
+    }
 }

@@ -45,7 +45,6 @@ public class BrandController {
         return vo;
     }
 
-    //brand/create
     @RequestMapping("create")
     public ResponseVo brandCreate(@RequestBody Brand brand) {
         System.out.println(brand);

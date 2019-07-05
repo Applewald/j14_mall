@@ -5,16 +5,19 @@
 
 
 
-  <insert id="insertCreategory" parameterType="com.cskaoyan.mall.bean.CreateStorge"  useGeneratedKeys="true" keyProperty="id">
+  <insert id="insertCreategory" parameterType="com.cskaoyan.mall.bean.CreateStorge"  >
+    <selectKey order="AFTER"   keyProperty="id"   resultType="java.lang.Integer">
+      select last_insert_id()
+    </selectKey>
     insert into cskaoyan_mall_storage (id, `key`, `name`,
       `type`, `size`, url, add_time,
       update_time)
-    values (null, #{key}, #{name},
+    values (#{id}, #{key}, #{name},
       #{type}, #{size}, #{url}, now(),
       now())
   </insert>
 
-  <resultMap id="findById" type="com.cskaoyan.mall.bean.CreateStorge" >
+  <resultMap id="findByUrl" type="com.cskaoyan.mall.bean.CreateStorge" >
     <result column="id" property="id"/>
     <result column="key" property="key"/>
     <result column="name" property="name"/>
@@ -25,10 +28,11 @@
     <result column="update_time" property="updateTime"/>
   </resultMap>
 
-  <select id="findCreategoryBy" resultMap="findById">
+  <select id="findCreategoryBy" resultMap="findByUrl">
     select id,`key`,`name`,`type`,`size`,url,add_time,update_time
     from cskaoyan_mall_storage
-    where id = #{id}
+    where url = #{url}
   </select>
+
 
 </mapper>

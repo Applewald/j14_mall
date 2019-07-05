@@ -74,10 +74,8 @@ public class BrandServiceImpl implements BrandService {
         if (brand.getSortOrder() == null) {
             brand.setSortOrder((byte) 0);
         }
-        System.out.println("前：" + brand.getId());
         try {
             int insert = brandMapper.insert(brand);
-            System.out.println("后：" + brand.getId());
             if (insert == 1) {
                 vo.setErrno(0);
                 vo.setErrmsg("成功");
