@@ -5,11 +5,14 @@
 
 
 
-  <insert id="insertCreategory" parameterType="com.cskaoyan.mall.bean.CreateStorge"  useGeneratedKeys="true" keyProperty="id">
+  <insert id="insertCreategory" parameterType="com.cskaoyan.mall.bean.CreateStorge"  >
+    <selectKey order="AFTER"   keyProperty="id"   resultType="java.lang.Integer">
+      select last_insert_id()
+    </selectKey>
     insert into cskaoyan_mall_storage (id, `key`, `name`,
       `type`, `size`, url, add_time,
       update_time)
-    values (null, #{key}, #{name},
+    values (#{id}, #{key}, #{name},
       #{type}, #{size}, #{url}, now(),
       now())
   </insert>
@@ -30,5 +33,6 @@
     from cskaoyan_mall_storage
     where id = #{id}
   </select>
+
 
 </mapper>

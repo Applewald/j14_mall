@@ -2,7 +2,10 @@ package com.cskaoyan.mall.service.impl;
 
 import com.cskaoyan.mall.bean.catandbrand.CatAndBrandData;
 import com.cskaoyan.mall.bean.Goods;
+import com.cskaoyan.mall.bean.creategoods.Attribute;
 import com.cskaoyan.mall.bean.creategoods.CreateGoods;
+import com.cskaoyan.mall.bean.creategoods.Product;
+import com.cskaoyan.mall.bean.creategoods.Specification;
 import com.cskaoyan.mall.mapper.CatAndBrandDataMapper;
 import com.cskaoyan.mall.mapper.CreateStorgeMapper;
 import com.cskaoyan.mall.mapper.GoodsMapper;
@@ -53,7 +56,23 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     @Transactional
     public void goodsCreate(CreateGoods createGoods) {
-        int addGoods = goodsMapper.addGoods(createGoods.getGoods());
+
+
+        Goods goods = createGoods.getGoods();
+
+        List<Specification> specifications = createGoods.getSpecifications();
+        List<Attribute> attributes = createGoods.getAttributes();
+        List<Product> products = createGoods.getProducts();
+
+
+        int goodsId = goodsMapper.addGoods(goods);
+
+        int addsf = goodsMapper.addSpecifications(specifications,goodsId);
+
+        int addProducts = goodsMapper.addProducts(products,goodsId);
+
+        int addAttributes = goodsMapper.addAttributes(attributes,goodsId);
+
 
 
     }
