@@ -1,6 +1,6 @@
 package com.cskaoyan.mall.service;
 
-import com.cskaoyan.mall.bean.Ad;
+import com.cskaoyan.mall.bean.promotion.Ad;
 import com.github.pagehelper.PageInfo;
 
 /**

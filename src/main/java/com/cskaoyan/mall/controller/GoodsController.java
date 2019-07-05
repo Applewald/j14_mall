@@ -32,8 +32,8 @@ public class GoodsController {
 
 
     @RequestMapping("goods/list")
-    public ResponseVo<DataVo<Goods>> goodsList(int page , int limit , String sort , String order,String goodsSn){
-        DataVo<Goods> goodsDataVo = goodsService.findGoodsList(page,limit,sort,order,goodsSn);
+    public ResponseVo<DataVo<Goods>> goodsList(int page , int limit , String sort , String order,String goodsSn,String name){
+        DataVo<Goods> goodsDataVo = goodsService.findGoodsList(page,limit,sort,order,goodsSn,name);
         ResponseVo<DataVo<Goods>> dataVoResponse = new ResponseVo<DataVo<Goods>>() ;
         dataVoResponse.setErrno(0);
         dataVoResponse.setErrmsg("成功");
@@ -78,10 +78,14 @@ public class GoodsController {
 
     @RequestMapping("goods/create")
     public MessageVo goodsCreate(@RequestBody CreateGoods createGoods){
-        goodsService.goodsCreate(createGoods);
 
+        boolean create = goodsService.goodsCreate(createGoods);
+        if (create == true){
+            return  MessageVo.getSuccessMeg();
+        }else {
+            return MessageVo.getFailMeg();
+        }
 
-        return new MessageVo(0,"成功");
     }
 
 

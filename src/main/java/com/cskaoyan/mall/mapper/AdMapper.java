@@ -1,6 +1,6 @@
 package com.cskaoyan.mall.mapper;
 
-import com.cskaoyan.mall.bean.Ad;
+import com.cskaoyan.mall.bean.promotion.Ad;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

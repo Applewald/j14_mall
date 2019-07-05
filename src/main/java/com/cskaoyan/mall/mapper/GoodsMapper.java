@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 public interface GoodsMapper {
-    List<Goods> findGoodsList(@Param("sort") String sort, @Param("order") String order,@Param("goodsSn") String goodsSn);
+    List<Goods> findGoodsList(@Param("sort") String sort, @Param("order") String order,@Param("goodsSn") String goodsSn,@Param("name") String name);
 
     int addGoods( Goods goods);
 
@@ -25,4 +25,7 @@ public interface GoodsMapper {
     int goodsTotal();
 
     int productTotal();
+    Goods findGoodsBypicUrl(@Param("picUrl") String picUrl);
+
+    Goods findGoodsByName(@Param("name") String name);
 }

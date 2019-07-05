@@ -30,4 +30,13 @@ public class MessageVo {
     public void setErrmsg(String errmsg) {
         this.errmsg = errmsg;
     }
+
+    public static MessageVo getSuccessMeg(){
+        return new MessageVo(0,"成功");
+    }
+
+    public static MessageVo getFailMeg(){
+        return new MessageVo(611,"商品名已经存在");
+    }
+
 }
