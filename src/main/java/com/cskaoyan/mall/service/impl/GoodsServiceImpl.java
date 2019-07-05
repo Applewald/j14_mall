@@ -33,9 +33,9 @@ public class GoodsServiceImpl implements GoodsService {
     CreateStorgeMapper createStorgeMapper;
 
     @Override
-    public DataVo<Goods> findGoodsList(int page, int limit, String sort, String order,String goodsSn) {
+    public DataVo<Goods> findGoodsList(int page, int limit, String sort, String order,String goodsSn,String name) {
         PageHelper.startPage(page,limit);
-        List<Goods> items =  goodsMapper.findGoodsList(sort,order,goodsSn);
+        List<Goods> items =  goodsMapper.findGoodsList(sort,order,goodsSn,name);
         PageInfo<Goods> pageInfo = new PageInfo<Goods>(items);
         DataVo<Goods> goodsDataVo = new DataVo<Goods>();
         goodsDataVo.setTotal(pageInfo.getTotal());
@@ -55,32 +55,43 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Override
     @Transactional
-    public void goodsCreate(CreateGoods createGoods) {
+    public boolean goodsCreate(CreateGoods createGoods) {
 
 
         Goods goods = createGoods.getGoods();
-
         List<Specification> specifications = createGoods.getSpecifications();
         List<Attribute> attributes = createGoods.getAttributes();
         List<Product> products = createGoods.getProducts();
 
+        Goods checkGoods =  goodsMapper.findGoodsByName(goods.getName());
 
-        int goodsId = goodsMapper.addGoods(goods);
+        if (checkGoods != null){
+            return false;
+        }
 
-        int addsf = goodsMapper.addSpecifications(specifications,goodsId);
+        int add = goodsMapper.addGoods(goods);
+        Goods goods1 = goodsMapper.findGoodsBypicUrl(goods.getPicUrl());
 
-        int addProducts = goodsMapper.addProducts(products,goodsId);
+        if (specifications != null && specifications.size() != 0){
+            int addsf = goodsMapper.addSpecifications(specifications,goods1.getId());
+        }
 
-        int addAttributes = goodsMapper.addAttributes(attributes,goodsId);
+        if (products != null && products.size() !=0 ){
+            int addProducts = goodsMapper.addProducts(products,goods1.getId());
+        }
+
+        if (attributes != null && attributes.size() != 0){
+            int addAttributes = goodsMapper.addAttributes(attributes,goods1.getId());
+        }
 
 
-
+        return true;
     }
 
 
     @Override
     public CreateStorge insertCreategory(CreateStorge createStorge) {
         int id = createStorgeMapper.insertCreategory(createStorge);
-        return createStorgeMapper.findCreategoryBy(id);
+        return createStorgeMapper.findCreategoryBy(createStorge.getUrl());
     }
 }

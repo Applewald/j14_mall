@@ -79,7 +79,7 @@ public class MyOssClient {
 		createStorge.setName(file.getName());
 		createStorge.setSize(size);
 		createStorge.setKey(uuid);
-		createStorge.setUrl(endpoint+"/" + bucket + "/" +uuid);
+		createStorge.setUrl("https://" + bucket +"." +endpoint +"/" + uuid);
 
 		return createStorge;
 

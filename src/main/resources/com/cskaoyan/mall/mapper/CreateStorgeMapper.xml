@@ -17,7 +17,7 @@
       now())
   </insert>
 
-  <resultMap id="findById" type="com.cskaoyan.mall.bean.CreateStorge" >
+  <resultMap id="findByUrl" type="com.cskaoyan.mall.bean.CreateStorge" >
     <result column="id" property="id"/>
     <result column="key" property="key"/>
     <result column="name" property="name"/>
@@ -28,10 +28,10 @@
     <result column="update_time" property="updateTime"/>
   </resultMap>
 
-  <select id="findCreategoryBy" resultMap="findById">
+  <select id="findCreategoryBy" resultMap="findByUrl">
     select id,`key`,`name`,`type`,`size`,url,add_time,update_time
     from cskaoyan_mall_storage
-    where id = #{id}
+    where url = #{url}
   </select>
 
 

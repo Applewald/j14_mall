@@ -18,7 +18,7 @@
     )
     values
     <foreach collection="products" item="item" separator="," >
-      (null,#{goodsId},#{item.specifications typeHandler = com.cskaoyan.mall.typehandler.StringToStringArrary}
+      (null,#{goodsId},#{item.specifications ,typeHandler = com.cskaoyan.mall.typehandler.StringToStringArrary}
       ,#{item.price},#{item.number},#{item.url},now(),now())
     </foreach>
   </insert>
@@ -26,14 +26,29 @@
 
   <insert id="addAttributes" >
     insert into cskaoyan_mall_goods_attribute (id, goods_id, attribute,
-      value, add_time, update_time)
+      `value`, add_time, update_time)
     values
     <foreach collection="attributes" item="item" separator="," >
       (null,#{goodsId},#{item.attribute},#{item.value},now(),now())
     </foreach>
   </insert>
 
-  
+
+  <select id="findGoodsBypicUrl" resultMap="findGoodsList" >
+       select id, goods_sn, name, category_id, brand_id, gallery, keywords, brief, is_on_sale,
+    sort_order, pic_url, share_url, is_new, is_hot, unit, counter_price, retail_price,
+    add_time, update_time, deleted
+    from cskaoyan_mall_goods
+    where pic_url = #{picUrl}
+  </select>
+
+  <select id="findGoodsByName" resultMap="findGoodsList" >
+       select id, goods_sn, name, category_id, brand_id, gallery, keywords, brief, is_on_sale,
+    sort_order, pic_url, share_url, is_new, is_hot, unit, counter_price, retail_price,
+    add_time, update_time, deleted
+    from cskaoyan_mall_goods
+    where name = #{name}
+  </select>
 
 
   <resultMap id="findGoodsList" type="com.cskaoyan.mall.bean.Goods">
@@ -70,6 +85,10 @@
     from cskaoyan_mall_goods
     <if  test="goodsSn != null and goodsSn != ''">
         where goods_sn = #{goodsSn}
+    </if>
+
+    <if  test="name != null and name != ''">
+      where `name` like concat('%',concat(#{name}),'%')
     </if>
 
     order by #{sort} #{order}
