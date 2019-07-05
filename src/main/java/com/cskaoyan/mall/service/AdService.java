@@ -8,7 +8,9 @@ import com.github.pagehelper.PageInfo;
  * 建立于 2019/7/4 14:25
  */
 public interface AdService {
-    PageInfo<Ad> getAllAd(int page, int limit, String sort, String order);
+    PageInfo<Ad> getAllAd(int page, int limit, String name,String content,String sort, String order);
     
     int updateByAdId(Ad ad);
+    
+    int deleteByAdId(Ad ad);
 }

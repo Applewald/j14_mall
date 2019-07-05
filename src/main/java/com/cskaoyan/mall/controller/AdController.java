@@ -21,10 +21,16 @@ public class AdController {
     AdService adService;
     
     @RequestMapping("ad/list")
-    public ResponseVo<DataVo> list(int page,int limit,String sort,String order){
+    public ResponseVo<DataVo> list(int page,int limit,String name,String content,String sort,String order){
         ResponseVo<DataVo> vo = new ResponseVo<>();
+        if(name == null){
+            name = "";
+        }
+        if(content == null){
+            content = "";
+        }
         DataVo<Ad> dataVo = new DataVo<>();
-        PageInfo<Ad> pageInfo = adService.getAllAd(page,limit,sort,order);
+        PageInfo<Ad> pageInfo = adService.getAllAd(page,limit,name,content,sort,order);
         dataVo.setItems(pageInfo.getList());
         dataVo.setTotal(pageInfo.getTotal());
         vo.setErrno(0);
@@ -44,6 +50,21 @@ public class AdController {
         } else {
             vo.setErrno(500);
             vo.setErrmsg("失败");
+        }
+        return vo;
+    }
+    
+    @RequestMapping("ad/delete")
+    public ResponseVo<Ad> delete(@RequestBody Ad ad){
+        ResponseVo<Ad> vo = new ResponseVo<>();
+        int i = adService.deleteByAdId(ad);
+        vo.setData(ad);
+        if(i > 0){
+            vo.setErrno(0);
+            vo.setErrmsg("OK");
+        } else {
+            vo.setErrmsg("失败");
+            vo.setErrno(500);
         }
         return vo;
     }
