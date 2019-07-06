@@ -33,6 +33,8 @@ public class GoodsController {
 
     @RequestMapping("goods/list")
     public ResponseVo<DataVo<Goods>> goodsList(int page , int limit , String sort , String order,String goodsSn,String name){
+
+
         DataVo<Goods> goodsDataVo = goodsService.findGoodsList(page,limit,sort,order,goodsSn,name);
         ResponseVo<DataVo<Goods>> dataVoResponse = new ResponseVo<DataVo<Goods>>() ;
         dataVoResponse.setErrno(0);
@@ -78,6 +80,7 @@ public class GoodsController {
 
     @RequestMapping("goods/create")
     public MessageVo goodsCreate(@RequestBody CreateGoods createGoods){
+
 
         boolean create = goodsService.goodsCreate(createGoods);
         if (create == true){
