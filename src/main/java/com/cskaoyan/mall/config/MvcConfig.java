@@ -32,6 +32,7 @@ public class MvcConfig implements WebMvcConfigurer {
     public void addConverter() {
         /*模板，将自己定义的转换器类放在后面即可*/
         configurableConversionService.addConverter(new DateConverter());
+        //configurableConversionService.addConverter(new StringToInteger());
     }
 
     @Bean

@@ -385,10 +385,26 @@
 
 
   <!--自己写的-->
-  <select id="queryUsers" resultMap="BaseResultMap">
+  <!--<select id="queryUsers" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List"/>
       from cskaoyan_mall_user
       order by #{sort} #{order}
+  </select>-->
+
+  <select id="queryUsersByOrder" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from cskaoyan_mall_user
+    <where>
+      <if test="username != null">
+        `username` like concat('%',#{username},'%')
+      </if>
+      <if test="mobile != null">
+        and
+        `mobile` like concat('%',#{mobile},'%')
+      </if>
+    </where>
+    order by #{sort} #{order}
   </select>
 </mapper>
