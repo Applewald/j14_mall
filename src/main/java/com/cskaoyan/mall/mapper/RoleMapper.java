@@ -10,19 +10,13 @@ import java.util.List;
 @Repository
 public interface RoleMapper {
 
-    int deleteByPrimaryKey(Integer id);
-
     int insert(@Param("role") Role record);
 
-    int insertSelective(Role record);
+    int deleteById(@Param("id") Integer id);
 
-    Role selectByPrimaryKey(Integer id);
+    int updateByRole(@Param("role") Role role);
 
-    Role selectByName(@Param("name") String name);
-
-    int updateByPrimaryKeySelective(Role record);
-
-    int updateByPrimaryKey(Role record);
+    Role selectRoleByName(@Param("name") String name);
 
     List<AdminOptions> selectAllRoleIdAndName();
 
