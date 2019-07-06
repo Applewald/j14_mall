@@ -54,4 +54,11 @@ public class ResponseVo<T> {
         responseVo.setErrno(0);
         return responseVo;
     }
+
+    public static Object fail(String errmsg, Integer errno){
+        Map<String, Object> o = new HashMap<>();
+        o.put("errmsg", errmsg);
+        o.put("errno", errno);
+        return o;
+    }
 }

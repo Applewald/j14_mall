@@ -17,10 +17,16 @@ import java.util.List;
  */
 public interface RoleService {
 
-    int insert(Role record);
+    int insertByRole(Role role);
 
+    int deleteById(Integer id);
+
+    int updateByRole(Role role);
+
+    Role selectRoleByName(String name);
 
     List<AdminOptions> selectAllRoleIdAndName();
 
     DataVo selectAllRoleList(Integer page, Integer limit, String sort, String order, String name);
+
 }
