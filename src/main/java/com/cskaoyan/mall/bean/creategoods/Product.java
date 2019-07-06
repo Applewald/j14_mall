@@ -1,7 +1,8 @@
 package com.cskaoyan.mall.bean.creategoods;
 
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.Date;
+
 
 public class Product {
 
@@ -10,6 +11,10 @@ public class Product {
     BigDecimal price;
     String[] specifications;
     String url;
+    Date addTime;
+    Date updateTime;
+    boolean deleted;
+    int goodsId;
 
 
     public int getId() {
@@ -52,15 +57,38 @@ public class Product {
         this.url = url;
     }
 
-
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", number=" + number +
-                ", price=" + price +
-                ", specifications=" + specifications +
-                ", url='" + url + '\'' +
-                '}';
+    public Date getAddTime() {
+        return addTime;
     }
+
+    public void setAddTime(Date addTime) {
+        this.addTime = addTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public int getGoodsId() {
+        return goodsId;
+    }
+
+    public void setGoodsId(int goodsId) {
+        this.goodsId = goodsId;
+    }
+
+
+
 }

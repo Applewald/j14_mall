@@ -14,4 +14,10 @@ public interface GoodsService {
     boolean goodsCreate(CreateGoods createGoods);
 
     CreateStorge insertCreategory(CreateStorge createStorge);
+
+    CreateGoods getGoodsDetailsById(int id);
+
+    void updateGoods(CreateGoods createGoods);
+
+    void deleteGoods(Goods goods);
 }

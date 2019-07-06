@@ -89,4 +89,30 @@ public class GoodsController {
     }
 
 
+    @RequestMapping("goods/detail")
+    public ResponseVo<CreateGoods> getGoodsDetailsById(int id){
+        ResponseVo<CreateGoods> responseVo = new ResponseVo<>();
+        CreateGoods createGoods = goodsService.getGoodsDetailsById(id);
+        responseVo.setData(createGoods);
+        responseVo.setErrmsg("成功");
+        responseVo.setErrno(0);
+        return responseVo;
+    }
+
+    @RequestMapping("goods/update")
+    public MessageVo updateGoods(@RequestBody CreateGoods createGoods){
+
+        goodsService.updateGoods(createGoods);
+
+            return MessageVo.getSuccessMeg();
+    }
+
+
+    @RequestMapping("/goods/delete")
+    public MessageVo deleteGoods(@RequestBody Goods goods){
+        goodsService.deleteGoods(goods);
+
+        return MessageVo.getSuccessMeg();
+    }
+
 }

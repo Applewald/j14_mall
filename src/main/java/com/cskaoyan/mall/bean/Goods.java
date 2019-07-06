@@ -21,7 +21,7 @@ public class Goods {
 
     private String brief;
 
-    private Boolean isOnSale;
+    private boolean isOnSale;
 
     private Short sortOrder;
 
@@ -29,9 +29,9 @@ public class Goods {
 
     private String shareUrl;
 
-    private Boolean isNew;
+    private boolean isNew;
 
-    private Boolean isHot;
+    private boolean isHot;
 
     private String unit;
 
@@ -43,7 +43,7 @@ public class Goods {
 
     private Date updateTime;
 
-    private Boolean deleted;
+    private boolean deleted;
 
     private String detail;
 
