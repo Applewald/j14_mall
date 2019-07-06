@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cskaoyan.mall.mapper.AdminMapper">
+
+  <!--admin/list 附带模糊查询-->
+  <resultMap id="selectAllAdmin" type="com.cskaoyan.mall.bean.admin.AdminResp">
+    <result column="id" property="id"/>
+    <result column="username" property="username"/>
+    <result column="avatar" property="avatar"/>
+    <result column="role_ids" property="roleIds" typeHandler="com.cskaoyan.mall.typeHandler.IntArrayTypeHandler"/>
+  </resultMap>
+  <select id="selectAllAdmin" resultMap="selectAllAdmin">
+    select id, username, avatar, role_ids
+    from cskaoyan_mall_admin
+    where deleted != 1
+    <if test="username != null and username != '' ">
+      and username like CONCAT('%',#{username},'%')
+    </if>
+    order by #{sort} #{order}
+  </select>
+
+  <select id="selectByPrimaryKey" resultType="com.cskaoyan.mall.bean.admin.Admin">
+    select * from cskaoyan_mall_admin where id = #{id}
+  </select>
+
+
+
+  <resultMap id="byUserName" type="com.cskaoyan.mall.bean.admin.Admin">
+    <result column="id" property="id"/>
+    <result column="username" property="username"/>
+    <result column="avatar" property="avatar"/>
+    <result column="role_ids" property="roleIds" typeHandler="com.cskaoyan.mall.typeHandler.IntArrayTypeHandler"/>
+    <result column="add_time" property="addTime"/>
+    <result column="update_time" property="updateTime"/>
+  </resultMap>
+  <select id="selectByUserName" resultMap="byUserName">
+    select * from cskaoyan_mall_admin where username = #{username}
+  </select>
+
+
+
+  <insert id="insert" >
+    insert into cskaoyan_mall_admin (username, password, avatar, role_ids, add_time, update_time)
+    values (
+    #{admin.username},
+    #{admin.password},
+    #{admin.avatar},
+    #{admin.roleIds, typeHandler = com.cskaoyan.mall.typeHandler.IntArrayTypeHandler},
+    now(), now()
+    )
+  </insert>
+
+  <!--删除管理员-->
+  <update id="deleteByPrimaryKey" >
+    update cskaoyan_mall_admin set deleted = 1 where id = #{id}
+  </update>
+
+
+</mapper>

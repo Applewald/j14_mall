@@ -2,7 +2,8 @@ HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
-!**/src/test/**
+**/src/test/**
+.gitignore
 
 ### STS ###
 .apt_generated
@@ -18,6 +19,7 @@ target/
 *.iws
 *.iml
 *.ipr
+/nbproject/private/
 
 ### NetBeans ###
 /nbproject/private/
@@ -29,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+gene/
+generatorConfig.xml

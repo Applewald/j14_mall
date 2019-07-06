@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cskaoyan.mall.mapper.AdMapper">
 
-    <resultMap id="AdMap" type="com.cskaoyan.mall.bean.Ad">
+    <resultMap id="AdMap" type="com.cskaoyan.mall.bean.promotion.Ad">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="link" jdbcType="VARCHAR" property="link"/>
@@ -32,10 +32,11 @@
           update_time,
           deleted
         from cskaoyan_mall_ad
+        where name like #{name} and content like #{content}
         order by #{sort} #{order}
     </select>
 
-    <update id="updateById" parameterType="com.cskaoyan.mall.bean.Ad">
+    <update id="updateById" parameterType="com.cskaoyan.mall.bean.promotion.Ad">
         update cskaoyan_mall_ad
         set
           name = #{name},
@@ -51,4 +52,8 @@
           deleted = #{deleted}
         WHERE id = #{id}
     </update>
+
+    <delete id="deleteByAdId">
+        delete from cskaoyan_mall_ad where id = #{id}
+    </delete>
 </mapper>

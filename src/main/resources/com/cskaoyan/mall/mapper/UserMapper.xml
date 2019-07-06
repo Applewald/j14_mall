@@ -407,4 +407,7 @@
     </where>
     order by #{sort} #{order}
   </select>
+  <select id="userTotal" resultType="_int">
+    select count(id) from cskaoyan_mall_user
+  </select>
 </mapper>

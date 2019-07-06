@@ -15,4 +15,5 @@ public interface UserService {
     ResponseVo<PageVo<User>> list1(int page,int limit,String sort,String order,String username,String mobile);
 
 
+    int userTotal();
 }

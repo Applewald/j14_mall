@@ -1,6 +1,6 @@
 package com.cskaoyan.mall.service.impl;
 
-import com.cskaoyan.mall.bean.Ad;
+import com.cskaoyan.mall.bean.promotion.Ad;
 import com.cskaoyan.mall.mapper.AdMapper;
 import com.cskaoyan.mall.service.AdService;
 import com.github.pagehelper.PageHelper;
@@ -20,9 +20,17 @@ public class AdServiceImpl implements AdService {
     AdMapper adMapper;
     
     @Override
-    public PageInfo<Ad> getAllAd(int page, int limit, String sort, String order) {
+    public PageInfo<Ad> getAllAd(int page, int limit, String name,String content,String sort, String order) {
         PageHelper.startPage(page,limit);
-        List<Ad> list = adMapper.getAllAd(sort,order);
+        if(name == null){
+            name = "";
+        }
+        if(content == null){
+            content = "";
+        }
+        name = "%" + name + "%";
+        content = "%" + content + "%";
+        List<Ad> list = adMapper.getAllAd(name,content,sort,order);
         PageInfo<Ad> pageInfo = new PageInfo<>(list);
         return pageInfo;
     }
@@ -30,5 +38,11 @@ public class AdServiceImpl implements AdService {
     @Override
     public int updateByAdId(Ad ad) {
         return adMapper.updateById(ad);
+    }
+    
+    @Override
+    public int deleteByAdId(Ad ad) {
+        int id = ad.getId();
+        return adMapper.deleteByAdId(id);
     }
 }

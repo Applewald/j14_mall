@@ -3,10 +3,14 @@ package com.cskaoyan.mall.mapper;
 
 import com.cskaoyan.mall.bean.Category;
 import com.cskaoyan.mall.bean.CategoryExample;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
+@JsonIgnoreProperties(value={"addTime","deleted","pid","sortOrder","updateTime"}) //希望动态过滤掉的属性
 public interface CategoryMapper {
     long countByExample(CategoryExample example);
 
@@ -28,5 +32,12 @@ public interface CategoryMapper {
 
     int updateByPrimaryKeySelective(Category record);
 
-    int updateByPrimaryKey(Category record);
+    int update1ByPrimaryKey(Category record);
+
+    int update2ByPrimaryKey(Category record);
+
+    List<Category> findCategoryList();
+
+    List<Category> findCategoryL1();
+
 }

@@ -1,6 +1,7 @@
 package com.cskaoyan.mall.service;
 
 import com.cskaoyan.mall.bean.Region;
+import com.cskaoyan.mall.bean.RegionChildren;
 
 import java.util.List;
 
@@ -12,5 +13,5 @@ import java.util.List;
  */
 public interface RegionService {
 
-    List<Region> findAllRegion();
+    List<RegionChildren> findRegionList();
 }

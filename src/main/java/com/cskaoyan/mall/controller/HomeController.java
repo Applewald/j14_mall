@@ -1,7 +1,11 @@
 package com.cskaoyan.mall.controller;
 
 import com.cskaoyan.mall.bean.LoginBean;
+import com.cskaoyan.mall.service.GoodsService;
+import com.cskaoyan.mall.service.OrderService;
+import com.cskaoyan.mall.service.UserService;
 import com.cskaoyan.mall.vo.ResponseVo;
+import com.cskaoyan.mall.vo.TotalVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,6 +36,27 @@ public class HomeController {
         ResponseVo<LoginBean> vo = new ResponseVo<>();
         vo.setErrno(0);
         vo.setData(loginBean);
+        return vo;
+    }
+
+    @Autowired
+    GoodsService goodsService;
+    @Autowired
+    UserService userService;
+    @Autowired
+    OrderService orderService;
+
+    @RequestMapping("dashboard")
+    public ResponseVo dashboard() {
+        TotalVo totalVo = new TotalVo();
+        totalVo.setGoodsTotal(goodsService.goodsTotal());
+        totalVo.setOrderTotal(orderService.orderTotal());
+        totalVo.setProductTotal(goodsService.productTotal());
+        totalVo.setUserTotal(userService.userTotal());
+        ResponseVo<TotalVo> vo = new ResponseVo<>();
+        vo.setErrno(0);
+        vo.setData(totalVo);
+        vo.setErrmsg("成功");
         return vo;
     }
 }
