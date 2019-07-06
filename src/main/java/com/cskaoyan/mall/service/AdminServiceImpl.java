@@ -69,6 +69,20 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public int update(Admin record) {
+        // 用户密码 md5加密
+        String password = record.getPassword();
+        String md5Password = "123";
+        try {
+            md5Password = MD5Util.getMD5(password);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        record.setPassword(md5Password);
+        return adminMapper.update(record);
+    }
+
+    @Override
     public DataVo selectAllAdminList(Integer page, Integer limit, String sort, String order, String username) {
         PageHelper.startPage(page, limit);
         List<AdminResp> admins = adminMapper.selectAllAdmin(sort, order, username);

@@ -3,7 +3,7 @@
 <mapper namespace="com.cskaoyan.mall.mapper.RoleMapper">
 
     <!--查询，模糊查询-->
-    <resultMap id="selectRole" type="com.cskaoyan.mall.bean.Role">
+    <resultMap id="selectRole" type="com.cskaoyan.mall.bean.role.Role">
         <result column="id" property="id"/>
         <result column="name" property="name"/>
         <result column="desc" property="desc"/>

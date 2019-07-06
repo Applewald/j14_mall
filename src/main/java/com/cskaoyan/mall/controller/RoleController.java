@@ -1,8 +1,9 @@
 package com.cskaoyan.mall.controller;
 
-import com.cskaoyan.mall.bean.Role;
+import com.cskaoyan.mall.bean.role.Role;
 import com.cskaoyan.mall.bean.admin.AdminOptions;
 import com.cskaoyan.mall.service.RoleService;
+import com.cskaoyan.mall.vo.DataVo;
 import com.cskaoyan.mall.vo.ResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,16 +38,8 @@ public class RoleController {
     /*查询全部的角色, 附带模糊查询*/
     @RequestMapping("/list")
     public Object roleList(Integer page, Integer limit, String sort, String order, String name) {
-        //ReVo reVo = roleService.selectAllRole(page, limit, sort, order, name);
-        List<Role> roles = roleService.selectAllRoleList(page, limit, sort, order, name);
-        Map<String, Object> object = new HashMap<>();
-        Map<String, Object> data = new HashMap<>();
-        data.put("items", roles);
-        data.put("total", roles.size());
-        object.put("data", data);
-        object.put("errmsg", "成功");
-        object.put("errno", 0);
-        return object;
+        DataVo dataVo = roleService.selectAllRoleList(page, limit, sort, order, name);
+        return ResponseVo.ok(dataVo);
     }
 
     /*添加新的角色*//*

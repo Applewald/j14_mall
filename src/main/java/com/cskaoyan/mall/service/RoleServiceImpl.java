@@ -1,10 +1,12 @@
 package com.cskaoyan.mall.service;
 
 
-import com.cskaoyan.mall.bean.Role;
+import com.cskaoyan.mall.bean.role.Role;
 import com.cskaoyan.mall.bean.admin.AdminOptions;
 import com.cskaoyan.mall.mapper.RoleMapper;
+import com.cskaoyan.mall.vo.DataVo;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,9 +54,14 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public List<Role> selectAllRoleList(Integer page, Integer limit, String sort, String order, String name) {
+    public DataVo selectAllRoleList(Integer page, Integer limit, String sort, String order, String name) {
         PageHelper.startPage(page, limit);
         List<Role> roles = roleMapper.selectAllRole(sort, order, name);
-        return roles;
+        PageInfo<Role> pageInfo = new PageInfo<>(roles);
+        DataVo<Role> dataVo = new DataVo<>();
+        dataVo.setItems(pageInfo.getList());
+        dataVo.setTotal(pageInfo.getTotal());
+
+        return dataVo;
     }
 }

@@ -12,7 +12,7 @@
   <select id="selectAllAdmin" resultMap="selectAllAdmin">
     select id, username, avatar, role_ids
     from cskaoyan_mall_admin
-    where deleted != 1
+    where deleted = 0
     <if test="username != null and username != '' ">
       and username like CONCAT('%',#{username},'%')
     </if>
@@ -22,8 +22,6 @@
   <select id="selectByPrimaryKey" resultType="com.cskaoyan.mall.bean.admin.Admin">
     select * from cskaoyan_mall_admin where id = #{id}
   </select>
-
-
 
   <resultMap id="byUserName" type="com.cskaoyan.mall.bean.admin.Admin">
     <result column="id" property="id"/>
@@ -37,8 +35,7 @@
     select * from cskaoyan_mall_admin where username = #{username}
   </select>
 
-
-
+  <!--添加管理员-->
   <insert id="insert" >
     insert into cskaoyan_mall_admin (username, password, avatar, role_ids, add_time, update_time)
     values (
@@ -55,5 +52,15 @@
     update cskaoyan_mall_admin set deleted = 1 where id = #{id}
   </update>
 
+  <!--修改管理员-->
+  <update id="update" >
+    update cskaoyan_mall_admin set
+    username = #{admin.username},
+    password = #{admin.password},
+    avatar = #{admin.avatar},
+    role_ids = #{admin.roleIds, typeHandler = com.cskaoyan.mall.typeHandler.IntArrayTypeHandler},
+    update_time = now()
+    where id = #{admin.id} and deleted = 0
+  </update>
 
 </mapper>

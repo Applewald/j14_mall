@@ -1,12 +1,11 @@
 package com.cskaoyan.mall.mapper;
 
-import com.cskaoyan.mall.bean.Role;
+import com.cskaoyan.mall.bean.role.Role;
 import com.cskaoyan.mall.bean.admin.AdminOptions;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
 
 @Repository
 public interface RoleMapper {

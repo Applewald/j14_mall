@@ -1,7 +1,6 @@
 package com.cskaoyan.mall.controller;
 
 import com.cskaoyan.mall.bean.admin.Admin;
-import com.cskaoyan.mall.bean.admin.AdminResp;
 import com.cskaoyan.mall.service.AdminService;
 import com.cskaoyan.mall.vo.DataVo;
 import com.cskaoyan.mall.vo.ResponseVo;
@@ -23,12 +22,11 @@ public class AdminController {
     @Autowired
     AdminService adminService;
 
-
+    /*查询*/
     @RequestMapping("/list")
     public Object adminList(Integer page, Integer limit, String sort, String order, String username) {
         DataVo dataVo = adminService.selectAllAdminList(page, limit, sort, order, username);
-        Object ok = ResponseVo.ok(dataVo);
-        return ok;
+        return ResponseVo.ok(dataVo);
     }
 
     /*添加管理员*/
@@ -37,7 +35,7 @@ public class AdminController {
         // 检查密码长度
 
         // 检查数据库是否有同名的管理员
-        System.out.println("-------------------");
+
         // 没有问题就添加
         adminService.insert(admin);
 
@@ -55,10 +53,16 @@ public class AdminController {
 
     /*修改管理员*/
     @RequestMapping("/update")
-    public Object update(@RequestBody AdminResp adminResp) {
-        int id = adminResp.getId();
+    public Object update(@RequestBody Admin admin) {
+        // 从数据库中查出
+        Admin admin1 = adminService.selectByPrimaryKey(admin.getId());
 
+        admin1.setUsername(admin.getUsername());
+        admin1.setPassword(admin.getPassword());
+        admin1.setAvatar(admin.getAvatar());
+        admin1.setRoleIds(admin.getRoleIds());
 
+        adminService.update(admin1);
         return ResponseVo.ok();
     }
 

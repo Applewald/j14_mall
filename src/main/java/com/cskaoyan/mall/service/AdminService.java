@@ -26,5 +26,7 @@ public interface AdminService {
 
     int deleteByPrimaryKey(Integer id);
 
+    int update(Admin record);
+
     DataVo selectAllAdminList(Integer page, Integer limit, String sort, String order, String username);
 }
