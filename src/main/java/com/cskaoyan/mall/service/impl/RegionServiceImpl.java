@@ -1,6 +1,7 @@
 package com.cskaoyan.mall.service.impl;
 
 import com.cskaoyan.mall.bean.Region;
+import com.cskaoyan.mall.bean.RegionChildren;
 import com.cskaoyan.mall.mapper.RegionMapper;
 import com.cskaoyan.mall.service.RegionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class RegionServiceImpl implements RegionService {
     RegionMapper regionMapper;
 
     @Override
-    public List<Region> findAllRegion() {
-        return regionMapper.findAllRegion();
+    public List<RegionChildren> findRegionList() {
+        return regionMapper.findRegionList();
     }
 }

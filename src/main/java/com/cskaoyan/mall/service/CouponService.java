@@ -1,6 +1,7 @@
 package com.cskaoyan.mall.service;
 
-import com.cskaoyan.mall.bean.Coupon;
+import com.cskaoyan.mall.bean.promotion.Coupon;
+import com.cskaoyan.mall.bean.promotion.CouponUser;
 import com.github.pagehelper.PageInfo;
 
 /**
@@ -9,4 +10,12 @@ import com.github.pagehelper.PageInfo;
  */
 public interface CouponService {
     PageInfo<Coupon> getAllCoupon(int page, int limit, String name, Short type, Short status, String sort, String order);
+    
+    int updateById(Coupon coupon);
+    
+    int deleteById(Coupon coupon);
+    
+    Coupon readById(int id);
+    
+    PageInfo<CouponUser> selectByCouponId(int page, int limit, Integer couponId, Integer userId ,Short status,String sort, String order);
 }

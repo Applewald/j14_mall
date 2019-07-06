@@ -46,18 +46,11 @@
             <version>5.1.47</version>
             <scope>runtime</scope>
         </dependency>
-        <!--mybatis及对maybatis的支持-->
-        <dependency>
-            <groupId>org.mybatis</groupId>
-            <artifactId>mybatis</artifactId>
-            <version>3.4.6</version>
-        </dependency>
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <version>2.0.0</version>
         </dependency>
-
         <!--文件上传-->
         <dependency>
             <groupId>commons-io</groupId>

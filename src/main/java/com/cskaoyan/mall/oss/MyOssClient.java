@@ -16,10 +16,10 @@ import java.util.UUID;
 @ConfigurationProperties(prefix = "myoss")
 @Component
 public class MyOssClient {
-	String bucket;
-	String endpoint ;
-	String accessKey ;
-	String secret ;
+	private String bucket;
+	private String endpoint ;
+	private String accessKey ;
+	private String secret ;
 
 	public String getBucket() {
 		return bucket;

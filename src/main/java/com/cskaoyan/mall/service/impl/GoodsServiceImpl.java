@@ -36,7 +36,7 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     public DataVo<Goods> findGoodsList(int page, int limit, String sort, String order,String goodsSn,String name) {
         PageHelper.startPage(page,limit);
-        List<Goods> items =  goodsMapper.findGoodsList(sort,order,goodsSn,name);
+        List<Goods> items =  goodsMapper.findGoodList(sort,order,goodsSn,name);
         PageInfo<Goods> pageInfo = new PageInfo<Goods>(items);
         DataVo<Goods> goodsDataVo = new DataVo<Goods>();
         goodsDataVo.setTotal(pageInfo.getTotal());
@@ -98,6 +98,7 @@ public class GoodsServiceImpl implements GoodsService {
         int id = createStorgeMapper.insertCreategory(createStorge);
         return createStorgeMapper.findCreategoryBy(createStorge.getUrl());
     }
+
 
 
     @Override
@@ -167,11 +168,15 @@ public class GoodsServiceImpl implements GoodsService {
             }
         }
 
-        int[] ids = new int[idList.size()];
-        for (int i = 0 ; i < idList.size() ; i++){
-            ids[i] = (int) idList.get(i);
+        if (idList.size() >0){
+            int[] ids = new int[idList.size()];
+            for (int i = 0 ; i < idList.size() ; i++){
+                ids[i] = (int) idList.get(i);
+            }
+
+            goodsMapper.deleteSpecificationsNotIn(ids);
         }
-        goodsMapper.deleteSpecificationsNotIn(ids);
+
     }
 
     private void updateProducts(List<Product> products, Integer goodsId) {
@@ -185,13 +190,16 @@ public class GoodsServiceImpl implements GoodsService {
                 goodsMapper.updateProduct(product);
             }
         }
+        if (idList.size()>0){
+            int[] ids = new int[idList.size()];
+            for (int i = 0 ; i < idList.size() ; i++){
+                ids[i] = (int) idList.get(i);
+            }
 
-        int[] ids = new int[idList.size()];
-        for (int i = 0 ; i < idList.size() ; i++){
-            ids[i] = (int) idList.get(i);
+            goodsMapper.deleteProductNotIn(ids);
         }
 
-        goodsMapper.deleteProductNotIn(ids);
+
 
 
 
@@ -210,17 +218,32 @@ public class GoodsServiceImpl implements GoodsService {
             }
         }
 
-        int[] ids = new int[idList.size()];
-        for (int i = 0 ; i < idList.size() ; i++){
-            ids[i] = (int) idList.get(i);
+        if (idList.size() >0){
+            int[] ids = new int[idList.size()];
+            for (int i = 0 ; i < idList.size() ; i++){
+                ids[i] = (int) idList.get(i);
+            }
+
+            goodsMapper.deleteAttributesNotIn(ids);
         }
 
-        goodsMapper.deleteAttributesNotIn(ids);
+
         
 
     }
 
 
 
+
+
+    @Override
+    public int goodsTotal() {
+        return goodsMapper.goodsTotal();
+    }
+
+    @Override
+    public int productTotal() {
+        return goodsMapper.productTotal();
+    }
 
 }

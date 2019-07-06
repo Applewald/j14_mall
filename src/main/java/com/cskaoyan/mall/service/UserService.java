@@ -11,6 +11,9 @@ import com.cskaoyan.mall.vo.ResponseVo;
 public interface UserService {
 
 
-    ResponseVo<PageVo<User>> list(int page,int limit,String sort,String order);
+    //ResponseVo<PageVo<User>> list(int page,int limit,String sort,String order);
+    ResponseVo<PageVo<User>> list1(int page,int limit,String sort,String order,String username,String mobile);
 
+
+    int userTotal();
 }

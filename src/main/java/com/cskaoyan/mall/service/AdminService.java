@@ -1,8 +1,10 @@
 package com.cskaoyan.mall.service;
 
 
-import com.cskaoyan.mall.bean.Admin;
-import com.cskaoyan.mall.vo.ReVo;
+import com.cskaoyan.mall.bean.admin.Admin;
+import com.cskaoyan.mall.bean.admin.AdminOptions;
+import com.cskaoyan.mall.vo.DataVo;
+
 
 import java.util.List;
 
@@ -14,7 +16,17 @@ import java.util.List;
  */
 public interface AdminService {
 
+    Admin selectByPrimaryKey(Integer id);
 
+    Admin selectByUserName(String username);
 
-    ReVo selectAllAdmin(Integer page, Integer limit, String sort, String order);
+    List<AdminOptions> selectAllRoleIdAndName();
+
+    int insert(Admin record);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int update(Admin record);
+
+    DataVo selectAllAdminList(Integer page, Integer limit, String sort, String order, String username);
 }

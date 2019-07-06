@@ -1,6 +1,6 @@
 package com.cskaoyan.mall.service.impl;
 
-import com.cskaoyan.mall.bean.Ad;
+import com.cskaoyan.mall.bean.promotion.Ad;
 import com.cskaoyan.mall.mapper.AdMapper;
 import com.cskaoyan.mall.service.AdService;
 import com.github.pagehelper.PageHelper;
@@ -22,6 +22,12 @@ public class AdServiceImpl implements AdService {
     @Override
     public PageInfo<Ad> getAllAd(int page, int limit, String name,String content,String sort, String order) {
         PageHelper.startPage(page,limit);
+        if(name == null){
+            name = "";
+        }
+        if(content == null){
+            content = "";
+        }
         name = "%" + name + "%";
         content = "%" + content + "%";
         List<Ad> list = adMapper.getAllAd(name,content,sort,order);

@@ -1,4 +1,4 @@
-package com.cskaoyan.mall.bean;
+package com.cskaoyan.mall.bean.role;
 
 import java.util.Date;
 
