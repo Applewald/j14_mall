@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cskaoyan.mall.mapper.GoodsCommentMapper">
+
+  <resultMap id="findGoodsComments" type="com.cskaoyan.mall.bean.GoodsComment">
+    <result column="id" property="id"/>
+    <result column="value_id" property="valueId"/>
+    <result column="type" property="type"/>
+    <result column="content" property="content"/>
+    <result column="user_id" property="userId"/>
+    <result column="has_picture" property="hasPicture"/>
+    <result column="pic_urls" property="picUrls" typeHandler="com.cskaoyan.mall.typehandler.StringToStringArrary"/>
+    <result column="star" property="star"/>
+    <result column="add_time" property="addTime"/>
+    <result column="update_time" property="updateTime"/>
+    <result column="deleted" property="deleted"/>
+  </resultMap>
+
+
+
+
+  <select id="findComments" resultMap="findGoodsComments" >
+    select id, value_id, `type`,content,user_id,has_picture,pic_urls,
+    star,add_time,update_time,deleted
+    from cskaoyan_mall_comment
+    where deleted = 0
+    <if  test="userId != null and userId != ''">
+      and user_id = #{userId}
+    </if>
+
+    <if  test="valueId != null and valueId != ''">
+      and value_id  like concat('%',concat(#{valueId}),'%')
+    </if>
+
+    order by #{sort} #{order}
+  </select>
+
+
+
+
+
+</mapper>

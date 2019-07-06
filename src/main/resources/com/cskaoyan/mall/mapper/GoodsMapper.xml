@@ -253,11 +253,11 @@
     from cskaoyan_mall_goods
     where deleted = 0
     <if  test="goodsSn != null and goodsSn != ''">
-        where goods_sn = #{goodsSn}
+        and goods_sn = #{goodsSn}
     </if>
 
     <if  test="name != null and name != ''">
-      where `name` like concat('%',concat(#{name}),'%')
+      and `name` like concat('%',concat(#{name}),'%')
     </if>
 
     order by #{sort} #{order}
