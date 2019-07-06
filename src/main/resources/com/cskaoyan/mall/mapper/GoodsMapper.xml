@@ -72,7 +72,7 @@
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
         <result column="deleted" jdbcType="BIT" property="deleted" />
         <result column="detail" jdbcType="BIT" property="detail" />
-        <result column="gallery" property="gallery" typeHandler="com.cskaoyan.mall.typehandler.StringToStringArrary"/>
+        <result column="gallery" property="gallery" typeHandler="com.cskaoyan.mall.typeHandler.StringToStringArrary"/>
         <!--<collection  jdbcType="VARCHAR" property="gallery" ofType="java.lang.String" >
           <result column="gallery" />
         </collection>-->
@@ -106,7 +106,7 @@
         retail_price, add_time, update_time,
         detail)
         values ( #{goodsSn}, #{name},
-        #{categoryId}, #{brandId}, #{gallery,typeHandler = com.cskaoyan.mall.typehandler.StringToStringArrary },
+        #{categoryId}, #{brandId}, #{gallery,typeHandler = com.cskaoyan.mall.typeHandler.StringToStringArrary },
         #{keywords}, #{brief}, #{isOnSale},
         #{sortOrder}, #{picUrl}, #{shareUrl},
         #{isNew}, #{isHot}, #{unit}, #{counterPrice},
