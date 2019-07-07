@@ -32,5 +32,15 @@ public interface UserMapper {
 
     int updateByPrimaryKey(User record);
     //自己写的查询方法
+
+    //List<User> queryUsers(@Param("sort") String sort,@Param("order") String order);
+    List<User> queryUsersByOrder(@Param("username")String username,
+                                 @Param("mobile")String mobile,
+                                 @Param("sort")String sort,
+                                 @Param("order")String order);
+
     List<User> queryUsers(@Param("sort") String sort,@Param("order") String order);
+
+    int userTotal();
+
 }

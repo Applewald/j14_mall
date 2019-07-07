@@ -1,55 +1,67 @@
 package com.cskaoyan.mall.controller;
 
-import com.cskaoyan.mall.bean.ReceiveRole;
-import com.cskaoyan.mall.bean.Role;
+
+import com.cskaoyan.mall.bean.role.Role;
+import com.cskaoyan.mall.bean.admin.AdminOptions;
 import com.cskaoyan.mall.service.RoleService;
-import com.cskaoyan.mall.vo.ReVo;
+import com.cskaoyan.mall.vo.DataVo;
 import com.cskaoyan.mall.vo.ResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Map;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 
 /**
  * @author zzc
  * @version 1.0
  * @date 2019-07-03 17:45
- * @description
+ * @description 系统管理 - 角色管理 - controller层
  */
 @RestController
+@RequestMapping("/role")
 public class RoleController {
 
     @Autowired
     RoleService roleService;
 
-    @RequestMapping("role/options")
-    public ReVo roleOptions() {
-        ReVo reVo = new ReVo();
-        reVo.setErrmsg("成功");
-        reVo.setErrno(0);
-        return reVo;
+    /*adminOptions, 管理员页面需要*/
+    @RequestMapping("/options")
+    public Object roleOptions() {
+        List<AdminOptions> adminOptions = roleService.selectAllRoleIdAndName();
+        Object ok = ResponseVo.ok(adminOptions);
+        return ok;
     }
 
     /*查询全部的角色, 附带模糊查询*/
-    @RequestMapping("role/list")
-    public ReVo roleList(Integer page, Integer limit, String sort, String order, String name) {
-        return roleService.selectAllRole(page, limit, sort, order, name);
+    @GetMapping("/list")
+    public Object roleList(Integer page, Integer limit, String sort, String order, String name) {
+        DataVo dataVo = roleService.selectAllRoleList(page, limit, sort, order, name);
+        return ResponseVo.ok(dataVo);
     }
 
-    /*添加新的角色*/
-    @RequestMapping("role/create")
-    public ResponseVo create(Map<String,String> map) {
+    /*添加角色*/
+    @PostMapping("/create")
+    public Object roleCreate(@RequestBody Role role) {
+        Role find = roleService.selectRoleByName(role.getName());
+        if (find == null) {
+            roleService.insertByRole(role);
+            return ResponseVo.ok();
+        } else {
+            return ResponseVo.fail("角色已经存在", 640);
+        }
+    }
 
+    /*删除角色*/
+    @PostMapping("/delete")
+    public Object roleDelete(@RequestBody Role role) {
+        roleService.deleteById(role.getId());
+        return ResponseVo.ok();
+    }
 
-
-        /*Role role = new Role();
-        role.setName(map.get("name"));
-        role.setDesc(map.get("desc"));*/
-        ResponseVo responseVo = new ResponseVo();
-        return responseVo;
+    /*修改角色*/
+    @PostMapping("/update")
+    public Object roleUpdate(@RequestBody Role role) {
+        roleService.updateByRole(role);
+        return ResponseVo.ok();
     }
 }

@@ -10,6 +10,7 @@ public class CreateGoods {
     private Goods goods;
     private List<Product> products;
     private List<Specification> specifications;
+    private int[] categoryIds;
 
     public List<Attribute> getAttributes() {
         return attributes;
@@ -43,14 +44,13 @@ public class CreateGoods {
         this.specifications = specifications;
     }
 
-
-    @Override
-    public String toString() {
-        return "CreateGoods{" +
-                "attributes=" + attributes +
-                ", goods=" + goods +
-                ", products=" + products +
-                ", specifications=" + specifications +
-                '}';
+    public int[] getCategoryIds() {
+        return categoryIds;
     }
+
+    public void setCategoryIds(int[] categoryIds) {
+        this.categoryIds = categoryIds;
+    }
+
+
 }

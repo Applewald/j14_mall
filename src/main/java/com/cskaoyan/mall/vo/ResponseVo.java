@@ -1,5 +1,10 @@
 package com.cskaoyan.mall.vo;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * author lixiaolong
  * date: 2019-07-03 15:03
@@ -38,9 +43,32 @@ public class ResponseVo<T> {
         this.errmsg = errmsg;
     }
 
+
     public ResponseVo(int errno, T data, String errmsg) {
         this.errno = errno;
         this.data = data;
         this.errmsg = errmsg;
+
+    }
+    public static Object ok(){
+        Map<String, Object> o = new HashMap<>();
+        o.put("errmsg", "成功");
+        o.put("errno", 0);
+        return o;
+    }
+
+    public static Object ok(Object data){
+        ResponseVo<Object> responseVo = new ResponseVo<>();
+        responseVo.setData(data);
+        responseVo.setErrmsg("成功");
+        responseVo.setErrno(0);
+        return responseVo;
+    }
+
+    public static Object fail(String errmsg, Integer errno){
+            Map<String, Object> o = new HashMap<>();
+            o.put("errmsg", errmsg);
+            o.put("errno", errno);
+            return o;
     }
 }

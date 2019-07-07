@@ -16,10 +16,10 @@ import java.util.UUID;
 @ConfigurationProperties(prefix = "myoss")
 @Component
 public class MyOssClient {
-	String bucket;
-	String endpoint ;
-	String accessKey ;
-	String secret ;
+	private String bucket;
+	private String endpoint ;
+	private String accessKey ;
+	private String secret ;
 
 	public String getBucket() {
 		return bucket;
@@ -76,10 +76,10 @@ public class MyOssClient {
 		CreateStorge createStorge = new CreateStorge();
 
 		createStorge.setType(contentType);
-		createStorge.setName(file.getName());
+		createStorge.setName(file.getOriginalFilename());
 		createStorge.setSize(size);
 		createStorge.setKey(uuid);
-		createStorge.setUrl(endpoint+"/" + bucket + "/" +uuid);
+		createStorge.setUrl("https://" + bucket +"." +endpoint +"/" + uuid);
 
 		return createStorge;
 

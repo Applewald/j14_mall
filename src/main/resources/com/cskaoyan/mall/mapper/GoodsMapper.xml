@@ -3,6 +3,222 @@
 <mapper namespace="com.cskaoyan.mall.mapper.GoodsMapper">
 
 
+
+
+  <insert id="addSpecifications" >
+    insert into cskaoyan_mall_goods_specification (id, goods_id, specification,
+      `value`, pic_url, add_time, update_time) values
+      <foreach collection="specifications" item="item" separator="," >
+        (null,#{goodsId},#{item.specification},#{item.value},#{item.picUrl},now(),now())
+      </foreach>
+  </insert>
+
+    <insert id="addSpecification">
+        insert into cskaoyan_mall_goods_specification (id, goods_id, specification,
+      `value`, pic_url, add_time, update_time) values
+      (null,#{goodsId},#{s.specification},#{s.value},#{s.picUrl},now(),now())
+    </insert>
+
+    <update id="deleteSpecificationsNotIn" >
+        update cskaoyan_mall_goods_specification set deleted = 1
+        where id not in
+        <foreach collection="ids" separator="," open="(" close=")" item="id">
+            #{id}
+        </foreach>
+    </update>
+
+  <resultMap id="specifications" type="com.cskaoyan.mall.bean.creategoods.Specification">
+    <result column="id" property="id"/>
+    <result column="goods_id" property="goodsId"/>
+    <result column="specification" property="specification"/>
+    <result column="value" property="value"/>
+    <result column="pic_url" property="picUrl"/>
+    <result column="add_time" property="addTime"/>
+    <result column="update_time" property="updateTime"/>
+    <result column="deleted" property="deleted"/>
+  </resultMap>
+
+  <select id="findSpecificationsByGoodsId" resultMap="specifications">
+    select id, goods_id, specification,
+      `value`, pic_url, add_time, update_time,deleted
+    from cskaoyan_mall_goods_specification
+    where goods_id = #{goodsId} and  deleted = 0
+  </select>
+
+
+  <update id="deleteSpecificationsbyGoodsId">
+    update cskaoyan_mall_goods_specification
+    set deleted = 1
+    where goods_id = #{goodsId}
+  </update>
+
+
+
+  <insert id="addProducts" >
+    insert into cskaoyan_mall_goods_product (id, goods_id, specifications,
+    price, `number`, url, add_time, update_time
+    )
+    values
+    <foreach collection="products" item="item" separator="," >
+      (null,#{goodsId},#{item.specifications ,typeHandler = com.cskaoyan.mall.typehandler.StringToStringArrary}
+      ,#{item.price},#{item.number},#{item.url},now(),now())
+    </foreach>
+  </insert>
+
+  <insert id="addProduct" >
+    insert into cskaoyan_mall_goods_product (id, goods_id, specifications,
+    price, `number`, url,add_time, update_time
+    )
+    values
+    (null,#{goodsId},#{p.specifications ,typeHandler = com.cskaoyan.mall.typehandler.StringToStringArrary}
+      ,#{p.price},#{p.number}, #{p.url},now(),now())
+  </insert>
+
+
+<update id="updateProduct" >
+  update cskaoyan_mall_goods_product
+  set specifications = #{p.specifications ,typeHandler = com.cskaoyan.mall.typehandler.StringToStringArrary},
+  price = #{p.price},
+  `number` = #{p.number},
+  <if test="p.url != null and p.url != ''">
+    url = #{p.url},
+  </if>
+  update_time = now()
+  where
+  id = #{p.id} and deleted = 0
+</update>
+
+
+
+  <update id="deleteProductNotIn" >
+    update cskaoyan_mall_goods_product
+    set deleted = 1
+    where id not in
+    <foreach collection="ids" separator="," open="(" close=")" item="id">
+      #{id}
+    </foreach>
+  </update>
+
+
+  <resultMap id="products" type="com.cskaoyan.mall.bean.creategoods.Product">
+    <result column="id" property="id"/>
+    <result column="goods_id" property="goodsId"/>
+    <result column="specifications" property="specifications" typeHandler="com.cskaoyan.mall.typehandler.StringToStringArrary"/>
+    <result column="price" property="price"/>
+    <result column="number" property="number"/>
+    <result column="url" property="url"/>
+    <result column="add_time" property="addTime"/>
+    <result column="update_time" property="updateTime"/>
+    <result column="deleted" property="deleted"/>
+  </resultMap>
+
+  <select id="findProductsByGoodsId" resultMap="products">
+    select id, goods_id, specifications,
+    price, `number`, url, add_time, update_time,deleted
+    from cskaoyan_mall_goods_product
+    where goods_id = #{goodsId} and  deleted = 0
+  </select>
+
+  <update id="deleteProductsByGoodsId" >
+    update cskaoyan_mall_goods_product set deleted = 1
+    where goods_id = #{goodsId}
+  </update>
+
+
+
+  <update id="deleteAttributesNotIn" >
+    update cskaoyan_mall_goods_attribute set deleted = 1
+    where id not in
+    <foreach collection="ids" separator="," open="(" close=")" item="id">
+      #{id}
+    </foreach>
+  </update>
+
+
+
+  <insert id="addAttribute" parameterType="com.cskaoyan.mall.bean.creategoods.Attribute">
+    insert into cskaoyan_mall_goods_attribute (id, goods_id, attribute,
+      `value`, add_time, update_time)
+    values
+       (null,#{goodsId},#{a.attribute},#{a.value},now(),now())
+  </insert>
+
+  <insert id="addAttributes" >
+    insert into cskaoyan_mall_goods_attribute (id, goods_id, attribute,
+      `value`, add_time, update_time)
+    values
+    <foreach collection="attributes" item="item" separator="," >
+      (null,#{goodsId},#{item.attribute},#{item.value},now(),now())
+    </foreach>
+  </insert>
+
+  <update id="deleteAttributesByGoodsId">
+    update cskaoyan_mall_goods_attribute
+    set deleted = 1
+    where goods_id = #{goodsId}
+  </update>
+
+
+
+  <resultMap id="attributes" type="com.cskaoyan.mall.bean.creategoods.Attribute">
+    <result property="id" column="id"/>
+    <result property="goodsId" column="goods_id"/>
+    <result property="attribute" column="attribute"/>
+    <result property="value" column="value"/>
+    <result property="addTime" column="add_time"/>
+    <result property="updateTime" column="update_time"/>
+    <result property="deleted" column="deleted"/>
+  </resultMap>
+
+  <select id="findAttributesByGoodsId" resultMap="attributes">
+    select id, goods_id, attribute,
+      `value`, add_time, update_time,`deleted`
+    from cskaoyan_mall_goods_attribute
+    where goods_id = #{goodsId} and  deleted = 0
+  </select>
+
+
+  <select id="findGoodsBypicUrl" resultMap="findGoodsList" >
+       select id, goods_sn, `name`, category_id, brand_id, gallery, keywords, brief, is_on_sale,
+    sort_order, pic_url, share_url, is_new, is_hot, unit, counter_price, retail_price,
+    add_time, update_time, deleted
+    from cskaoyan_mall_goods
+    where pic_url = #{picUrl} and  deleted = 0
+  </select>
+
+  <select id="findGoodsByName" resultMap="findGoodsList" >
+       select id, goods_sn, `name`, category_id, brand_id, gallery, keywords, brief, is_on_sale,
+    sort_order, pic_url, share_url, is_new, is_hot, unit, counter_price, retail_price,
+    add_time, update_time, deleted
+    from cskaoyan_mall_goods
+    where name = #{name} and  deleted = 0
+  </select>
+
+  <select id="findGoodsById" resultMap="findGoodsList" >
+       select id, goods_sn, `name`, category_id, brand_id, gallery, keywords, brief, is_on_sale,
+    sort_order, pic_url, share_url, is_new, is_hot, unit, counter_price, retail_price,
+    add_time, update_time, deleted
+    from cskaoyan_mall_goods
+    where id = #{id} and deleted = 0
+  </select>
+
+  <select id="findGoodsCategoryById" resultType="int">
+    select category_id
+    from cskaoyan_mall_goods
+    where id = #{id}
+  </select>
+
+
+
+
+  <select id="findCategoryLv1ByLv2" resultType="int">
+    select c1.id from cskaoyan_mall_category c1
+  where c1.level = 'L1' and c1.sort_order =
+  (select sort_order from cskaoyan_mall_category where
+  id = #{Lv2Id})
+  </select>
+
+
   <resultMap id="findGoodsList" type="com.cskaoyan.mall.bean.Goods">
     <result column="id" jdbcType="INTEGER" property="id" />
     <result column="goods_sn" jdbcType="VARCHAR" property="goodsSn" />
@@ -30,20 +246,29 @@
     </collection>-->
   </resultMap>
 
-  <select id="findGoodsList" resultMap="findGoodsList" >
+  <select id="findGoodList" resultMap="findGoodsList" >
     select id, goods_sn, name, category_id, brand_id, gallery, keywords, brief, is_on_sale,
     sort_order, pic_url, share_url, is_new, is_hot, unit, counter_price, retail_price,
     add_time, update_time, deleted
     from cskaoyan_mall_goods
+    where deleted = 0
     <if  test="goodsSn != null and goodsSn != ''">
-        where goods_sn = #{goodsSn}
+        and goods_sn = #{goodsSn}
+    </if>
+
+    <if  test="name != null and name != ''">
+      and `name` like concat('%',concat(#{name}),'%')
     </if>
 
     order by #{sort} #{order}
   </select>
 
 
+
   <insert id="addGoods" parameterType="com.cskaoyan.mall.bean.Goods">
+    <selectKey order="AFTER"   keyProperty="id"   resultType="java.lang.Integer">
+      select last_insert_id()
+    </selectKey>
     insert into cskaoyan_mall_goods ( goods_sn, `name`,
       category_id, brand_id, gallery,
       keywords, brief, is_on_sale,
@@ -59,4 +284,44 @@
       #{retailPrice}, now(), now(),
        #{detail})
   </insert>
+
+  <update id="deleteGoodsById" >
+    update cskaoyan_mall_goods
+     set deleted = 1
+    where id = #{goodsId}
+  </update>
+
+
+  <update id="updateGoods" parameterType="com.cskaoyan.mall.bean.Goods">
+    update cskaoyan_mall_goods set
+    goods_sn = #{goodsSn},
+    `name` = #{name},
+    category_id =  #{categoryId},
+    brand_id = #{brandId},
+    <if test="gallery != null and gallery != ''">
+      gallery =#{gallery,typeHandler = com.cskaoyan.mall.typehandler.StringToStringArrary } ,
+    </if>
+
+    keywords =  #{keywords},
+    brief = #{brief},
+    is_on_sale = #{isOnSale  },
+    sort_order = #{sortOrder } ,
+    <if test="picUrl != null and picUrl != ''">
+        pic_url = #{picUrl} ,
+    </if>
+    share_url = #{shareUrl},
+    is_new = #{isNew},
+    is_hot = #{isHot},
+    unit = #{unit},
+    counter_price = #{counterPrice} ,
+    retail_price = #{retailPrice},
+   <!-- <if test="addTime == null">
+      add_time = now(),
+    </if>-->
+    update_time = now(),
+    detail= #{detail}
+    where id = #{id}
+  </update>
+
+
 </mapper>

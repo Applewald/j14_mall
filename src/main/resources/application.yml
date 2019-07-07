@@ -22,9 +22,8 @@ spring:
     url: jdbc:mysql://localhost:3306/mall?useSSL=false&characterEncoding=utf8
     username: root
     password: 123456
-
 myoss:
-  bucket: cskaoyan
+  bucket: cskaoyanmall
   endpoint: oss-cn-beijing.aliyuncs.com
-  access-key: LTAI8EgTxlc4QQZr
-  secret: RBDvSGZOR8DaUJxlLrW4Ed46RVnAkR
+  access-key: LTAIegWUeqnPr5my
+  secret: PujccJZRgXXQnEctUFGmcDGQ2XLGha

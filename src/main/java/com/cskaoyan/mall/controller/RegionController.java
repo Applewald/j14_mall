@@ -1,8 +1,14 @@
 package com.cskaoyan.mall.controller;
 
+import com.cskaoyan.mall.bean.Region;
+import com.cskaoyan.mall.bean.RegionChildren;
+import com.cskaoyan.mall.service.RegionService;
 import com.cskaoyan.mall.vo.ResponseVo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * author lixiaolong
@@ -10,12 +16,18 @@ import org.springframework.web.bind.annotation.RestController;
  * description:
  */
 @RestController
+@RequestMapping("region")
 public class RegionController {
+    @Autowired
+    RegionService regionService;
 
-    @RequestMapping("region/list")
-    public ResponseVo list() {
-        ResponseVo<Object> vo = new ResponseVo<>();
-
+    @RequestMapping("list")
+    public ResponseVo regionList() {
+        ResponseVo<List<RegionChildren>> vo = new ResponseVo<>();
+        List<RegionChildren> regionList = regionService.findRegionList();
+        vo.setData(regionList);
+        vo.setErrmsg("成功");
+        vo.setErrno(0);
         return vo;
     }
 }

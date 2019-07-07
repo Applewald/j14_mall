@@ -7,11 +7,23 @@ import com.cskaoyan.mall.bean.CreateStorge;
 import com.cskaoyan.mall.vo.DataVo;
 
 public interface GoodsService {
-    DataVo<Goods> findGoodsList(int page, int limit, String sort, String order,String goodsSn);
+    DataVo<Goods> findGoodsList(int page, int limit, String sort, String order,String goodsSn,String name);
 
     CatAndBrandData findCatAndBrandData();
 
-    void goodsCreate(CreateGoods createGoods);
+    boolean goodsCreate(CreateGoods createGoods);
 
     CreateStorge insertCreategory(CreateStorge createStorge);
+
+
+    CreateGoods getGoodsDetailsById(int id);
+
+    void updateGoods(CreateGoods createGoods);
+
+    void deleteGoods(Goods goods);
+
+    int goodsTotal();
+
+    int productTotal();
+
 }

@@ -2,6 +2,7 @@ package com.cskaoyan.mall.mapper;
 
 
 import com.cskaoyan.mall.bean.Region;
+import com.cskaoyan.mall.bean.RegionChildren;
 import com.cskaoyan.mall.bean.RegionExample;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -32,5 +33,5 @@ public interface RegionMapper {
 
     int updateByPrimaryKey(Region record);
 
-    List<Region> findAllRegion();
+    List<RegionChildren> findRegionList();
 }

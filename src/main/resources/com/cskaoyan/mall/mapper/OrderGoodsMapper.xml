@@ -350,4 +350,12 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="orderGoods" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from
+      `cskaoyan_mall_order_goods`
+    where
+      order_id = #{orderId}
+  </select>
 </mapper>

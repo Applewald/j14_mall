@@ -1,6 +1,9 @@
 package com.cskaoyan.mall.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Date;
+import java.util.List;
 
 public class Category {
     private Integer id;
@@ -26,6 +29,16 @@ public class Category {
     private Date updateTime;
 
     private Boolean deleted;
+
+    private List<Category> children;
+
+    public List<Category> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<Category> children) {
+        this.children = children;
+    }
 
     public Integer getId() {
         return id;
@@ -58,7 +71,7 @@ public class Category {
     public void setDesc(String desc) {
         this.desc = desc == null ? null : desc.trim();
     }
-
+    //@JsonIgnore //将对象json返回时自动忽略掉对象中的特定属性的注解方式
     public Integer getPid() {
         return pid;
     }
@@ -90,7 +103,6 @@ public class Category {
     public void setLevel(String level) {
         this.level = level == null ? null : level.trim();
     }
-
     public Byte getSortOrder() {
         return sortOrder;
     }
@@ -98,7 +110,6 @@ public class Category {
     public void setSortOrder(Byte sortOrder) {
         this.sortOrder = sortOrder;
     }
-
     public Date getAddTime() {
         return addTime;
     }
@@ -106,7 +117,6 @@ public class Category {
     public void setAddTime(Date addTime) {
         this.addTime = addTime;
     }
-
     public Date getUpdateTime() {
         return updateTime;
     }
@@ -114,7 +124,6 @@ public class Category {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
-
     public Boolean getDeleted() {
         return deleted;
     }
