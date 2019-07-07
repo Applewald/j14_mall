@@ -15,7 +15,15 @@ public interface GoodsService {
 
     CreateStorge insertCreategory(CreateStorge createStorge);
 
+
+    CreateGoods getGoodsDetailsById(int id);
+
+    void updateGoods(CreateGoods createGoods);
+
+    void deleteGoods(Goods goods);
+
     int goodsTotal();
 
     int productTotal();
+
 }

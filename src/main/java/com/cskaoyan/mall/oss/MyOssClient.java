@@ -76,7 +76,7 @@ public class MyOssClient {
 		CreateStorge createStorge = new CreateStorge();
 
 		createStorge.setType(contentType);
-		createStorge.setName(file.getName());
+		createStorge.setName(file.getOriginalFilename());
 		createStorge.setSize(size);
 		createStorge.setKey(uuid);
 		createStorge.setUrl("https://" + bucket +"." +endpoint +"/" + uuid);

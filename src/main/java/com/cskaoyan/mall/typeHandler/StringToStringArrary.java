@@ -1,4 +1,4 @@
-package com.cskaoyan.mall.typeHandler;
+package com.cskaoyan.mall.typehandler;
 
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.TypeHandler;
@@ -49,7 +49,12 @@ public class StringToStringArrary implements TypeHandler<String[]> {
     }
 
     private String[]  StringTranferStringArrary(String s){
-        String substring = s.substring(1, s.length() - 1);
-        return substring.split(",");
+        if (s == null || "[]".equals(s)){
+            return new String[0];
+        }else {
+            String substring = s.substring(1, s.length() - 1);
+            return substring.split(",");
+        }
+
     }
 }

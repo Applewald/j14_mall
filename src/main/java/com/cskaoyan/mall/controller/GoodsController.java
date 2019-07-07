@@ -32,9 +32,12 @@ public class GoodsController {
 
 
     @RequestMapping("goods/list")
+
     public ResponseVo<DataVo<Goods>> goodsList(int page , int limit , String sort , String order,String goodsSn,String name){
         DataVo<Goods> goodsDataVo = goodsService.findGoodsList(page,limit,sort,order,goodsSn,name);
         ResponseVo<DataVo<Goods>> dataVoResponse = new ResponseVo<DataVo<Goods>>() ;
+
+
         dataVoResponse.setErrno(0);
         dataVoResponse.setErrmsg("成功");
         dataVoResponse.setData(goodsDataVo);
@@ -57,7 +60,7 @@ public class GoodsController {
     @RequestMapping("storage/create")
     public ResponseVo<CreateStorge> createStorage(MultipartFile file){
         CreateStorge createStorge = new CreateStorge();
-        ResponseVo<CreateStorge> responseVo = new ResponseVo<>();
+        ResponseVo<CreateStorge> responseVo = new ResponseVo<CreateStorge>();
 
         try {
             createStorge = myOssClient.ossFileUpload(file);
@@ -79,6 +82,7 @@ public class GoodsController {
     @RequestMapping("goods/create")
     public MessageVo goodsCreate(@RequestBody CreateGoods createGoods){
 
+
         boolean create = goodsService.goodsCreate(createGoods);
         if (create == true){
             return  MessageVo.getSuccessMeg();
@@ -88,5 +92,31 @@ public class GoodsController {
 
     }
 
+
+    @RequestMapping("goods/detail")
+    public ResponseVo<CreateGoods> getGoodsDetailsById(int id){
+        ResponseVo<CreateGoods> responseVo = new ResponseVo<>();
+        CreateGoods createGoods = goodsService.getGoodsDetailsById(id);
+        responseVo.setData(createGoods);
+        responseVo.setErrmsg("成功");
+        responseVo.setErrno(0);
+        return responseVo;
+    }
+
+    @RequestMapping("goods/update")
+    public MessageVo updateGoods(@RequestBody CreateGoods createGoods){
+
+        goodsService.updateGoods(createGoods);
+
+            return MessageVo.getSuccessMeg();
+    }
+
+
+    @RequestMapping("/goods/delete")
+    public MessageVo deleteGoods(@RequestBody Goods goods){
+        goodsService.deleteGoods(goods);
+
+        return MessageVo.getSuccessMeg();
+    }
 
 }

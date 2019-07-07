@@ -15,6 +15,9 @@ public class ResponseVo<T> {
     private T data;
     private String errmsg;
 
+    public ResponseVo() {
+    }
+
     public int getErrno() {
         return errno;
     }
@@ -40,6 +43,13 @@ public class ResponseVo<T> {
         this.errmsg = errmsg;
     }
 
+
+    public ResponseVo(int errno, T data, String errmsg) {
+        this.errno = errno;
+        this.data = data;
+        this.errmsg = errmsg;
+
+    }
     public static Object ok(){
         Map<String, Object> o = new HashMap<>();
         o.put("errmsg", "成功");
@@ -53,5 +63,12 @@ public class ResponseVo<T> {
         responseVo.setErrmsg("成功");
         responseVo.setErrno(0);
         return responseVo;
+    }
+
+    public static Object fail(String errmsg, Integer errno){
+            Map<String, Object> o = new HashMap<>();
+            o.put("errmsg", errmsg);
+            o.put("errno", errno);
+            return o;
     }
 }
