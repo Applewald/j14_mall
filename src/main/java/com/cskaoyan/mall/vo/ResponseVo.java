@@ -10,6 +10,9 @@ public class ResponseVo<T> {
     private T data;
     private String errmsg;
 
+    public ResponseVo() {
+    }
+
     public int getErrno() {
         return errno;
     }
@@ -32,6 +35,12 @@ public class ResponseVo<T> {
     }
 
     public void setErrmsg(String errmsg) {
+        this.errmsg = errmsg;
+    }
+
+    public ResponseVo(int errno, T data, String errmsg) {
+        this.errno = errno;
+        this.data = data;
         this.errmsg = errmsg;
     }
 }

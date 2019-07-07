@@ -34,7 +34,7 @@ public class GoodsController {
     @RequestMapping("goods/list")
     public ResponseVo<DataVo<Goods>> goodsList(int page , int limit , String sort , String order,String goodsSn){
         DataVo<Goods> goodsDataVo = goodsService.findGoodsList(page,limit,sort,order,goodsSn);
-        ResponseVo<DataVo<Goods>> dataVoResponse = new ResponseVo<DataVo<Goods>>() ;
+        ResponseVo<DataVo<Goods>> dataVoResponse = new ResponseVo<>() ;
         dataVoResponse.setErrno(0);
         dataVoResponse.setErrmsg("成功");
         dataVoResponse.setData(goodsDataVo);
@@ -57,7 +57,7 @@ public class GoodsController {
     @RequestMapping("storage/create")
     public ResponseVo<CreateStorge> createStorage(MultipartFile file){
         CreateStorge createStorge = new CreateStorge();
-        ResponseVo<CreateStorge> responseVo = new ResponseVo<>();
+        ResponseVo<CreateStorge> responseVo = new ResponseVo<CreateStorge>();
 
         try {
             createStorge = myOssClient.ossFileUpload(file);
