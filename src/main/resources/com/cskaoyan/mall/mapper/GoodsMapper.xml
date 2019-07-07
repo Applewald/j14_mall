@@ -18,11 +18,10 @@
         )
         values
         <foreach collection="products" item="item" separator="," >
-            (null,#{goodsId},#{item.specifications ,typeHandler = com.cskaoyan.mall.typehandler.StringToStringArrary}
+            (null,#{goodsId},#{item.specifications ,typeHandler = com.cskaoyan.mall.typeHandler.StringToStringArrary}
             ,#{item.price},#{item.number},#{item.url},now(),now())
         </foreach>
     </insert>
-
 
     <insert id="addAttributes" >
         insert into cskaoyan_mall_goods_attribute (id, goods_id, attribute,

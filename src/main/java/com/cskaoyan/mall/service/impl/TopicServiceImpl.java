@@ -38,6 +38,7 @@ public class TopicServiceImpl implements TopicService {
     
     @Override
     public int deleteByTopicId(Topic topic) {
-        return 0;
+        Integer id = topic.getId();
+        return topicMapper.deleteByPrimaryKey(id);
     }
 }
