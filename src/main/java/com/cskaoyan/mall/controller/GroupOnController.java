@@ -1,5 +1,6 @@
 package com.cskaoyan.mall.controller;
 
+import com.cskaoyan.mall.bean.promotion.GOListRecord;
 import com.cskaoyan.mall.bean.promotion.GroupOnRules;
 import com.cskaoyan.mall.service.GroupOnService;
 import com.cskaoyan.mall.vo.DataVo;
@@ -69,6 +70,18 @@ public class GroupOnController {
         } else {
             vo.setErrmsg("失败");
         }
+        return vo;
+    }
+    
+    @RequestMapping("groupon/listRecord")
+    public ResponseVo<DataVo> listRecord(int page,int limit,Integer goodsId,String sort,String order){
+        ResponseVo<DataVo> vo = new ResponseVo<>();
+        DataVo<GOListRecord> dataVo = new DataVo<>();
+        PageInfo<GOListRecord> pageInfo = groupOnService.findActivity(page,limit,goodsId,sort,order);
+        dataVo.setItems(pageInfo.getList());
+        dataVo.setTotal(pageInfo.getTotal());
+        vo.setData(dataVo);
+        vo.setErrmsg("成功");
         return vo;
     }
 }

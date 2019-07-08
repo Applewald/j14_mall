@@ -1,7 +1,7 @@
 package com.cskaoyan.mall.vo;
 
 /**
- * author lixiaolong
+ * @author lixiaolong
  * date: 2019-07-05 17:38
  * description:
  */
