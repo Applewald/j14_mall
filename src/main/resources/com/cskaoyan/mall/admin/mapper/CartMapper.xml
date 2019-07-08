@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cskaoyan.mall.admin.mapper.CartMapper">
+  <resultMap id="BaseResultMap" type="com.cskaoyan.mall.admin.bean.cart.Cart">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="goods_id" jdbcType="INTEGER" property="goodsId" />
+    <result column="goods_sn" jdbcType="VARCHAR" property="goodsSn" />
+    <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="product_id" jdbcType="INTEGER" property="productId" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="number" jdbcType="SMALLINT" property="number" />
+    <result column="specifications" jdbcType="VARCHAR" property="specifications" />
+    <result column="checked" jdbcType="BIT" property="checked" />
+    <result column="pic_url" jdbcType="VARCHAR" property="picUrl" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="deleted" jdbcType="BIT" property="deleted" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, goods_id, goods_sn, goods_name, product_id, price, number, specifications, 
+    checked, pic_url, add_time, update_time, deleted
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cskaoyan_mall_cart
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cskaoyan_mall_cart
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+
+  <insert id="addCart" >
+    insert into cskaoyan_mall_cart ( goods_id,product_id, number)
+    values ( #{goodsId},#{productId}, #{number} )
+  </insert>
+
+
+</mapper>
