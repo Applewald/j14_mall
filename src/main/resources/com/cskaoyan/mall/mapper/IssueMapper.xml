@@ -7,7 +7,7 @@
     <result column="answer" jdbcType="VARCHAR" property="answer" />
     <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-    <result column="deleted" typeHandler="com.cskaoyan.mall.typeHandler.BooleanTypeHandler" property="deleted" />
+    <result column="deleted" typeHandler="com.cskaoyan.mall.typehandler.BooleanTypeHandler" property="deleted" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -108,7 +108,7 @@
       add_time, update_time, deleted
       )
     values (null, #{question,jdbcType=VARCHAR}, #{answer,jdbcType=VARCHAR},
-      #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleted,typeHandler=com.cskaoyan.mall.typeHandler.BooleanTypeHandler}
+      #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleted,typeHandler=com.cskaoyan.mall.typehandler.BooleanTypeHandler}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.cskaoyan.mall.bean.Issue">
@@ -150,7 +150,7 @@
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="deleted != null">
-        #{deleted,typeHandler=com.cskaoyan.mall.typeHandler.BooleanTypeHandler},
+        #{deleted,typeHandler=com.cskaoyan.mall.typehandler.BooleanTypeHandler},
       </if>
     </trim>
   </insert>
@@ -179,7 +179,7 @@
         update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.deleted != null">
-        deleted = #{record.deleted,typeHandler=com.cskaoyan.mall.typeHandler.BooleanTypeHandler},
+        deleted = #{record.deleted,typeHandler=com.cskaoyan.mall.typehandler.BooleanTypeHandler},
       </if>
     </set>
     <if test="_parameter != null">
@@ -193,7 +193,7 @@
       answer = #{record.answer,jdbcType=VARCHAR},
       add_time = #{record.addTime,jdbcType=TIMESTAMP},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-      deleted = #{record.deleted,typeHandler=com.cskaoyan.mall.typeHandler.BooleanTypeHandler}
+      deleted = #{record.deleted,typeHandler=com.cskaoyan.mall.typehandler.BooleanTypeHandler}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -214,7 +214,7 @@
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="deleted != null">
-        deleted = #{deleted,typeHandler=com.cskaoyan.mall.typeHandler.BooleanTypeHandler},
+        deleted = #{deleted,typeHandler=com.cskaoyan.mall.typehandler.BooleanTypeHandler},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -225,7 +225,7 @@
       answer = #{answer,jdbcType=VARCHAR},
       add_time = #{addTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
-      deleted = #{deleted,typeHandler=com.cskaoyan.mall.typeHandler.BooleanTypeHandler}
+      deleted = #{deleted,typeHandler=com.cskaoyan.mall.typehandler.BooleanTypeHandler}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="findIssueList" resultMap="BaseResultMap">
