@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cskaoyan.mall.admin.mapper.GroupOnRulesMapper">
+  <resultMap id="BaseResultMap" type="com.cskaoyan.mall.admin.bean.promotion.GroupOnRules">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="goods_id" jdbcType="INTEGER" property="goodsId" />
+    <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="pic_url" jdbcType="VARCHAR" property="picUrl" />
+    <result column="discount" jdbcType="DECIMAL" property="discount" />
+    <result column="discount_member" jdbcType="INTEGER" property="discountMember" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="expire_time" jdbcType="TIMESTAMP" property="expireTime" />
+    <result column="deleted" jdbcType="BIT" property="deleted" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, goods_id, goods_name, pic_url, discount, discount_member, add_time, update_time, 
+    expire_time, deleted
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cskaoyan_mall_groupon_rules
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cskaoyan_mall_groupon_rules
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cskaoyan.mall.admin.bean.promotion.GroupOnRules">
+    insert into cskaoyan_mall_groupon_rules (id, goods_id, goods_name, 
+      pic_url, discount, discount_member, 
+      add_time, update_time, expire_time, 
+      deleted)
+    values (#{id,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER}, #{goodsName,jdbcType=VARCHAR}, 
+      #{picUrl,jdbcType=VARCHAR}, #{discount,jdbcType=DECIMAL}, #{discountMember,jdbcType=INTEGER}, 
+      #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{expireTime,jdbcType=TIMESTAMP}, 
+      #{deleted,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cskaoyan.mall.admin.bean.promotion.GroupOnRules">
+    insert into cskaoyan_mall_groupon_rules
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="goodsId != null">
+        goods_id,
+      </if>
+      <if test="goodsName != null">
+        goods_name,
+      </if>
+      <if test="picUrl != null">
+        pic_url,
+      </if>
+      <if test="discount != null">
+        discount,
+      </if>
+      <if test="discountMember != null">
+        discount_member,
+      </if>
+      <if test="addTime != null">
+        add_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="expireTime != null">
+        expire_time,
+      </if>
+      <if test="deleted != null">
+        deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="goodsId != null">
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsName != null">
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="picUrl != null">
+        #{picUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="discount != null">
+        #{discount,jdbcType=DECIMAL},
+      </if>
+      <if test="discountMember != null">
+        #{discountMember,jdbcType=INTEGER},
+      </if>
+      <if test="addTime != null">
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expireTime != null">
+        #{expireTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cskaoyan.mall.admin.bean.promotion.GroupOnRules">
+    update cskaoyan_mall_groupon_rules
+    <set>
+      <if test="goodsId != null">
+        goods_id = #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsName != null">
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="picUrl != null">
+        pic_url = #{picUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="discount != null">
+        discount = #{discount,jdbcType=DECIMAL},
+      </if>
+      <if test="discountMember != null">
+        discount_member = #{discountMember,jdbcType=INTEGER},
+      </if>
+      <if test="addTime != null">
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expireTime != null">
+        expire_time = #{expireTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cskaoyan.mall.admin.bean.promotion.GroupOnRules">
+    update cskaoyan_mall_groupon_rules
+    set goods_id = #{goodsId,jdbcType=INTEGER},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      pic_url = #{picUrl,jdbcType=VARCHAR},
+      discount = #{discount,jdbcType=DECIMAL},
+      discount_member = #{discountMember,jdbcType=INTEGER},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      expire_time = #{expireTime,jdbcType=TIMESTAMP},
+      deleted = #{deleted,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="findGroupOnRules" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from cskaoyan_mall_groupon_rules
+    <where>
+      <if test="goodsId != null">
+        goodsId = #{goodsId}
+      </if>
+    </where>
+    order by #{sort} #{order}
+  </select>
+  
+  <resultMap id="GOLRecord" type="com.cskaoyan.mall.admin.bean.promotion.GOListRecord">
+    <association property="rules" javaType="com.cskaoyan.mall.bean.promotion.GroupOnRules">
+      <result column="id" property="id"/>
+      <result column="goods_id" property="goodsId"/>
+      <result column="goods_name" property="goodsName"/>
+      <result column="pic_url" property="picUrl"/>
+      <result column="discount" property="discount"/>
+      <result column="discount_member" property="discountMember"/>
+      <result column="add_time" property="addTime"/>
+      <result column="update_time" property="updateTime"/>
+      <result column="expire_time" property="expireTime"/>
+      <result column="deleted" property="deleted"/>
+    </association>
+    <association property="groupon" javaType="com.cskaoyan.mall.bean.promotion.GroupOn">
+      <result column="id" property="id"/>
+      <result column="order_id" property="orderId"/>
+      <result column="groupon_id" property="grouponId"/>
+      <result column="rules_id" property="rulesId"/>
+      <result column="user_id" property="userId"/>
+      <result column="creator_user_id" property="creatorUserId"/>
+      <result column="add_time" property="addTime"/>
+      <result column="update_time" property="updateTime"/>
+      <result column="share_url" property="shareUrl"/>
+      <result column="payed" property="payed"/>
+      <result column="deleted" property="deleted"/>
+    </association>
+    <association property="goods" javaType="com.cskaoyan.mall.bean.Goods">
+      <result column="id" property="id"/>
+      <result column="goods_sn" property="goodsSn"/>
+      <result column="name" property="name"/>
+      <result column="category_id" property="categoryId"/>
+      <result column="brand_id" property="brandId"/>
+      <result column="gallery" property="gallery" typeHandler="com.cskaoyan.mall.typehandler.StringToStringArrary"/>
+      <result column="keywords" property="keywords"/>
+      <result column="brief" property="brief"/>
+      <result column="is_on_sale" property="isOnSale"/>
+      <result column="sort_order" property="sortOrder"/>
+      <result column="pic_url" property="picUrl"/>
+      <result column="share_url" property="shareUrl"/>
+      <result column="is_new" property="isNew"/>
+      <result column="is_hot" property="isHot"/>
+      <result column="unit" property="unit"/>
+      <result column="counter_price" property="counterPrice"/>
+      <result column="retail_price" property="retailPrice"/>
+      <result column="add_time" property="addTime"/>
+      <result column="update_time" property="updateTime"/>
+      <result column="deleted" property="deleted"/>
+      <result column="detail" property="detail"/>
+    </association>
+  </resultMap>
+
+  <select id="findActivityByTime" resultMap="GOLRecord">
+    select goods.id,
+           goods.goods_sn,
+           goods.name,
+           goods.category_id,
+           goods.brand_id,
+           goods.gallery,
+           goods.keywords,
+           goods.brief,
+           goods.is_on_sale,
+           goods.sort_order,
+           goods.pic_url,
+           goods.share_url,
+           goods.is_new,
+           goods.is_hot,
+           goods.unit,
+           goods.counter_price,
+           goods.retail_price,
+           goods.add_time,
+           goods.update_time,
+           goods.deleted,
+           rules.id,
+           rules.goods_id,
+           rules.goods_name,
+           rules.pic_url,
+           rules.discount,
+           rules.discount_member,
+           rules.add_time,
+           rules.update_time,
+           rules.expire_time,
+           rules.deleted,
+           groupon.id,
+           groupon.order_id,
+           groupon.groupon_id,
+           groupon.rules_id,
+           groupon.user_id,
+           groupon.creator_user_id,
+           groupon.add_time,
+           groupon.update_time,
+           groupon.share_url,
+           groupon.payed,
+           groupon.deleted
+    from cskaoyan_mall_groupon_rules rules
+    left join cskaoyan_mall_goods goods
+      on rules.goods_id = goods.id
+    left join cskaoyan_mall_groupon groupon
+      on groupon.rules_id = rules.id
+    <where>
+      <if test="goodsId != null">
+        goods.id = #{goodsId} and
+      </if>
+      now() between rules.add_time and rules.expire_time
+    </where>
+  </select>
+</mapper>
