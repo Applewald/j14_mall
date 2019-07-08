@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.cskaoyan.mall.admin.mapper.PermissionMapper">
-  <resultMap id="BaseResultMap" type="com.cskaoyan.mall.admin.bean.permission.Permission">
+<mapper namespace="com.cskaoyan.mall.admin.mapper.CollectMapper">
+  <resultMap id="BaseResultMap" type="com.cskaoyan.mall.admin.bean.Collect">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="role_id" jdbcType="INTEGER" property="roleId" />
-    <result column="permission" jdbcType="VARCHAR" property="permission" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="value_id" jdbcType="INTEGER" property="valueId" />
+    <result column="type" jdbcType="TINYINT" property="type" />
     <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="deleted" jdbcType="BIT" property="deleted" />
@@ -68,15 +69,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, role_id, permission, add_time, update_time, deleted
+    id, user_id, value_id, type, add_time, update_time, deleted
   </sql>
-  <select id="selectByExample" parameterType="com.cskaoyan.mall.admin.bean.permission.PermissionExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.cskaoyan.mall.admin.bean.CollectExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from cskaoyan_mall_permission
+    from cskaoyan_mall_collect
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -87,38 +88,41 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from cskaoyan_mall_permission
+    from cskaoyan_mall_collect
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from cskaoyan_mall_permission
+    delete from cskaoyan_mall_collect
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.cskaoyan.mall.admin.bean.permission.PermissionExample">
-    delete from cskaoyan_mall_permission
+  <delete id="deleteByExample" parameterType="com.cskaoyan.mall.admin.bean.CollectExample">
+    delete from cskaoyan_mall_collect
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.cskaoyan.mall.admin.bean.permission.Permission">
-    insert into cskaoyan_mall_permission (id, role_id, permission, 
-      add_time, update_time, deleted
-      )
-    values (#{id,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}, #{permission,jdbcType=VARCHAR}, 
-      #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}
-      )
+  <insert id="insert" parameterType="com.cskaoyan.mall.admin.bean.Collect">
+    insert into cskaoyan_mall_collect (id, user_id, value_id, 
+      type, add_time, update_time, 
+      deleted)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{valueId,jdbcType=INTEGER}, 
+      #{type,jdbcType=TINYINT}, #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{deleted,jdbcType=BIT})
   </insert>
-  <insert id="insertSelective" parameterType="com.cskaoyan.mall.admin.bean.permission.Permission">
-    insert into cskaoyan_mall_permission
+  <insert id="insertSelective" parameterType="com.cskaoyan.mall.admin.bean.Collect">
+    insert into cskaoyan_mall_collect
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
       </if>
-      <if test="roleId != null">
-        role_id,
+      <if test="userId != null">
+        user_id,
       </if>
-      <if test="permission != null">
-        permission,
+      <if test="valueId != null">
+        value_id,
+      </if>
+      <if test="type != null">
+        type,
       </if>
       <if test="addTime != null">
         add_time,
@@ -134,11 +138,14 @@
       <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="roleId != null">
-        #{roleId,jdbcType=INTEGER},
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
       </if>
-      <if test="permission != null">
-        #{permission,jdbcType=VARCHAR},
+      <if test="valueId != null">
+        #{valueId,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=TINYINT},
       </if>
       <if test="addTime != null">
         #{addTime,jdbcType=TIMESTAMP},
@@ -151,23 +158,26 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.cskaoyan.mall.admin.bean.permission.PermissionExample" resultType="java.lang.Long">
-    select count(*) from cskaoyan_mall_permission
+  <select id="countByExample" parameterType="com.cskaoyan.mall.admin.bean.CollectExample" resultType="java.lang.Long">
+    select count(*) from cskaoyan_mall_collect
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update cskaoyan_mall_permission
+    update cskaoyan_mall_collect
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.roleId != null">
-        role_id = #{record.roleId,jdbcType=INTEGER},
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=INTEGER},
       </if>
-      <if test="record.permission != null">
-        permission = #{record.permission,jdbcType=VARCHAR},
+      <if test="record.valueId != null">
+        value_id = #{record.valueId,jdbcType=INTEGER},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=TINYINT},
       </if>
       <if test="record.addTime != null">
         add_time = #{record.addTime,jdbcType=TIMESTAMP},
@@ -184,10 +194,11 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update cskaoyan_mall_permission
+    update cskaoyan_mall_collect
     set id = #{record.id,jdbcType=INTEGER},
-      role_id = #{record.roleId,jdbcType=INTEGER},
-      permission = #{record.permission,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      value_id = #{record.valueId,jdbcType=INTEGER},
+      type = #{record.type,jdbcType=TINYINT},
       add_time = #{record.addTime,jdbcType=TIMESTAMP},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       deleted = #{record.deleted,jdbcType=BIT}
@@ -195,14 +206,17 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.cskaoyan.mall.admin.bean.permission.Permission">
-    update cskaoyan_mall_permission
+  <update id="updateByPrimaryKeySelective" parameterType="com.cskaoyan.mall.admin.bean.Collect">
+    update cskaoyan_mall_collect
     <set>
-      <if test="roleId != null">
-        role_id = #{roleId,jdbcType=INTEGER},
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
       </if>
-      <if test="permission != null">
-        permission = #{permission,jdbcType=VARCHAR},
+      <if test="valueId != null">
+        value_id = #{valueId,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=TINYINT},
       </if>
       <if test="addTime != null">
         add_time = #{addTime,jdbcType=TIMESTAMP},
@@ -216,13 +230,30 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.cskaoyan.mall.admin.bean.permission.Permission">
-    update cskaoyan_mall_permission
-    set role_id = #{roleId,jdbcType=INTEGER},
-      permission = #{permission,jdbcType=VARCHAR},
+  <update id="updateByPrimaryKey" parameterType="com.cskaoyan.mall.admin.bean.Collect">
+    update cskaoyan_mall_collect
+    set user_id = #{userId,jdbcType=INTEGER},
+      value_id = #{valueId,jdbcType=INTEGER},
+      type = #{type,jdbcType=TINYINT},
       add_time = #{addTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="queryCollectByOrder" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from cskaoyan_mall_collect
+    <where>
+      <if test="userId != null">
+        `user_id` like concat('%',#{userId},'%')
+      </if>
+      <if test="valueId != null">
+        and
+        `value_id` like concat('%',#{valueId},'%')
+      </if>
+    </where>
+    order by #{sort} #{order}
+  </select>
 </mapper>

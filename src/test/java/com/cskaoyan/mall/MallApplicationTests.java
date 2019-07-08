@@ -1,9 +1,7 @@
 package com.cskaoyan.mall;
 
-import com.cskaoyan.mall.bean.Address;
-import com.cskaoyan.mall.bean.SearchHistory;
-import com.cskaoyan.mall.mapper.AddressMapper;
-import com.cskaoyan.mall.mapper.SearchHistoryMapper;
+import com.cskaoyan.mall.admin.bean.SearchHistory;
+import com.cskaoyan.mall.admin.mapper.SearchHistoryMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mybatis.spring.annotation.MapperScan;
@@ -15,7 +13,7 @@ import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@MapperScan(basePackages = "com.cskaoyan.mall.mapper.SearchHistoryMapper")
+@MapperScan(basePackages = "SearchHistoryMapper")
 public class MallApplicationTests {
 
     /*@Autowired
