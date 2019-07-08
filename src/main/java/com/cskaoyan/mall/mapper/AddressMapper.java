@@ -37,4 +37,6 @@ public interface AddressMapper {
                                       @Param("userId")String userId,
                                       @Param("sort")String sort,
                                       @Param("order")String order);
+
+    List<Address> getAddressList();
 }

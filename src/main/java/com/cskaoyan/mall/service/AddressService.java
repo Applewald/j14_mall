@@ -1,7 +1,6 @@
 package com.cskaoyan.mall.service;
 
 import com.cskaoyan.mall.bean.Address;
-import com.cskaoyan.mall.bean.User;
 import com.cskaoyan.mall.vo.PageVo;
 import com.cskaoyan.mall.vo.ResponseVo;
 
@@ -12,4 +11,6 @@ import com.cskaoyan.mall.vo.ResponseVo;
 public interface AddressService {
 
     ResponseVo<PageVo<Address>> list1(int page, int limit,String name, String userId, String sort, String order);
+
+    ResponseVo<Address> getAddressList();
 }

@@ -345,4 +345,8 @@
     order by #{sort} #{order}
   </select>
 
+  <select id="getAddressList" resultMap="BaseResultMap">
+    select
+
+  </select>
 </mapper>

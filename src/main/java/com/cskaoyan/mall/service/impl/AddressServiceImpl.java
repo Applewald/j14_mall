@@ -42,4 +42,21 @@ public class AddressServiceImpl implements AddressService {
         }
         return pageVoResponseVo;
     }
+
+    @Override
+    public ResponseVo<Address> getAddressList() {
+       List<Address>  addresses= addressMapper.getAddressList();
+        ResponseVo<Address> addressResponseVo = new ResponseVo<>();
+        if(addresses.size() > -1) {
+            addressResponseVo.setData((Address) addresses);
+            addressResponseVo.setErrmsg("成功");
+            addressResponseVo.setErrno(0);
+        }  else {
+            addressResponseVo.setErrmsg(null);
+            addressResponseVo.setErrmsg("失败");
+            addressResponseVo.setErrno(-1);
+        }
+        return  addressResponseVo;
+
+    }
 }

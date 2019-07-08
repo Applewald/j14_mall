@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * 与用户管理相关的controller全部写到一个controller下
  */
 @Controller
-
+@RequestMapping("admin")
 public class UserController {
     @Autowired
     UserService userService;
