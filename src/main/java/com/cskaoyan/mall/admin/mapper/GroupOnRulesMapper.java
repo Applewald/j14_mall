@@ -1,5 +1,6 @@
 package com.cskaoyan.mall.admin.mapper;
 
+import com.cskaoyan.mall.admin.bean.promotion.GOListRecord;
 import com.cskaoyan.mall.admin.bean.promotion.GroupOnRules;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -23,4 +24,8 @@ public interface GroupOnRulesMapper {
     List<GroupOnRules> findGroupOnRules(@Param("goodsId") Integer goodsId,
                                         @Param("sort") String sort,
                                         @Param("order") String order);
+    
+    List<GOListRecord> findActivityByTime(@Param("goodsId")Integer goodsId,
+                                          @Param("sort")String sort,
+                                          @Param("order")String order);
 }

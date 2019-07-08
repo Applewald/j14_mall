@@ -1,5 +1,6 @@
 package com.cskaoyan.mall.admin.service.impl;
 
+import com.cskaoyan.mall.admin.bean.promotion.GOListRecord;
 import com.cskaoyan.mall.admin.bean.promotion.GroupOnRules;
 import com.cskaoyan.mall.admin.mapper.GroupOnMapper;
 import com.cskaoyan.mall.admin.mapper.GroupOnRulesMapper;
@@ -39,5 +40,13 @@ public class GroupOnServiceImpl implements GroupOnService {
     @Override
     public int updateById(GroupOnRules groupOnRules) {
         return groupOnRulesMapper.updateByPrimaryKey(groupOnRules);
+    }
+    
+    @Override
+    public PageInfo<GOListRecord> findActivity(int page, int limit, Integer goodsId, String sort, String order) {
+        PageHelper.startPage(page,limit);
+        List<GOListRecord> list = groupOnRulesMapper.findActivityByTime(goodsId,sort,order);
+        PageInfo<GOListRecord> pageInfo = new PageInfo<>(list);
+        return pageInfo;
     }
 }
