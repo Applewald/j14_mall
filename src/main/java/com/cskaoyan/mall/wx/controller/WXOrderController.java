@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("wx/order")
-public class OrderController {
+public class WXOrderController {
     @Autowired
     OrderService orderService;
 
