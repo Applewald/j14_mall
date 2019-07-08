@@ -7,6 +7,7 @@ import com.cskaoyan.mall.vo.DataVo;
 
 
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -26,6 +27,8 @@ public interface RoleService {
     Role selectRoleByName(String name);
 
     List<AdminOptions> selectAllRoleIdAndName();
+
+    Set<String> queryByIds(Integer[] roleIds);
 
     DataVo selectAllRoleList(Integer page, Integer limit, String sort, String order, String name);
 

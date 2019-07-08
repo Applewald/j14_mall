@@ -9,7 +9,11 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -23,7 +27,6 @@ public class RoleServiceImpl implements RoleService {
 
     @Autowired
     RoleMapper roleMapper;
-
 
     @Override
     public int insertByRole(Role record) {
@@ -48,6 +51,23 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public List<AdminOptions> selectAllRoleIdAndName() {
         return roleMapper.selectAllRoleIdAndName();
+    }
+
+    @Override
+    public Set<String> queryByIds(Integer[] roleIds) {
+        Set<String> roles = new HashSet<>();
+        if(roleIds.length == 0){
+            return roles;
+        }
+
+        List<Integer> integers = Arrays.asList(roleIds);
+
+        for (Integer id : integers) {
+            Role role = roleMapper.selectRoleById(id);
+            roles.add(role.getName());
+        }
+
+        return roles;
     }
 
     @Override

@@ -33,4 +33,9 @@ public class LogServiceImpl implements LogService {
         dataVo.setTotal(pageInfo.getTotal());
         return dataVo;
     }
+
+    @Override
+    public void save(Log log) {
+
+    }
 }
