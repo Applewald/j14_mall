@@ -1,5 +1,7 @@
 package com.cskaoyan.mall.admin.bean.cart;
 
+import java.math.BigDecimal;
+
 /**
  * @author hx
  * @version 1.0
@@ -7,16 +9,16 @@ package com.cskaoyan.mall.admin.bean.cart;
  */
 
 public class CartTotal {
-    long checkedGoodsAmount;
+    BigDecimal checkedGoodsAmount;
     long checkedGoodsCount;
-    long goodsAmount;
+    BigDecimal goodsAmount;
     long goodsCount;
 
-    public long getCheckedGoodsAmount() {
+    public BigDecimal getCheckedGoodsAmount() {
         return checkedGoodsAmount;
     }
 
-    public void setCheckedGoodsAmount(long checkedGoodsAmount) {
+    public void setCheckedGoodsAmount(BigDecimal checkedGoodsAmount) {
         this.checkedGoodsAmount = checkedGoodsAmount;
     }
 
@@ -28,11 +30,11 @@ public class CartTotal {
         this.checkedGoodsCount = checkedGoodsCount;
     }
 
-    public long getGoodsAmount() {
+    public BigDecimal getGoodsAmount() {
         return goodsAmount;
     }
 
-    public void setGoodsAmount(long goodsAmount) {
+    public void setGoodsAmount(BigDecimal goodsAmount) {
         this.goodsAmount = goodsAmount;
     }
 
@@ -47,7 +49,7 @@ public class CartTotal {
     public CartTotal() {
     }
 
-    public CartTotal(long checkedGoodsAmount, long checkedGoodsCount, long goodsAmount, long goodsCount) {
+    public CartTotal(BigDecimal checkedGoodsAmount, long checkedGoodsCount, BigDecimal goodsAmount, long goodsCount) {
         this.checkedGoodsAmount = checkedGoodsAmount;
         this.checkedGoodsCount = checkedGoodsCount;
         this.goodsAmount = goodsAmount;
