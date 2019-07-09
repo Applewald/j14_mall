@@ -47,7 +47,7 @@ public class AuthController {
     @Autowired
     com.cskaoyan.mall.service.PermissionService permissionService;
 
-    @Log(value = "登录")
+    //@Log(value = "登录")
     @PostMapping("/auth/login")
     public Object login(@RequestBody String body) {
 
@@ -93,7 +93,7 @@ public class AuthController {
         return ResponseVo.ok(result);
     }
 
-    @Log(value = "退出")
+    //@Log(value = "退出")
     @PostMapping("/auth/logout")
     public Object logout() {
         Subject currentUser = SecurityUtils.getSubject();

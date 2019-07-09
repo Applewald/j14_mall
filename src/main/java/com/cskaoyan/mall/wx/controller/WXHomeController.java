@@ -41,6 +41,9 @@ public class WXHomeController {
     @Autowired
     CouponService couponService;
 
+    @Autowired
+    GoodsCommentService goodsCommentService;
+
     @GetMapping("/home/index")
     public Object homeIndex() {
         List<Ad> ads = adService.selectAllAd();
@@ -70,8 +73,12 @@ public class WXHomeController {
 
     @GetMapping("/comment/list")
     public Object commentList(Integer valueId, Integer type, Integer size, Integer page, Integer showType) {
+        HashMap<Object, Object> map = new HashMap<>();
+        List<Object> list = goodsCommentService.selectAllCommentsList(valueId, type, size, page, showType);
+        map.put("count", list.size());
+        map.put("currentPage", page);
+        map.put("data", list);
 
-
-        return null;
+        return ResponseVo.ok(map);
     }
 }

@@ -47,8 +47,10 @@ public class GoodsCommentServiceImpl implements GoodsCommentService {
         // 默认无图
         List<GoodsComment> goodsComments = goodsCommentMapper.selectAllCommentsList(valueId, type);
 
+        // 如果有图
         if (showType == 1) {
-            // showType = 1 有图
+
+            // 筛选有图的
             List<GoodsComment> showType1 = new ArrayList<>();
 
             for (GoodsComment goodsComment : goodsComments) {
@@ -78,8 +80,26 @@ public class GoodsCommentServiceImpl implements GoodsCommentService {
             }
         } else {
 
+            for (GoodsComment goodsComment : goodsComments) {
+                Map<Object, Object> map = new HashMap<>();
+
+                User user = userMapper.selectByPrimaryKey(goodsComment.getUserId());
+
+                Map<Object, Object> userInfoMap = new HashMap<>();
+                userInfoMap.put("nickName", user.getNickname());
+                userInfoMap.put("avatarUrl", user.getAvatar());
+
+                String[] picUrls = goodsComment.getPicUrls();
+
+                map.put("addTime", goodsComment.getAddTime());
+                map.put("content", goodsComment.getContent());
+                map.put("picList", picUrls);
+                map.put("userInfo", userInfoMap);
+
+                dataLists.add(map);
+            }
         }
 
-        return null;
+        return dataLists;
     }
 }
