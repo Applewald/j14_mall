@@ -292,11 +292,12 @@ public class GoodsServiceImpl implements GoodsService {
                 names.add(specifications.get(0).getSpecification());
             }
 
-            String[] nameArray = (String[]) names.toArray();
+
+            Object[] nameArray =  names.toArray();
             for (int j = 0 ; j < nameArray.length;j++){
                 SpecificationVo specificationVo = new SpecificationVo();
-                specificationVo.setName(nameArray[j]);
-                specificationVo.setValueList(goodsMapper.findSpecificationsByGoodsIdAndSname(id,nameArray[j]));
+                specificationVo.setName((String) nameArray[j]);
+                specificationVo.setValueList(goodsMapper.findSpecificationsByGoodsIdAndSname(id,(String) nameArray[j]));
             }
         }
 
