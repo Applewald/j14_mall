@@ -31,6 +31,10 @@ public interface CartMapper {
     int updateCheckedByUidAndPids(@Param("userId") Integer userId,@Param("isChecked") Integer isChecked,
                                   @Param("productIds") List<Integer> productIds);
 
+//3
+   /* int getCartCount(@Param("userId") Integer userId, @Param("isChecked") Integer isChecked,
+                     @Param("productIds")  List<Integer> productIds);
+*/
 //*************************************************************************
 
     //

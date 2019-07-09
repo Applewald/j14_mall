@@ -58,4 +58,12 @@ public class CartServiceImpl implements CartService {
     public int updateCartChecked(Integer userId, Integer isChecked, List<Integer> productIds) {
         return cartMapper.updateCheckedByUidAndPids(userId,isChecked,productIds);
     }
+
+    //333333333333 add添加商品到购物车
+
+
+ /*   @Override
+    public int getCartCount(Integer userId, Integer isChecked, List<Integer> productIds) {
+        return cartMapper.getCartCount(userId,isChecked,productIds);
+    }*/
 }
