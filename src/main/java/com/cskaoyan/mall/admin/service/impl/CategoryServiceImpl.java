@@ -1,5 +1,7 @@
 package com.cskaoyan.mall.admin.service.impl;
 
+
+import com.cskaoyan.mall.admin.bean.wxhome.Channel;
 import com.cskaoyan.mall.admin.vo.ResponseVo;
 import com.cskaoyan.mall.admin.bean.Category;
 import com.cskaoyan.mall.admin.mapper.CategoryMapper;
@@ -8,9 +10,14 @@ import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -94,6 +101,13 @@ public class CategoryServiceImpl implements CategoryService {
             vo.setErrmsg("失败");
         }
         return vo;
+    }
+
+
+    @Override
+    public List<Channel> selectAllChannel() {
+        List<Channel> channels = categoryMapper.selectAllChannel();
+        return channels;
     }
 
 

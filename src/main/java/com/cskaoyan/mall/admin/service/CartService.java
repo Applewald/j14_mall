@@ -9,7 +9,7 @@ import com.cskaoyan.mall.admin.bean.cart.CartIndex;
  */
 
 public interface CartService {
-    CartIndex queryCartIndex();
+    CartIndex queryCartIndex(Integer userId);
 
     int addCart(int goodsId, int number, int productId);
 }

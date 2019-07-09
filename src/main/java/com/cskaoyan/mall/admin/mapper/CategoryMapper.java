@@ -3,6 +3,7 @@ package com.cskaoyan.mall.admin.mapper;
 
 import com.cskaoyan.mall.admin.bean.Category;
 import com.cskaoyan.mall.admin.bean.CategoryExample;
+import com.cskaoyan.mall.admin.bean.wxhome.Channel;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -13,6 +14,7 @@ import java.util.List;
 @Repository
 @JsonIgnoreProperties(value={"addTime","deleted","pid","sortOrder","updateTime"}) //希望动态过滤掉的属性
 public interface CategoryMapper {
+
     long countByExample(CategoryExample example);
 
     int deleteByExample(CategoryExample example);
@@ -41,12 +43,16 @@ public interface CategoryMapper {
 
     List<Category> findCategoryL1();
 
+    @Select("select * from cskaoyan_mall_category where deleted = 0")
+    List<Category> selectAllCategory();
+
+    @Select("select id, name, icon_url as iconUrl from cskaoyan_mall_category where level = 'L1' and deleted = 0")
+    List<Channel> selectAllChannel();
+
     List<Category> findL2CategorysByL1Id(@Param("L1Id") Integer id);
 
     List<Category> findL1CategoryList();
 
-
     Category findCategoryById(@Param("id") Integer currentId);
-
 
 }

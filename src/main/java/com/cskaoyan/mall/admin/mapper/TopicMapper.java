@@ -1,10 +1,13 @@
 package com.cskaoyan.mall.admin.mapper;
 
 import com.cskaoyan.mall.admin.bean.promotion.Topic;
+import com.cskaoyan.mall.admin.bean.wxhome.TopicList;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author 河鲍鱼
@@ -26,4 +29,13 @@ public interface TopicMapper {
                             @Param("subtitle") String subtitle,
                             @Param("sort") String sort,
                             @Param("order") String order);
+
+
+    @Select("select id, title, subtitle, price, read_count as readCount, pic_url as picUrl from cskaoyan_mall_topic where deleted = 0")
+    List<TopicList> selectAllTopicList();
+
+    
+    /**以下为前台方法*/
+    List<Map> getTopis();
+
 }
