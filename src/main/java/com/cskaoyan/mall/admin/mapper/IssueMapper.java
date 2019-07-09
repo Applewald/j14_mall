@@ -33,4 +33,6 @@ public interface IssueMapper {
     int updateByPrimaryKey(Issue record);
 
     List<Issue> findIssueList(@Param("question")String question,@Param("sort") String sort,@Param("order") String order);
+
+    List<Issue> findAllIssues();
 }

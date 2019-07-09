@@ -38,4 +38,6 @@ public interface BrandMapper {
 
     @Select("select * from cskaoyan_mall_brand")
     List<BrandList> selectAllBrand();
+
+    Brand findBrandByBrandId(@Param("id") Integer brandId);
 }

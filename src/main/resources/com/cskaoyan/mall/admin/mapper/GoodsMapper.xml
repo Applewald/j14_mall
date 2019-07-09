@@ -36,6 +36,13 @@
         <result column="deleted" property="deleted"/>
     </resultMap>
 
+    <select id="findSpecificationsByGoodsIdAndSname" resultMap="specifications">
+        select id, goods_id, specification,
+    `value`, pic_url, add_time, update_time,deleted
+    from cskaoyan_mall_goods_specification
+    where goods_id = #{goodsId} and  deleted = 0 and specification = #{sname}
+    </select>
+
     <select id="findSpecificationsByGoodsId" resultMap="specifications">
     select id, goods_id, specification,
     `value`, pic_url, add_time, update_time,deleted

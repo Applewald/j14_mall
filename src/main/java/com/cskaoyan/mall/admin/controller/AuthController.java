@@ -28,7 +28,7 @@ import java.util.Set;
  * @description 登录、注销
  */
 @RestController
-@RequestMapping("/admin/auth")
+//@RequestMapping("/admin/auth")
 public class AuthController {
 
     @Autowired
