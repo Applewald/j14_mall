@@ -266,6 +266,18 @@ public class GoodsServiceImpl implements GoodsService {
         return data;
     }
 
+    @Override
+    public List<GoodsList> getRelatedGoodsById(Integer id) {
+        int categoryId = goodsMapper.findGoodsCategoryById(id);
+        List<GoodsList> goodsLists = goodsMapper.selectAllGoodsListByCid(categoryId);
+        if (goodsLists.size() > 6){
+            List<GoodsList> newList = goodsLists.subList(0,6);
+            return newList;
+        }else {
+            return goodsLists;
+        }
+
+    }
 
     @Override
     public Map<Object, Object> wxGoodsDetailsById(Integer id) {
@@ -291,7 +303,6 @@ public class GoodsServiceImpl implements GoodsService {
             for (int i = 0; i < specifications.size(); i++) {
                 names.add(specifications.get(0).getSpecification());
             }
-
 
             Object[] nameArray =  names.toArray();
             for (int j = 0 ; j < nameArray.length;j++){
