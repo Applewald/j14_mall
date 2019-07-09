@@ -70,4 +70,10 @@ public class UserServiceImpl implements UserService {
     public int userTotal() {
         return userMapper.userTotal();
     }
+
+
+    @Override
+    public User findUserInfoByUsernameAndPassword(String username, String password) {
+        return userMapper.findUserInfoByUsernameAndPassword(username,password);
+    }
 }
