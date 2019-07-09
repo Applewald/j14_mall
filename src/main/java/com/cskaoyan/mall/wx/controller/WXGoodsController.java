@@ -93,6 +93,12 @@ public class WXGoodsController {
         return BaseRespVo.ok(data);
     }
 
+    @RequestMapping("goods/detail")
+    public BaseRespVo goodsDetail (Integer id){
+        Map<Object,Object> data = new HashMap<>();
+        data = goodsService.wxGoodsDetailsById(id);
+        return BaseRespVo.ok(data);
+    }
 
 
 

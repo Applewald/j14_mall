@@ -4,7 +4,6 @@ import com.cskaoyan.mall.admin.bean.promotion.Topic;
 import com.cskaoyan.mall.admin.bean.wxhome.TopicList;
 import com.github.pagehelper.PageInfo;
 
-
 import java.util.List;
 
 import java.util.Map;
@@ -21,11 +20,12 @@ public interface TopicService {
     int deleteByTopicId(Topic topic);
 
     List<TopicList> selectAllTopicList();
-
-
+    
     /**以下为前台方法*/
     PageInfo<Map> getTopics(int page, int size);
     
     Topic getTopicById(Integer id);
+    
+    List<Topic> getRelatedTopic(int id);
 
 }

@@ -25,4 +25,13 @@ public class WxDataVo<T> {
     public void setData(List<T> data) {
         this.data = data;
     }
+
+    public WxDataVo() {
+    }
+
+
+    public WxDataVo(Long count, List<T> data) {
+        this.count = count;
+        this.data = data;
+    }
 }

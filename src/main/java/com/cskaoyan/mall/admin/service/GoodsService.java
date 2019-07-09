@@ -46,4 +46,5 @@ public interface GoodsService {
     List<Object> selectAllGroupOnList();
 
 
+    Map<Object, Object> wxGoodsDetailsById(Integer id);
 }

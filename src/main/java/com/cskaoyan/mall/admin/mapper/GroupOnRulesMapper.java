@@ -3,10 +3,10 @@ package com.cskaoyan.mall.admin.mapper;
 import com.cskaoyan.mall.admin.bean.promotion.GOListRecord;
 import com.cskaoyan.mall.admin.bean.promotion.GroupOnRules;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface GroupOnRulesMapper {
@@ -29,6 +29,8 @@ public interface GroupOnRulesMapper {
     List<GOListRecord> findActivityByTime(@Param("goodsId")Integer goodsId,
                                           @Param("sort")String sort,
                                           @Param("order")String order);
+    
+    List<Map> getGroupOnList();
 
     List<GroupOnRules> selectAllGroupOnRules();
 }

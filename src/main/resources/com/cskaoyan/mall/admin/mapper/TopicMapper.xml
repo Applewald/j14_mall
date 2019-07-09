@@ -101,4 +101,16 @@
            title
     from cskaoyan_mall_topic
   </select>
+
+  <select id="selectRelatedTopic" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from cskaoyan_mall_topic
+    where id in
+    <foreach collection="ids" separator="," open="(" close=")" item="id">
+      #{id}
+    </foreach>
+  </select>
 </mapper>

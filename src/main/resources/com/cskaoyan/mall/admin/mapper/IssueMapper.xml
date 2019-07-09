@@ -239,4 +239,10 @@
     </where>
     order by #{sort} #{order}
   </select>
+
+  <select id="findAllIssues" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cskaoyan_mall_issue
+  </select>
 </mapper>

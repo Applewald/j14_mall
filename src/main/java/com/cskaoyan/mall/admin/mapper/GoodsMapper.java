@@ -81,7 +81,7 @@ public interface GoodsMapper {
     GroupOnGood selectGroupOnGoodByGoodId(@Param("id") Integer id);
 
 
-
+    List<Specification> findSpecificationsByGoodsIdAndSname(@Param("goodsId") Integer id, @Param("sname") String s);
 }
 
 
