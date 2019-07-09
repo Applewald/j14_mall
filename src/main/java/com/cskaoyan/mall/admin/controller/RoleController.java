@@ -18,7 +18,7 @@ import java.util.List;
  * @description 系统管理 - 角色管理 - controller层
  */
 @RestController
-@RequestMapping("admin/role")
+@RequestMapping("/admin/role")
 public class RoleController {
 
     @Autowired

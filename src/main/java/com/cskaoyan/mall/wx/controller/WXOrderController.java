@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
  * date: 2019-07-03 19:58
  * description:
  */
-@RestController
+/*@RestController
 @RequestMapping("wx/order")
 public class WXOrderController {
     @Autowired
@@ -29,4 +29,4 @@ public class WXOrderController {
         return vo;
     }
 
-}
+}*/

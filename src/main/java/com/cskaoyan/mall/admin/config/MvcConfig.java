@@ -1,4 +1,4 @@
-package com.cskaoyan.mall.config;
+package com.cskaoyan.mall.admin.config;
 
 import com.cskaoyan.mall.admin.converter.DateConverter;
 import org.springframework.beans.factory.annotation.Autowired;

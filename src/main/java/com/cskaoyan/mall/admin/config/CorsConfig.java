@@ -1,4 +1,4 @@
-package com.cskaoyan.mall.config;
+package com.cskaoyan.mall.admin.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
