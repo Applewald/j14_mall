@@ -4,9 +4,7 @@ import com.cskaoyan.mall.admin.bean.permission.Permission;
 import com.cskaoyan.mall.admin.bean.permission.PermissionExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
-@Repository
 public interface PermissionMapper {
     long countByExample(PermissionExample example);
 

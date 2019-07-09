@@ -4,6 +4,8 @@ import com.cskaoyan.mall.admin.bean.promotion.GOListRecord;
 import com.cskaoyan.mall.admin.bean.promotion.GroupOnRules;
 import com.github.pagehelper.PageInfo;
 
+import java.util.Map;
+
 /**
  * @author 河鲍鱼
  * 建立于 2019/7/5 20:38
@@ -16,4 +18,6 @@ public interface GroupOnService {
     int updateById(GroupOnRules groupOnRules);
     
     PageInfo<GOListRecord> findActivity(int page, int limit, Integer goodsId, String sort, String order);
+    
+    PageInfo<Map> getGroupOnList(int page, int size);
 }

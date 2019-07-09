@@ -10,4 +10,6 @@ import java.util.List;
 public interface LogMapper {
 
     List<Log> selectAllLogList(@Param("sort") String sort, @Param("order") String order, @Param("admin") String name);
+
+    void insert(@Param("log") Log log);
 }

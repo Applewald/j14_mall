@@ -370,15 +370,26 @@ public class GoodsServiceImpl implements GoodsService {
             Map<Object, Object> map = new HashMap<>();
 
             Integer id = channels.get(i).getId();
-            List<GoodsList> goodsLists = goodsMapper.selectAllGoodsListByCid(id);
+
+            List<Category> l2CategorysByL1Id = categoryMapper.findL2CategorysByL1Id(id);
+
+            ArrayList<GoodsList> totalGoodsLists = new ArrayList<>();
+
+            for (Category category : l2CategorysByL1Id) {
+                List<GoodsList> goodsLists = goodsMapper.selectAllGoodsListByCid(category.getId());
+                totalGoodsLists.addAll(goodsLists);
+            }
+
+
             map.put("id", channels.get(i).getId());
             map.put("name", channels.get(i).getName());
-            if (goodsLists.size() > 5 ) {
-                List<GoodsList> goodsLists1 = goodsLists.subList(0, 4);
+            if (totalGoodsLists.size() > 5 ) {
+                List<GoodsList> goodsLists1 = totalGoodsLists.subList(0, 4);
                 map.put("goodsList", goodsLists1);
             } else {
-                map.put("goodsList", goodsLists);
+                map.put("goodsList", totalGoodsLists);
             }
+
             mapList.add(map);
         }
 
