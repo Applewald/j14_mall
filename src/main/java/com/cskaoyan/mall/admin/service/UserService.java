@@ -3,6 +3,7 @@ package com.cskaoyan.mall.admin.service;
 import com.cskaoyan.mall.admin.bean.User;
 import com.cskaoyan.mall.admin.vo.ResponseVo;
 import com.cskaoyan.mall.admin.vo.PageVo;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * author : summer
@@ -16,4 +17,6 @@ public interface UserService {
 
 
     int userTotal();
+
+    User findUserInfoByUsernameAndPassword( String username, String password);
 }

@@ -410,4 +410,15 @@
   <select id="userTotal" resultType="_int">
     select count(id) from cskaoyan_mall_user
   </select>
+
+  <select id="findUserInfoByUsernameAndPassword" resultMap="BaseResultMap">
+    select id, username, password,
+      gender, birthday, last_login_time,
+      last_login_ip, user_level, nickname,
+      mobile, avatar, weixin_openid,
+      status, add_time, update_time,
+      deleted
+      from cskaoyan_mall_user
+      where username = #{username}  and password = #{password} and deleted = 0
+  </select>
 </mapper>

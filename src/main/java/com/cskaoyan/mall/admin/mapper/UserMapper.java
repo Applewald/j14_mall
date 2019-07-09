@@ -43,4 +43,5 @@ public interface UserMapper {
 
     int userTotal();
 
+    User findUserInfoByUsernameAndPassword(@Param("username") String username,@Param("password") String password);
 }
