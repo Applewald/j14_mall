@@ -18,6 +18,8 @@ public interface RoleMapper {
 
     Role selectRoleByName(@Param("name") String name);
 
+    Role selectRoleById(@Param("id") Integer id);
+
     List<AdminOptions> selectAllRoleIdAndName();
 
     List<Role> selectAllRole(@Param("sort") String sort, @Param("order") String order, @Param("name") String name);

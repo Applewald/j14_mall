@@ -1,6 +1,5 @@
 package com.cskaoyan.mall.wx.controller;
 
-import com.cskaoyan.mall.admin.bean.OrderGoods;
 import com.cskaoyan.mall.admin.service.BrandService;
 import com.cskaoyan.mall.admin.service.OrderService;
 import com.cskaoyan.mall.admin.service.RegionService;
@@ -10,12 +9,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * author xiaolong
  * date: 2019-07-03 19:58
  * description:
  */
 @RestController
+@RequestMapping("wx/order")
 public class WXOrderController {
     @Autowired
     RegionService regionService;
@@ -49,12 +51,13 @@ public class WXOrderController {
         return vo;
     }
 
-    @RequestMapping("wx/order/submit")
-    public ResponseVo orderSubmit(int id) {
+    /*@RequestMapping("wx/order/submit")
+    public ResponseVo orderSubmit(HttpServletRequest request) {
+        String tokenKey = request.getHeader("X-Litemall-Token");
+        Integer userId = UserTokenManager.getUserId(tokenKey);
         ResponseVo vo = brandService.findBrandDetail(id);
         return vo;
-    }
-
+    }*/
     //OrderSubmit: WxApiRoot + 'order/submit', // 提交订单
     //OrderPrepay: WxApiRoot + 'order/prepay', // 订单的预支付会话
     //OrderList: WxApiRoot + 'order/list', //订单列表
@@ -69,7 +72,7 @@ public class WXOrderController {
     @Autowired
     OrderService orderService;
 
-    @RequestMapping("order/list")
+   /* @RequestMapping("order/list")
     public ResponseVo orderList(int page, int limit, String sort, String order, Integer userId, String orderSn, Integer[] orderStatusArray) {
         ResponseVo vo = orderService.orderList(page, limit, sort, order, userId, orderSn, orderStatusArray);
         return vo;
@@ -79,6 +82,6 @@ public class WXOrderController {
     public ResponseVo orderDetail(int id) {
         ResponseVo vo = orderService.orderDetail(id);
         return vo;
-    }
+    }*/
 
 }

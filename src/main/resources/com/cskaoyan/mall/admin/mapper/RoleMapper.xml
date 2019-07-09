@@ -29,6 +29,12 @@
         where `name` = #{name} and deleted = 0
     </select>
 
+    <!--按id查询-->
+    <select id="selectRoleById" resultMap="selectRole" >
+        select * from cskaoyan_mall_role
+        where `id` = #{id} and deleted = 0 and enabled = 1
+    </select>
+
     <!--添加角色-->
     <insert id="insert" >
         insert into cskaoyan_mall_role (`name`, `desc`, add_time, update_time)

@@ -95,8 +95,7 @@ public class BrandServiceImpl implements BrandService {
         List<Map> brandList = brandMapper.findBrandListMap();
         PageInfo pageInfo = new PageInfo(brandList);
         //int totalPages = ((int) Math.ceil(1.0 * pageInfo.getTotal() / size));
-        int totalPages = pageInfo.getPages();
-        map.put("totalPages", totalPages);
+        map.put("totalPages", pageInfo.getPages());
         map.put("brandList", pageInfo.getList());
         ResponseVo<Object> vo = new ResponseVo<>();
         vo.setData(map);
@@ -110,7 +109,7 @@ public class BrandServiceImpl implements BrandService {
         Brand brand = brandMapper.findBrandDetailById(id);
         ResponseVo<Object> vo = new ResponseVo<>();
         Map map = new HashMap();
-        map.put("brand",brand);
+        map.put("brand", brand);
         vo.setData(map);
         vo.setErrno(0);
         vo.setErrmsg("成功");

@@ -1,7 +1,10 @@
 package com.cskaoyan.mall.admin.aspect;
 
+
 import com.cskaoyan.mall.admin.bean.log.Log;
+
 import com.cskaoyan.mall.admin.service.LogService;
+
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -52,24 +55,22 @@ public class LogAspect {
         }
 
         HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
-
         // 获取主机ip
         String ip = request.getRemoteHost();
-        log.setIp(ip);
+        //Subject currentUser = SecurityUtils.getSubject();
 
-        // 记录当前时间
-        log.setAddTime(new Date());
+        //Admin admin = (Admin) currentUser.getPrincipal();
+        //log.setAdmin(admin.getUsername());
 
         // 操作类别，默认为安全操作
-        log.setType(1);
+        //log.setType(1);
+        log.setAdmin("admin123");
+        log.setIp(ip);
+        log.setAddTime(new Date());
 
-
-
-        // 获取请求的类名
-        String className = joinPoint.getTarget().getClass().getName();
 
 
         // 调用service保存到数据库
-        //logService.save(log);
+        logService.save(log);
     }
 }
