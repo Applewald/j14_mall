@@ -26,4 +26,6 @@ public interface CategoryService {
     Map<Object, Object> findCategoryGoods();
 
     Map<Object, Object> QueryCurrentCategory(Integer currentId);
+
+    Map<Object, Object> goodsCategory(Integer id);
 }
