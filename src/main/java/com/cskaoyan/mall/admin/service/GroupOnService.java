@@ -4,6 +4,7 @@ import com.cskaoyan.mall.admin.bean.promotion.GOListRecord;
 import com.cskaoyan.mall.admin.bean.promotion.GroupOnRules;
 import com.github.pagehelper.PageInfo;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,4 +21,8 @@ public interface GroupOnService {
     PageInfo<GOListRecord> findActivity(int page, int limit, Integer goodsId, String sort, String order);
     
     PageInfo<Map> getGroupOnList(int page, int size);
+    
+    List<Map> getMyGroupOnList(int showType);
+    
+    Map<Object,Object> getMyGroupOnDetail(Integer grouponId);
 }

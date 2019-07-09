@@ -33,4 +33,8 @@ public interface GroupOnRulesMapper {
     List<Map> getGroupOnList();
 
     List<GroupOnRules> selectAllGroupOnRules();
+    
+    List<Map> getMyGroupOnList(@Param("show") int showType);
+    
+    Map<Object,Object> getMyGroupOnDetail(@Param("id")Integer grouponId);
 }
