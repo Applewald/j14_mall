@@ -1,15 +1,23 @@
 package com.cskaoyan.mall.admin.service.impl;
 
+
+import com.cskaoyan.mall.admin.bean.wxhome.Channel;
 import com.cskaoyan.mall.admin.vo.ResponseVo;
 import com.cskaoyan.mall.admin.bean.Category;
 import com.cskaoyan.mall.admin.mapper.CategoryMapper;
 import com.cskaoyan.mall.admin.service.CategoryService;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -97,6 +105,13 @@ public class CategoryServiceImpl implements CategoryService {
 
 
     @Override
+    public List<Channel> selectAllChannel() {
+        List<Channel> channels = categoryMapper.selectAllChannel();
+        return channels;
+    }
+
+
+    @Override
     public Map<Object, Object> findCategoryGoods() {
         Map<Object,Object> data = new HashMap<>();
 
@@ -149,4 +164,7 @@ public class CategoryServiceImpl implements CategoryService {
         return data;
 
     }
+
+
+
 }

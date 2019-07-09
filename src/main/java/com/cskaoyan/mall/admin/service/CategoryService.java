@@ -1,9 +1,14 @@
 package com.cskaoyan.mall.admin.service;
 
 import com.cskaoyan.mall.admin.bean.Category;
+import com.cskaoyan.mall.admin.bean.wxhome.Channel;
 import com.cskaoyan.mall.admin.vo.ResponseVo;
 
+
+import java.util.List;
+
 import java.util.Map;
+
 
 /**
  * author: xiaolong
@@ -23,9 +28,14 @@ public interface CategoryService {
 
     ResponseVo insert(Category category);
 
+
+    List<Channel> selectAllChannel();
+
     Map<Object, Object> findCategoryGoods();
 
     Map<Object, Object> QueryCurrentCategory(Integer currentId);
 
     Map<Object, Object> goodsCategory(Integer id);
+
+
 }

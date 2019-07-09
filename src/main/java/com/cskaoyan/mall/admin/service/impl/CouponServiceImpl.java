@@ -1,5 +1,6 @@
 package com.cskaoyan.mall.admin.service.impl;
 
+import com.cskaoyan.mall.admin.bean.wxhome.CouponList;
 import com.cskaoyan.mall.admin.bean.promotion.Coupon;
 import com.cskaoyan.mall.admin.bean.promotion.CouponUser;
 import com.cskaoyan.mall.admin.mapper.CouponMapper;
@@ -55,5 +56,10 @@ public class CouponServiceImpl implements CouponService {
         List<CouponUser> list = couponMapper.getCouponUserByCouponId(couponId,userId,status,sort,order);
         PageInfo<CouponUser> pageInfo = new PageInfo<>(list);
         return pageInfo;
+    }
+
+    @Override
+    public List<CouponList> selectAllCouponList() {
+        return couponMapper.selectAllCouponList();
     }
 }

@@ -293,4 +293,11 @@
     from cskaoyan_mall_groupon_rules gr
     left join cskaoyan_mall_goods good on gr.goods_id = good.id
   </select>
+
+
+  <select id="selectAllGroupOnRules" resultType="com.cskaoyan.mall.admin.bean.promotion.GroupOnRules" >
+    select goods_id as goodsId, discount, discount_member as discountMember
+    from cskaoyan_mall_groupon_rules r LEFT JOIN cskaoyan_mall_goods g on r.goods_id = g.id
+    where r.deleted = 0
+  </select>
 </mapper>

@@ -3,7 +3,9 @@ package com.cskaoyan.mall.admin.mapper;
 
 import com.cskaoyan.mall.admin.bean.Brand;
 import com.cskaoyan.mall.admin.bean.BrandExample;
+import com.cskaoyan.mall.admin.bean.wxhome.BrandList;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -34,4 +36,8 @@ public interface BrandMapper {
 
     List<Brand> findBrandList(@Param("id") Integer id, @Param("name") String name, @Param("sort") String sort, @Param("order") String order);
 
+    @Select("select * from cskaoyan_mall_brand")
+    List<BrandList> selectAllBrand();
+
+    Brand findBrandByBrandId(@Param("id") Integer brandId);
 }

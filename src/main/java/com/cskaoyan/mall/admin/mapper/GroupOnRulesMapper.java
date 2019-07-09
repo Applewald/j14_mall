@@ -31,5 +31,6 @@ public interface GroupOnRulesMapper {
                                           @Param("order")String order);
     
     List<Map> getGroupOnList();
-    
+
+    List<GroupOnRules> selectAllGroupOnRules();
 }

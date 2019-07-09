@@ -1,29 +1,31 @@
 package com.cskaoyan.mall.admin.service.impl;
 
-import com.cskaoyan.mall.admin.bean.Category;
+
+import com.cskaoyan.mall.admin.bean.*;
+import com.cskaoyan.mall.admin.bean.promotion.GroupOnRules;
+import com.cskaoyan.mall.admin.bean.wxhome.*;
+import com.cskaoyan.mall.admin.mapper.*;
+import com.cskaoyan.mall.admin.service.CategoryService;
 import com.cskaoyan.mall.admin.mapper.CatAndBrandDataMapper;
 import com.cskaoyan.mall.admin.mapper.CategoryMapper;
 import com.cskaoyan.mall.admin.mapper.GoodsMapper;
 import com.cskaoyan.mall.admin.vo.DataVo;
 import com.cskaoyan.mall.admin.bean.catandbrand.CatAndBrandData;
-import com.cskaoyan.mall.admin.bean.Goods;
 import com.cskaoyan.mall.admin.bean.creategoods.Attribute;
 import com.cskaoyan.mall.admin.bean.creategoods.CreateGoods;
 import com.cskaoyan.mall.admin.bean.creategoods.Product;
 import com.cskaoyan.mall.admin.bean.creategoods.Specification;
-import com.cskaoyan.mall.admin.mapper.CreateStorgeMapper;
 import com.cskaoyan.mall.admin.service.GoodsService;
-import com.cskaoyan.mall.admin.bean.CreateStorge;
+import com.cskaoyan.mall.admin.vo.SpecificationVo;
+import com.cskaoyan.mall.admin.vo.WxDataVo;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.math.BigDecimal;
+import java.util.*;
 
 @Service
 public class GoodsServiceImpl implements GoodsService {
@@ -38,7 +40,23 @@ public class GoodsServiceImpl implements GoodsService {
     CreateStorgeMapper createStorgeMapper;
 
     @Autowired
+    CategoryService categoryService;
+
+    @Autowired
+    GroupOnRulesMapper rulesMapper;
+
+    @Autowired
     CategoryMapper categoryMapper;
+
+    @Autowired
+    BrandMapper brandMapper;
+
+    @Autowired
+    GoodsCommentMapper goodsCommentMapper;
+
+    @Autowired
+    IssueMapper issueMapper;
+
 
     @Override
     public DataVo<Goods> findGoodsList(int page, int limit, String sort, String order, String goodsSn, String name) {
@@ -231,6 +249,77 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
+    public Map<Object, Object> goodsList(Integer categoryId, Integer page, Integer size) {
+        Map<Object,Object> data = new HashMap<>();
+
+        PageHelper.startPage(page,size);
+        List<GoodsList> goods =  goodsMapper.selectAllGoodsListByCid(categoryId);
+        PageInfo<GoodsList> pageInfo = new PageInfo<GoodsList>(goods);
+
+        data.put("count",pageInfo.getTotal());
+        data.put("goodsList",pageInfo.getList());
+
+        //不知道filterCategoryList 怎么查的 乱查
+        List<Category> filterCategoryList = categoryMapper.findL2CategorysByL1Id(categoryId);
+        data.put("filterCategoryList",filterCategoryList);
+
+        return data;
+    }
+
+
+    @Override
+    public Map<Object, Object> wxGoodsDetailsById(Integer id) {
+        Map<Object,Object> data = new HashMap<>();
+
+        Goods info = goodsMapper.findGoodsById(id);
+        List<Attribute> attributes =  goodsMapper.findAttributesByGoodsId(id);
+        Brand brand = brandMapper.findBrandByBrandId(info.getBrandId()) ;
+        List<WxComment> comments = goodsCommentMapper.findGoodsCommentByValueId(id);  ;
+        WxDataVo<WxComment> comment = new WxDataVo<>((long)comments.size(),comments);
+
+        List<Issue> issue = issueMapper.findAllIssues() ;
+        List<Product> productList = goodsMapper.findProductsByGoodsId(id);
+        String shareimage = info.getShareUrl();
+        List<Specification> specifications = goodsMapper.findSpecificationsByGoodsId(id);
+
+        List<SpecificationVo> specificationList = new ArrayList<>();
+
+        if (specifications == null || specifications.size() == 0){
+            specificationList  = null;
+        }else {
+            HashSet<String> names = new HashSet<>();
+            for (int i = 0; i < specifications.size(); i++) {
+                names.add(specifications.get(0).getSpecification());
+            }
+
+            String[] nameArray = (String[]) names.toArray();
+            for (int j = 0 ; j < nameArray.length;j++){
+                SpecificationVo specificationVo = new SpecificationVo();
+                specificationVo.setName(nameArray[j]);
+                specificationVo.setValueList(goodsMapper.findSpecificationsByGoodsIdAndSname(id,nameArray[j]));
+            }
+        }
+
+        //不知道干嘛的
+        int userHasCollect = 0;
+
+
+
+
+        data.put("info",info);
+        data.put("attributes",attributes);
+        data.put("brand",brand);
+        data.put("comment",comment);
+        data.put("issue",issue);
+        data.put("productList",productList);
+        data.put("shareimage",shareimage);
+        data.put("specificationList",specificationList);
+        data.put("userHasCollect",userHasCollect);
+
+        return data;
+    }
+
+    @Override
     public int goodsTotal() {
         return goodsMapper.goodsTotal();
     }
@@ -240,6 +329,68 @@ public class GoodsServiceImpl implements GoodsService {
         return goodsMapper.productTotal();
     }
 
+    @Override
+    public List<GoodsList> selectAllHotGoodsList() {
+        List<GoodsList> temp = goodsMapper.selectAllHotGoodsList();
+        List<GoodsList> hotGoodsLists = new ArrayList<>();
+        for (int i = 0; i < 6; i++) {
+            hotGoodsLists.add(temp.get(i));
+        }
+        return hotGoodsLists;
+    }
 
+    @Override
+    public List<GoodsList> selectAllNewGoodsList() {
+        List<GoodsList> temp = goodsMapper.selectAllNewGoodsList();
+        List<GoodsList> hotGoodsLists = new ArrayList<>();
+        for (int i = 0; i < 6; i++) {
+            hotGoodsLists.add(temp.get(i));
+        }
+        return hotGoodsLists;
+    }
+
+    @Override
+    public List<Object> selectAllFloorGoodsList() {
+        ArrayList<Object> mapList = new ArrayList<>();
+
+        List<Channel> channels = categoryService.selectAllChannel();
+        for (int i = 0; i < 4; i++) {
+            Map<Object, Object> map = new HashMap<>();
+
+            Integer id = channels.get(i).getId();
+            List<GoodsList> goodsLists = goodsMapper.selectAllGoodsListByCid(id);
+            map.put("id", channels.get(i).getId());
+            map.put("name", channels.get(i).getName());
+            if (goodsLists.size() > 5 ) {
+                List<GoodsList> goodsLists1 = goodsLists.subList(0, 4);
+                map.put("goodsList", goodsLists1);
+            } else {
+                map.put("goodsList", goodsLists);
+            }
+            mapList.add(map);
+        }
+
+        return mapList;
+    }
+
+    @Override
+    public List<Object> selectAllGroupOnList() {
+        List<Object> list = new ArrayList<>();
+
+        List<GroupOnRules> groupOnRules = rulesMapper.selectAllGroupOnRules();
+
+        for (GroupOnRules groupOnRule : groupOnRules) {
+            HashMap<Object, Object> goods = new HashMap<>();
+            GroupOnGood groupOnGood = goodsMapper.selectGroupOnGoodByGoodId(groupOnRule.getGoodsId());
+            BigDecimal retailPrice = groupOnGood.getRetailPrice();
+            BigDecimal discount = groupOnRule.getDiscount();
+            BigDecimal subtract = retailPrice.subtract(discount);
+            goods.put("goods", groupOnGood);
+            goods.put("groupon_member", groupOnRule.getDiscountMember());
+            goods.put("groupon_price", subtract);
+            list.add(goods);
+        }
+        return list;
+    }
 
 }
