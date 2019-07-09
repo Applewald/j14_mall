@@ -3,9 +3,10 @@ package com.cskaoyan.mall.admin.mapper;
 
 import com.cskaoyan.mall.admin.bean.cart.Cart;
 import com.cskaoyan.mall.admin.bean.cart.CartTotal;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+@Repository
 public interface CartMapper {
     int deleteByPrimaryKey(Integer id);
 

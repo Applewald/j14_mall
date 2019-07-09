@@ -3,8 +3,11 @@ package com.cskaoyan.mall.wx.controller;
 import com.cskaoyan.mall.admin.service.BrandService;
 import com.cskaoyan.mall.admin.service.OrderService;
 import com.cskaoyan.mall.admin.service.RegionService;
+import com.cskaoyan.mall.admin.token.UserTokenManager;
+import com.cskaoyan.mall.admin.util.JacksonUtil;
 import com.cskaoyan.mall.admin.vo.ResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,7 +20,6 @@ import javax.servlet.http.HttpServletRequest;
  * description:
  */
 @RestController
-@RequestMapping("wx/order")
 public class WXOrderController {
     @Autowired
     RegionService regionService;
@@ -40,28 +42,46 @@ public class WXOrderController {
     }
 
     /*品牌详情*/
-    //"addTime": "2018-01-31 19:00:00", 服务器
-    //        "updateTime": "2018-01-31 19:00:00",
-    //"addTime": "2018-01-31T16:00:00.000+0000", 本地
-    //            "updateTime": "2019-07-05T17:26:13.000+0000",
-    //
     @RequestMapping("wx/brand/detail")
     public ResponseVo brandDetial(int id) {
         ResponseVo vo = brandService.findBrandDetail(id);
         return vo;
     }
 
-    /*@RequestMapping("wx/order/submit")
-    public ResponseVo orderSubmit(HttpServletRequest request) {
+    /*提交订单*/
+   /* @RequestMapping("wx/order/submit")
+    public ResponseVo orderSubmit(@RequestBody String body, HttpServletRequest request) {
+        int addressId = JacksonUtil.parseInteger(body, "addressId");
+        int cartId = JacksonUtil.parseInteger(body, "cartId");
+        int couponId = JacksonUtil.parseInteger(body, "couponId");
+        int grouponLinkId = JacksonUtil.parseInteger(body, "grouponLinkId");
+        int grouponRulesId = JacksonUtil.parseInteger(body, "grouponRulesId");
+        String message = JacksonUtil.parseString(body, "message");
+
         String tokenKey = request.getHeader("X-Litemall-Token");
         Integer userId = UserTokenManager.getUserId(tokenKey);
-        ResponseVo vo = brandService.findBrandDetail(id);
+        ResponseVo vo = orderService.insertOrder(addressId, cartId, couponId, grouponLinkId, grouponRulesId, message);
         return vo;
     }*/
-    //OrderSubmit: WxApiRoot + 'order/submit', // 提交订单
+
     //OrderPrepay: WxApiRoot + 'order/prepay', // 订单的预支付会话
-    //OrderList: WxApiRoot + 'order/list', //订单列表
+
+
+    //wx/order/list
+    /*品牌列表*/
+    @RequestMapping("wx/order/list")
+    public ResponseVo OrderList(int showType, int page, int size, HttpServletRequest request) {
+        String tokenKey = request.getHeader("X-Litemall-Token");
+        Integer userId = UserTokenManager.getUserId(tokenKey);
+        ResponseVo vo = orderService.findOrderList(userId, showType, page, size);
+        return vo;
+    }
+
+
     //OrderDetail: WxApiRoot + 'order/detail', //订单详情
+
+    //@RequestMapping("order/detail")
+
     //OrderCancel: WxApiRoot + 'order/cancel', //取消订单
     //OrderRefund: WxApiRoot + 'order/refund', //退款取消订单
     //OrderDelete: WxApiRoot + 'order/delete', //删除订单
@@ -72,16 +92,11 @@ public class WXOrderController {
     @Autowired
     OrderService orderService;
 
-   /* @RequestMapping("order/list")
-    public ResponseVo orderList(int page, int limit, String sort, String order, Integer userId, String orderSn, Integer[] orderStatusArray) {
-        ResponseVo vo = orderService.orderList(page, limit, sort, order, userId, orderSn, orderStatusArray);
+
+    @RequestMapping("wx/order/detail")
+    public ResponseVo orderDetail(int orderId) {
+        ResponseVo vo = orderService.orderDetail(orderId);
         return vo;
     }
-
-    @RequestMapping("order/detail")
-    public ResponseVo orderDetail(int id) {
-        ResponseVo vo = orderService.orderDetail(id);
-        return vo;
-    }*/
 
 }

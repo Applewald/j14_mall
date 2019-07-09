@@ -20,4 +20,7 @@ public interface OrderService {
 
     Map<Object, Object> findOrderStatusByUserId(Integer userId);
 
+    ResponseVo insertOrder(int addressId,int cartId,int couponId, int grouponLinkId,int grouponRulesId,String message);
+
+    ResponseVo findOrderList(int userId,int showType, int page, int size);
 }

@@ -358,4 +358,12 @@
     where
       order_id = #{orderId}
   </select>
+  <select id="findGoodsList" resultType="java.util.Map">
+    select
+      `number`,pic_url as picUrl,id, goods_name as goodsName
+    from
+      `cskaoyan_mall_order_goods`
+    where
+      order_id = #{orderId}
+  </select>
 </mapper>

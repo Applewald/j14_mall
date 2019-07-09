@@ -1,19 +1,25 @@
 package com.cskaoyan.mall.admin.service.impl;
 
-import com.cskaoyan.mall.admin.bean.Order;
-import com.cskaoyan.mall.admin.bean.OrderGoods;
-import com.cskaoyan.mall.admin.bean.User;
+import com.cskaoyan.mall.admin.bean.*;
+import com.cskaoyan.mall.admin.bean.cart.Cart;
+import com.cskaoyan.mall.admin.bean.promotion.Coupon;
+import com.cskaoyan.mall.admin.bean.promotion.GroupOn;
+import com.cskaoyan.mall.admin.bean.promotion.GroupOnRules;
+import com.cskaoyan.mall.admin.mapper.*;
+import com.cskaoyan.mall.admin.service.AddressService;
+import com.cskaoyan.mall.admin.service.CouponService;
+import com.cskaoyan.mall.admin.service.GroupOnService;
+import com.cskaoyan.mall.admin.util.OrderStatusUtil;
 import com.cskaoyan.mall.admin.vo.DataVo;
 import com.cskaoyan.mall.admin.vo.ResponseVo;
-import com.cskaoyan.mall.admin.mapper.OrderGoodsMapper;
-import com.cskaoyan.mall.admin.mapper.OrderMapper;
-import com.cskaoyan.mall.admin.mapper.UserMapper;
 import com.cskaoyan.mall.admin.service.OrderService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -88,5 +94,67 @@ public class OrderServiceImpl implements OrderService {
         data.put("unship", unship);
 
         return data;
+    }
+
+    @Autowired
+    CartMapper cartMapper;
+    @Autowired
+    AddressMapper addressMapper;
+    @Autowired
+    CouponMapper couponMapper;
+    @Autowired
+    GroupOnMapper groupOnMapper;
+    @Autowired
+    GroupOnRulesMapper groupOnRulesMapper;
+    @Override
+    public ResponseVo insertOrder(int addressId, int cartId, int couponId, int grouponLinkId, int grouponRulesId, String message) {
+        Address address = addressMapper.selectByPrimaryKey(addressId);
+        Cart cart = cartMapper.selectByPrimaryKey(cartId);
+        Coupon coupon = couponMapper.selectById(couponId);
+        GroupOn groupOn = groupOnMapper.selectByPrimaryKey(grouponLinkId);
+        GroupOnRules groupOnRules = groupOnRulesMapper.selectByPrimaryKey(grouponRulesId);
+        return null;
+    }
+
+    @Autowired
+    HandleOption handleOption;
+    @Override
+    public ResponseVo findOrderList(int userId, int showType, int page, int size) {
+        Map map = new HashMap();
+        PageHelper.startPage(page, size);
+        ResponseVo<Object> vo = new ResponseVo<>();
+        List<Map> data = orderMapper.findOrderList(userId, showType);
+        for (Map datum : data) {
+            //判断订单的状态
+            int orderStatus = ((int) datum.get("orderStatusText"));
+            String orderStatusText = OrderStatusUtil.toOrderStatusText(orderStatus);
+            datum.put("orderStatusText", orderStatusText);
+            //判断是否用了优惠券
+            BigDecimal grouponPrice = (BigDecimal) datum.get("isGroupin");
+            if (grouponPrice.compareTo(new BigDecimal(0))<=0) {
+                datum.put("isGroupin", false);
+            }else {
+                datum.put("isGroupin", true);
+            }
+            int orderId = ((int) datum.get("id"));
+            List<Map> goodsList = orderGoodsMapper.findGoodsList(orderId);
+            datum.put("goodsList", goodsList);
+            //订单已评价
+            int comments = ((int) datum.get("comments"));
+            if (comments <= 0) {
+                handleOption.setComment(true);
+            }
+            datum.remove("comments");
+            handleOption = OrderStatusUtil.getHandleOption(orderStatus, handleOption);
+            datum.put("handleOption", handleOption);
+        }
+        PageInfo pageInfo = new PageInfo(data);
+        map.put("data", pageInfo.getList());
+        map.put("count", pageInfo.getTotal());
+        map.put("totalPages", pageInfo.getPages());
+        vo.setData(map);
+        vo.setErrmsg("成功");
+        vo.setErrno(0);
+        return vo;
     }
 }
