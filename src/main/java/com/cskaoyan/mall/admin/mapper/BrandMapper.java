@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface BrandMapper {
@@ -34,4 +35,7 @@ public interface BrandMapper {
 
     List<Brand> findBrandList(@Param("id") Integer id, @Param("name") String name, @Param("sort") String sort, @Param("order") String order);
 
+    List<Map> findBrandListMap();
+
+    Brand findBrandDetailById(@Param("id") int id);
 }

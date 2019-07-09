@@ -294,4 +294,14 @@
         </where>
         order by #{sort} #{order}
     </select>
+    <select id="findBrandListMap" resultType="java.util.HashMap">
+        select id,`name`,`desc`,pic_url as picUrl,floor_price as floorPrice from `cskaoyan_mall_brand`
+    </select>
+    <select id="findBrandDetailById" resultMap="BaseResultMap">
+        SELECT
+        id,`name`,`desc`,pic_url,sort_order,floor_price,add_time,update_time, deleted
+        FROM
+        `cskaoyan_mall_brand`
+        where id = #{id}
+    </select>
 </mapper>

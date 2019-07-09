@@ -10,7 +10,9 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class BrandServiceImpl implements BrandService {
@@ -86,4 +88,32 @@ public class BrandServiceImpl implements BrandService {
         return vo;
     }
 
+    @Override
+    public ResponseVo findBrandList(int page, int size) {
+        PageHelper.startPage(page, size);
+        Map map = new HashMap();
+        List<Map> brandList = brandMapper.findBrandListMap();
+        PageInfo pageInfo = new PageInfo(brandList);
+        //int totalPages = ((int) Math.ceil(1.0 * pageInfo.getTotal() / size));
+        int totalPages = pageInfo.getPages();
+        map.put("totalPages", totalPages);
+        map.put("brandList", pageInfo.getList());
+        ResponseVo<Object> vo = new ResponseVo<>();
+        vo.setData(map);
+        vo.setErrno(0);
+        vo.setErrmsg("成功");
+        return vo;
+    }
+
+    @Override
+    public ResponseVo findBrandDetail(int id) {
+        Brand brand = brandMapper.findBrandDetailById(id);
+        ResponseVo<Object> vo = new ResponseVo<>();
+        Map map = new HashMap();
+        map.put("brand",brand);
+        vo.setData(map);
+        vo.setErrno(0);
+        vo.setErrmsg("成功");
+        return vo;
+    }
 }

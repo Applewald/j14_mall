@@ -20,4 +20,8 @@ public interface BrandService {
 
     ResponseVo insert(Brand brand);
 
+    ResponseVo findBrandList(int page, int size);
+
+    ResponseVo findBrandDetail(int id);
+
 }
