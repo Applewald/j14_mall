@@ -78,8 +78,9 @@ public class WxAuthController {
 			return BaseRespVo.fail();
 		}
 
+
 		Map<Object, Object> order = orderService.findOrderStatusByUserId(userId);
-		//***********************************
+
 		Map<Object,Object> data =  new HashMap<>();
 
 		data.put("order",order);
@@ -87,6 +88,7 @@ public class WxAuthController {
 		data.put("errno",0);
 
 		return data;
+
 
 	}
 
