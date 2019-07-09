@@ -17,6 +17,7 @@ public class WXCartController {
 
     @Autowired
     CartService cartService;
+    //获取购物车的数据
     @RequestMapping("wx/cart/index")  //有问题
     public ResponseVo<CartIndex> cart(){
         ResponseVo<CartIndex> responseVo = new ResponseVo<>();
@@ -32,7 +33,7 @@ public class WXCartController {
         return responseVo;
 
     }
-
+    // 添加商品到购物车
     @RequestMapping("wx/cart/add")
     public ResponseVo cartAdd(int goodsId,int number,int productId){
         ResponseVo responseVo = new ResponseVo();
@@ -47,6 +48,35 @@ public class WXCartController {
         }
         return responseVo;
     }
+
+    //cart/fastadd' 立即购买商品
+/*    @RequestMapping("wx/cart/fastadd")
+    public ResponseVo cartFastadd(int goodsId,int number,int productId){
+        ResponseVo responseVo = new ResponseVo();
+        int data = cartService.fastAdd(goodsId,number,productId);
+        if (data >=1){
+            responseVo.setData(data);
+            responseVo.setErrno(0);
+            responseVo.setErrmsg("成功");
+        }else {
+            responseVo.setErrno(1);
+            responseVo.setErrmsg("失败");
+        }
+        return responseVo;
+    }*/
+
+
+    //'cart/checkout', // 下单前信息确认
+   /* @RequestMapping("wx/cart/checkout")
+
+    cartId:61
+    addressId:0
+    couponId:0
+    grouponRulesId:*/
+    //'cart/update', // 更新购物车的商品
+    //cart/delete', 删除购物车的商品
+    ////  'cart/checked'选择或取消选择商品
+    //'cart/goodscount', // 获取购物车商品件数
 
 
 }
