@@ -309,6 +309,7 @@ public class GoodsServiceImpl implements GoodsService {
                 SpecificationVo specificationVo = new SpecificationVo();
                 specificationVo.setName((String) nameArray[j]);
                 specificationVo.setValueList(goodsMapper.findSpecificationsByGoodsIdAndSname(id,(String) nameArray[j]));
+                specificationList.add(specificationVo);
             }
         }
 

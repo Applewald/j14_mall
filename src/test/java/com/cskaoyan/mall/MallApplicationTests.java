@@ -12,6 +12,7 @@ import com.cskaoyan.mall.admin.mapper.SearchHistoryMapper;
 import com.cskaoyan.mall.admin.service.BrandService;
 import com.cskaoyan.mall.admin.service.CategoryService;
 import com.cskaoyan.mall.admin.service.GoodsService;
+import com.cskaoyan.mall.util.MD5Util;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mybatis.spring.annotation.MapperScan;
@@ -19,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,8 +60,8 @@ public class MallApplicationTests {
     GroupOnRulesMapper groupOnRulesMapper;
 
     @Test
-    public void test2() {
-        List<GoodsList> goodsLists = goodsMapper.selectAllGoodsListByCid(1036000);
-        System.out.println("goodsLists = " + goodsLists);
+    public void test2() throws NoSuchAlgorithmException {
+        String mall123 = MD5Util.getMD5("promotion123");
+        System.out.println("mall123 = " + mall123);
     }
 }
