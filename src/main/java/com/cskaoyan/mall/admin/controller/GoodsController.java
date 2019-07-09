@@ -22,7 +22,7 @@ import java.io.IOException;
 
 
 @RestController
-//@RequestMapping("admin")
+@RequestMapping("admin")
 public class GoodsController {
 
     @Autowired
