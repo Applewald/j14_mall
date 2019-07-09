@@ -405,4 +405,6 @@
       from cskaoyan_mall_category
       where  id = #{id} and deleted = 0
     </select>
+
+
 </mapper>

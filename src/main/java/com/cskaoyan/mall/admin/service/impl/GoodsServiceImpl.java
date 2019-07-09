@@ -230,6 +230,24 @@ public class GoodsServiceImpl implements GoodsService {
         }
     }
 
+   /* @Override
+    public Map<Object, Object> goodsList(Integer categoryId, Integer page, Integer size) {
+        Map<Object,Object> data = new HashMap<>();
+
+        PageHelper.startPage(page,size);
+        List<Good> goods =  goodsMapper.findGoodsListByCategoryId(categoryId);
+        PageInfo<Good> pageInfo = new PageInfo<Good>(goods);
+
+        data.put("count",pageInfo.getTotal());
+        data.put("goodsList",pageInfo.getList());
+
+        //不知道filterCategoryList 怎么查的 乱查
+        List<Category> filterCategoryList = categoryMapper.findL2CategorysByL1Id(categoryId);
+        data.put("filterCategoryList",filterCategoryList);
+
+        return data;
+    }*/
+
     @Override
     public int goodsTotal() {
         return goodsMapper.goodsTotal();

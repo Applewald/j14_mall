@@ -28,5 +28,7 @@ public interface GoodsService {
 
     int productTotal();
 
+    //Map<Object, Object> goodsList(Integer categoryId, Integer page, Integer size);
+
 
 }
