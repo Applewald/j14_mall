@@ -81,8 +81,8 @@ public class WxAuthController {
 		//***********************************
 
 		data = orderService.findOrderStatusByUserId(userId);
-		//根据userId查询订单信息
-		data.put("order", null);
+		//根据userId查询订单信息git
+		data.put("order", data);
 		//***********************************
 
 		return BaseRespVo.ok(data);
