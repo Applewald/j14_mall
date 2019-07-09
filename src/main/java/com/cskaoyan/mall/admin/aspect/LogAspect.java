@@ -1,10 +1,13 @@
 package com.cskaoyan.mall.admin.aspect;
 
 
+import com.cskaoyan.mall.admin.bean.admin.Admin;
 import com.cskaoyan.mall.admin.bean.log.Log;
 
 import com.cskaoyan.mall.admin.service.LogService;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -37,7 +40,6 @@ public class LogAspect {
 
     @AfterReturning("logPutCut()")
     public void saveLog(JoinPoint joinPoint) {
-
         // 新建日志实例
         Log log = new Log();
 
@@ -51,24 +53,32 @@ public class LogAspect {
         com.cskaoyan.mall.admin.annotation.Log myLog = method.getAnnotation(com.cskaoyan.mall.admin.annotation.Log.class);
         if (myLog != null) {
             String value = myLog.value();
+            // 操作动作
             log.setAction(value);
         }
 
         HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
         // 获取主机ip
         String ip = request.getRemoteHost();
-        //Subject currentUser = SecurityUtils.getSubject();
-
-        //Admin admin = (Admin) currentUser.getPrincipal();
-        //log.setAdmin(admin.getUsername());
 
         // 操作类别，默认为安全操作
         //log.setType(1);
-        log.setAdmin("admin123");
+
+        Subject currentUser = SecurityUtils.getSubject();
+        Admin principal = (Admin) currentUser.getPrincipal();
+        // 操作管理员
+        log.setAdmin(principal.getUsername());
+        // ip地址
         log.setIp(ip);
-        log.setAddTime(new Date());
+        // 操作时间
+        //log.setAddTime(new Date());
+        // 操作状态
+        //log.setStatus(true);
 
-
+        Object[] args = joinPoint.getArgs();
+        Admin arg = (Admin)args[0];
+        // 操作结果
+        log.setResult(arg.getUsername());
 
         // 调用service保存到数据库
         logService.save(log);
