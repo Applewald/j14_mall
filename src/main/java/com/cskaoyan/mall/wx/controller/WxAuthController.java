@@ -78,15 +78,16 @@ public class WxAuthController {
 			return BaseRespVo.fail();
 		}
 
-		Map<Object, Object> data = new HashMap<Object, Object>();
+		Map<Object, Object> order = orderService.findOrderStatusByUserId(userId);
 		//***********************************
+		Map<Object,Object> data =  new HashMap<>();
 
-		data = orderService.findOrderStatusByUserId(userId);
-		//根据userId查询订单信息git
-		data.put("order", data);
-		//***********************************
+		data.put("order",order);
+		data.put("errmsg","成功");
+		data.put("errno",0);
 
-		return BaseRespVo.ok(data);
+		return data;
+
 	}
 
 	//
