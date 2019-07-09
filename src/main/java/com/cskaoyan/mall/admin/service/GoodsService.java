@@ -6,6 +6,8 @@ import com.cskaoyan.mall.admin.bean.Goods;
 import com.cskaoyan.mall.admin.bean.creategoods.CreateGoods;
 import com.cskaoyan.mall.admin.bean.CreateStorge;
 
+import java.util.Map;
+
 public interface GoodsService {
     DataVo<Goods> findGoodsList(int page, int limit, String sort, String order, String goodsSn, String name);
 
@@ -25,5 +27,6 @@ public interface GoodsService {
     int goodsTotal();
 
     int productTotal();
+
 
 }

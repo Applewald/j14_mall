@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author 河鲍鱼
@@ -26,4 +27,7 @@ public interface TopicMapper {
                             @Param("subtitle") String subtitle,
                             @Param("sort") String sort,
                             @Param("order") String order);
+    
+    /**以下为前台方法*/
+    List<Map> getTopis();
 }

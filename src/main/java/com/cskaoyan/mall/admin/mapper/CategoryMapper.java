@@ -5,6 +5,7 @@ import com.cskaoyan.mall.admin.bean.Category;
 import com.cskaoyan.mall.admin.bean.CategoryExample;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -40,4 +41,10 @@ public interface CategoryMapper {
 
     List<Category> findCategoryL1();
 
+    List<Category> findL2CategorysByL1Id(@Param("L1Id") Integer id);
+
+    List<Category> findL1CategoryList();
+
+
+    Category findCategoryById(@Param("id") Integer currentId);
 }
