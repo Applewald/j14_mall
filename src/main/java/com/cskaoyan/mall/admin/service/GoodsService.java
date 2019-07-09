@@ -47,4 +47,6 @@ public interface GoodsService {
 
 
     Map<Object, Object> wxGoodsDetailsById(Integer id);
+
+    List<GoodsList> getRelatedGoodsById(Integer id);
 }
