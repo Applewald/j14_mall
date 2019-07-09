@@ -7,7 +7,9 @@ import com.cskaoyan.mall.admin.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -93,4 +95,35 @@ public class CategoryServiceImpl implements CategoryService {
         return vo;
     }
 
+
+    @Override
+    public Map<Object, Object> findCategoryGoods() {
+        Map<Object,Object> data = new HashMap<>();
+
+        List<Category> categoryList = categoryMapper.findL1CategoryList();
+        data.put("categoryList",categoryList);
+        if (categoryList == null || categoryList.size() == 0){
+            data.put("currentCategory",null);
+            data.put("currentSubCategory",null);
+        }else {
+
+            Category currentCategory = categoryList.get(0);
+            data.put("currentCategory",currentCategory);
+
+            List<Category> currentSubCategory = categoryMapper.findL2CategorysByL1Id(currentCategory.getId());
+            data.put("currentSubCategory",currentSubCategory);
+        }
+        return data;
+    }
+
+
+    @Override
+    public Map<Object, Object> QueryCurrentCategory(Integer currentId) {
+        Map<Object,Object> data = new HashMap<>();
+        Category currentCategory = categoryMapper.findCategoryById(currentId);
+        List<Category> currentSubCategory = categoryMapper.findL2CategorysByL1Id(currentId);
+        data.put("currentCategory",currentCategory);
+        data.put("currentSubCategory",currentSubCategory);
+        return data;
+    }
 }

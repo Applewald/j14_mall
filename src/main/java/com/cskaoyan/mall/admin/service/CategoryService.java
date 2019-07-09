@@ -3,6 +3,8 @@ package com.cskaoyan.mall.admin.service;
 import com.cskaoyan.mall.admin.bean.Category;
 import com.cskaoyan.mall.admin.vo.ResponseVo;
 
+import java.util.Map;
+
 /**
  * author: xiaolong
  * date: 2019-07-03 21:14
@@ -21,4 +23,7 @@ public interface CategoryService {
 
     ResponseVo insert(Category category);
 
+    Map<Object, Object> findCategoryGoods();
+
+    Map<Object, Object> QueryCurrentCategory(Integer currentId);
 }

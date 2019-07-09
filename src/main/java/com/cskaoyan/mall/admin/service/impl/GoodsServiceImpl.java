@@ -1,6 +1,8 @@
 package com.cskaoyan.mall.admin.service.impl;
 
+import com.cskaoyan.mall.admin.bean.Category;
 import com.cskaoyan.mall.admin.mapper.CatAndBrandDataMapper;
+import com.cskaoyan.mall.admin.mapper.CategoryMapper;
 import com.cskaoyan.mall.admin.mapper.GoodsMapper;
 import com.cskaoyan.mall.admin.vo.DataVo;
 import com.cskaoyan.mall.admin.bean.catandbrand.CatAndBrandData;
@@ -19,7 +21,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class GoodsServiceImpl implements GoodsService {
@@ -32,6 +36,9 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Autowired
     CreateStorgeMapper createStorgeMapper;
+
+    @Autowired
+    CategoryMapper categoryMapper;
 
     @Override
     public DataVo<Goods> findGoodsList(int page, int limit, String sort, String order, String goodsSn, String name) {
@@ -198,11 +205,6 @@ public class GoodsServiceImpl implements GoodsService {
 
             goodsMapper.deleteProductNotIn(ids);
         }
-
-
-
-
-
     }
 
     private void updateAttributes(List<Attribute> attributes, Integer goodsId) {
@@ -226,15 +228,7 @@ public class GoodsServiceImpl implements GoodsService {
 
             goodsMapper.deleteAttributesNotIn(ids);
         }
-
-
-        
-
     }
-
-
-
-
 
     @Override
     public int goodsTotal() {
@@ -245,5 +239,7 @@ public class GoodsServiceImpl implements GoodsService {
     public int productTotal() {
         return goodsMapper.productTotal();
     }
+
+
 
 }
