@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author 河鲍鱼
@@ -44,6 +45,7 @@ public class TopicServiceImpl implements TopicService {
         return topicMapper.deleteByPrimaryKey(id);
     }
 
+
     @Override
     public List<TopicList> selectAllTopicList() {
         List<TopicList> temp = topicMapper.selectAllTopicList();
@@ -56,5 +58,22 @@ public class TopicServiceImpl implements TopicService {
         return topicLists;
     }
 
+
+
+    
+    
+    /**以下为前台方法*/
+    @Override
+    public PageInfo<Map> getTopics(int page, int size) {
+        PageHelper.startPage(page,size);
+        List<Map> list = topicMapper.getTopis();
+        PageInfo<Map> pageInfo = new PageInfo<>(list);
+        return pageInfo;
+    }
+    
+    @Override
+    public Topic getTopicById(Integer id) {
+        return topicMapper.selectByPrimaryKey(id);
+    }
 
 }

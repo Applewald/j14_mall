@@ -8,7 +8,10 @@ import com.cskaoyan.mall.admin.bean.Goods;
 import com.cskaoyan.mall.admin.bean.creategoods.CreateGoods;
 import com.cskaoyan.mall.admin.bean.CreateStorge;
 
+
 import java.util.List;
+
+import java.util.Map;
 
 
 public interface GoodsService {
@@ -31,6 +34,7 @@ public interface GoodsService {
 
     int productTotal();
 
+
     List<GoodsList> selectAllHotGoodsList();
 
     List<GoodsList> selectAllNewGoodsList();
@@ -38,4 +42,6 @@ public interface GoodsService {
     List<Object> selectAllFloorGoodsList();
 
     List<Object> selectAllGroupOnList();
+
+
 }

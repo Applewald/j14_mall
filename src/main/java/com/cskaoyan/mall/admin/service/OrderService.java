@@ -2,6 +2,8 @@ package com.cskaoyan.mall.admin.service;
 
 import com.cskaoyan.mall.admin.vo.ResponseVo;
 
+import java.util.Map;
+
 /**
  * author: xiaolong
  * date: 2019-07-05 17:55
@@ -15,4 +17,7 @@ public interface OrderService {
     ResponseVo orderList(int page, int limit, String sort, String order, Integer userId, String orderSn, Integer[] orderStatusArray);
 
     ResponseVo orderDetail(int id);
+
+    Map<Object, Object> findOrderStatusByUserId(Integer userId);
+
 }

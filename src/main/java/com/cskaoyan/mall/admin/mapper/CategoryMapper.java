@@ -14,6 +14,7 @@ import java.util.List;
 @Repository
 @JsonIgnoreProperties(value={"addTime","deleted","pid","sortOrder","updateTime"}) //希望动态过滤掉的属性
 public interface CategoryMapper {
+
     long countByExample(CategoryExample example);
 
     int deleteByExample(CategoryExample example);
@@ -48,5 +49,10 @@ public interface CategoryMapper {
     @Select("select id, name, icon_url as iconUrl from cskaoyan_mall_category where level = 'L1' and deleted = 0")
     List<Channel> selectAllChannel();
 
+    List<Category> findL2CategorysByL1Id(@Param("L1Id") Integer id);
+
+    List<Category> findL1CategoryList();
+
+    Category findCategoryById(@Param("id") Integer currentId);
 
 }

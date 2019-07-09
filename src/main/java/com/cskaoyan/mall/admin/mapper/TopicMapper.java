@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author 河鲍鱼
@@ -29,6 +30,12 @@ public interface TopicMapper {
                             @Param("sort") String sort,
                             @Param("order") String order);
 
+
     @Select("select id, title, subtitle, price, read_count as readCount, pic_url as picUrl from cskaoyan_mall_topic where deleted = 0")
     List<TopicList> selectAllTopicList();
+
+    
+    /**以下为前台方法*/
+    List<Map> getTopis();
+
 }

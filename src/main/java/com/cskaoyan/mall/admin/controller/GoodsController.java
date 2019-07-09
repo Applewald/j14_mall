@@ -80,27 +80,6 @@ public class GoodsController {
         return responseVo;
     }
 
-    @RequestMapping("/wx/storage/upload")
-    public ResponseVo<CreateStorge> storageUpload(@RequestParam("file") MultipartFile file){
-        CreateStorge createStorge = new CreateStorge();
-        ResponseVo<CreateStorge> responseVo = new ResponseVo<CreateStorge>();
-
-        try {
-            createStorge = myOssClient.ossFileUpload(file);
-            CreateStorge createStorge1 = goodsService.insertCreategory(createStorge);
-            responseVo.setData(createStorge1);
-            responseVo.setErrmsg("成功");
-            responseVo.setErrno(0);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            responseVo.setErrmsg("失败");
-            responseVo.setErrno(-1);
-            return responseVo;
-        }
-        return responseVo;
-    }
-
 
     @RequestMapping("goods/create")
     public MessageVo goodsCreate(@RequestBody CreateGoods createGoods){
