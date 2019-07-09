@@ -9,6 +9,7 @@ import com.cskaoyan.mall.admin.token.UserTokenManager;
 import com.cskaoyan.mall.admin.util.JacksonUtil;
 import com.cskaoyan.mall.admin.vo.BaseRespVo;
 
+import com.cskaoyan.mall.admin.vo.ResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -86,5 +87,17 @@ public class WxAuthController {
 		//***********************************
 
 		return BaseRespVo.ok(data);
+	}
+
+	//
+	@PostMapping("auth/logout")
+	public Object logout() {
+		return ResponseVo.ok();
+	}
+
+	// 验证码  不支持
+	@PostMapping("auth/regCaptcha")
+	public Object regCaptcha() {
+		return ResponseVo.fail("小程序后台验证码服务不支持", 701);
 	}
 }

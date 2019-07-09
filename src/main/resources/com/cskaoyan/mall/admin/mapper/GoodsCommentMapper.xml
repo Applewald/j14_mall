@@ -35,6 +35,13 @@
     order by #{sort} #{order}
   </select>
 
+  <select id="selectAllCommentsList" resultMap="findGoodsComments" >
+    select * from cskaoyan_mall_comment
+    where deleted = 0
+    and value_id = #{valueId}
+    and `type` = #{type}
+  </select>
+
 
 
 

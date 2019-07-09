@@ -1,8 +1,10 @@
 package com.cskaoyan.mall.admin.controller;
 
 
+import com.cskaoyan.mall.admin.annotation.Log;
 import com.cskaoyan.mall.admin.bean.admin.Admin;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
 import com.cskaoyan.mall.admin.service.AdminService;
 import com.cskaoyan.mall.admin.vo.DataVo;
@@ -26,7 +28,7 @@ public class AdminController {
     AdminService adminService;
 
     /*查询*/
-    //@RequiresPermissions("admin:admin:list")
+    @RequiresPermissions("admin:admin:list")
     @RequestMapping("/list")
     public Object adminList(Integer page, Integer limit, String sort, String order, String username) {
         DataVo dataVo = adminService.selectAllAdminList(page, limit, sort, order, username);
@@ -34,7 +36,8 @@ public class AdminController {
     }
 
     /*添加管理员*/
-    //@RequiresPermissions("admin:admin:create")
+    @Log(value = "添加管理员")
+    @RequiresPermissions("admin:admin:create")
     @RequestMapping("/create")
     public Object insert(@RequestBody Admin admin) {
         // 检查密码长度
@@ -57,21 +60,24 @@ public class AdminController {
     }
 
     /*删除管理员*/
+    @Log(value = "删除管理员")
+    @RequiresPermissions("admin:admin:delete")
     @RequestMapping("/delete")
-    //@RequiresPermissions("admin:admin:delete")
     public Object delete(@RequestBody Admin admin) {
-        adminService.deleteByPrimaryKey(admin.getId());
-
         Subject currentUser = SecurityUtils.getSubject();
         Admin principal = (Admin) currentUser.getPrincipal();
+
         if (principal.getId().equals(admin.getId())) {
             return ResponseVo.fail("管理员不能删除自己账号", 604);
         }
+
+        adminService.deleteByPrimaryKey(admin.getId());
         return ResponseVo.ok();
     }
 
     /*修改管理员*/
-    //@RequiresPermissions("admin:admin:update")
+    @Log(value = "修改管理员")
+    @RequiresPermissions("admin:admin:update")
     @RequestMapping("/update")
     public Object update(@RequestBody Admin admin) {
         // 从数据库中查出
