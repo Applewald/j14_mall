@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
  * date: 2019-07-03 15:32
  * description:
  */
-j
 @RestController
 @RequestMapping("admin")
 public class HomeController {
