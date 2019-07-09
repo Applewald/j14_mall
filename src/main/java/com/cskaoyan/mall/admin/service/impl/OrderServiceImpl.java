@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * author lixiaolong
@@ -69,5 +70,23 @@ public class OrderServiceImpl implements OrderService {
         vo.setErrno(0);
         vo.setErrmsg("成功");
         return vo;
+    }
+
+
+    @Override
+    public Map<Object, Object> findOrderStatusByUserId(Integer userId) {
+
+        Map<Object, Object> data = new HashMap<>();
+        int uncomment = orderMapper.findUncommentCounts(userId);
+        int unpaid = orderMapper.findUnpaidCounts(userId);
+        int unrecv = orderMapper.findUnrecvCounts(userId);
+        int unship = orderMapper.findUnship(userId);
+
+        data.put("uncomment", uncomment);
+        data.put("unpaid", unpaid);
+        data.put("unrecv", unrecv);
+        data.put("unship", unship);
+
+        return data;
     }
 }

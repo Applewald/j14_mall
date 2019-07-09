@@ -16,8 +16,8 @@ import java.util.UUID;
 @ConfigurationProperties(prefix = "myoss")
 @Component
 public class MyOssClient {
-	private String bucket;
 	private String endpoint ;
+	private String bucket;
 	private String accessKey ;
 	private String secret ;
 

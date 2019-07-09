@@ -1,5 +1,6 @@
 package com.cskaoyan.mall.admin.service;
 
+import com.cskaoyan.mall.admin.bean.promotion.GOListRecord;
 import com.cskaoyan.mall.admin.bean.promotion.GroupOnRules;
 import com.github.pagehelper.PageInfo;
 
@@ -13,4 +14,6 @@ public interface GroupOnService {
     int deleteByGroupOnRulesId(GroupOnRules groupOnRules);
     
     int updateById(GroupOnRules groupOnRules);
+    
+    PageInfo<GOListRecord> findActivity(int page, int limit, Integer goodsId, String sort, String order);
 }
