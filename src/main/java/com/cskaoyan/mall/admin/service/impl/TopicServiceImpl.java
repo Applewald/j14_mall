@@ -48,7 +48,7 @@ public class TopicServiceImpl implements TopicService {
     @Override
     public PageInfo<Map> getTopics(int page, int size) {
         PageHelper.startPage(page,size);
-        List<Map> list = topicMapper.getTopis();
+        List<Map> list = topicMapper.getTopics();
         PageInfo<Map> pageInfo = new PageInfo<>(list);
         return pageInfo;
     }
@@ -56,5 +56,19 @@ public class TopicServiceImpl implements TopicService {
     @Override
     public Topic getTopicById(Integer id) {
         return topicMapper.selectByPrimaryKey(id);
+    }
+    
+    @Override
+    public List<Topic> getRelatedTopic(int id) {
+        int[] ids = {264,266,268,271,272};
+        int[] ints = new int[4];
+        for (int i = 0; i < ints.length; i++) {
+            if(ids[i] != id){
+                ints[i] = ids[i];
+            } else {
+                ints[i] = ids[4];
+            }
+        }
+        return topicMapper.selectRelatedTopic(ints);
     }
 }

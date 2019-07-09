@@ -3,6 +3,7 @@ package com.cskaoyan.mall.admin.service;
 import com.cskaoyan.mall.admin.bean.promotion.Topic;
 import com.github.pagehelper.PageInfo;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,4 +20,6 @@ public interface TopicService {
     PageInfo<Map> getTopics(int page, int size);
     
     Topic getTopicById(Integer id);
+    
+    List<Topic> getRelatedTopic(int id);
 }

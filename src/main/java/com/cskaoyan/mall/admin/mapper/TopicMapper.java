@@ -29,5 +29,7 @@ public interface TopicMapper {
                             @Param("order") String order);
     
     /**以下为前台方法*/
-    List<Map> getTopis();
+    List<Map> getTopics();
+    
+    List<Topic> selectRelatedTopic(@Param("ids")int[] ids);
 }
