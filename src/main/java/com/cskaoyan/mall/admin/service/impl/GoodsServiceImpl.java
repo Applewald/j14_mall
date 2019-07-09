@@ -1,7 +1,9 @@
 package com.cskaoyan.mall.admin.service.impl;
 
-import com.cskaoyan.mall.admin.mapper.CatAndBrandDataMapper;
-import com.cskaoyan.mall.admin.mapper.GoodsMapper;
+import com.cskaoyan.mall.admin.bean.promotion.GroupOnRules;
+import com.cskaoyan.mall.admin.bean.wxhome.*;
+import com.cskaoyan.mall.admin.mapper.*;
+import com.cskaoyan.mall.admin.service.CategoryService;
 import com.cskaoyan.mall.admin.vo.DataVo;
 import com.cskaoyan.mall.admin.bean.catandbrand.CatAndBrandData;
 import com.cskaoyan.mall.admin.bean.Goods;
@@ -9,7 +11,6 @@ import com.cskaoyan.mall.admin.bean.creategoods.Attribute;
 import com.cskaoyan.mall.admin.bean.creategoods.CreateGoods;
 import com.cskaoyan.mall.admin.bean.creategoods.Product;
 import com.cskaoyan.mall.admin.bean.creategoods.Specification;
-import com.cskaoyan.mall.admin.mapper.CreateStorgeMapper;
 import com.cskaoyan.mall.admin.service.GoodsService;
 import com.cskaoyan.mall.admin.bean.CreateStorge;
 import com.github.pagehelper.PageHelper;
@@ -18,8 +19,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class GoodsServiceImpl implements GoodsService {
@@ -32,6 +36,12 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Autowired
     CreateStorgeMapper createStorgeMapper;
+
+    @Autowired
+    CategoryService categoryService;
+
+    @Autowired
+    GroupOnRulesMapper rulesMapper;
 
     @Override
     public DataVo<Goods> findGoodsList(int page, int limit, String sort, String order, String goodsSn, String name) {
@@ -245,5 +255,70 @@ public class GoodsServiceImpl implements GoodsService {
     public int productTotal() {
         return goodsMapper.productTotal();
     }
+
+    @Override
+    public List<GoodsList> selectAllHotGoodsList() {
+        List<GoodsList> temp = goodsMapper.selectAllHotGoodsList();
+        List<GoodsList> hotGoodsLists = new ArrayList<>();
+        for (int i = 0; i < 6; i++) {
+            hotGoodsLists.add(temp.get(i));
+        }
+        return hotGoodsLists;
+    }
+
+    @Override
+    public List<GoodsList> selectAllNewGoodsList() {
+        List<GoodsList> temp = goodsMapper.selectAllNewGoodsList();
+        List<GoodsList> hotGoodsLists = new ArrayList<>();
+        for (int i = 0; i < 6; i++) {
+            hotGoodsLists.add(temp.get(i));
+        }
+        return hotGoodsLists;
+    }
+
+    @Override
+    public List<Object> selectAllFloorGoodsList() {
+        ArrayList<Object> mapList = new ArrayList<>();
+
+        List<Channel> channels = categoryService.selectAllChannel();
+        for (int i = 0; i < 4; i++) {
+            Map<Object, Object> map = new HashMap<>();
+
+            Integer id = channels.get(i).getId();
+            List<GoodsList> goodsLists = goodsMapper.selectAllGoodsListByCid(id);
+            map.put("id", channels.get(i).getId());
+            map.put("name", channels.get(i).getName());
+            if (goodsLists.size() > 5 ) {
+                List<GoodsList> goodsLists1 = goodsLists.subList(0, 4);
+                map.put("goodsList", goodsLists1);
+            } else {
+                map.put("goodsList", goodsLists);
+            }
+            mapList.add(map);
+        }
+
+        return mapList;
+    }
+
+    @Override
+    public List<Object> selectAllGroupOnList() {
+        List<Object> list = new ArrayList<>();
+
+        List<GroupOnRules> groupOnRules = rulesMapper.selectAllGroupOnRules();
+
+        for (GroupOnRules groupOnRule : groupOnRules) {
+            HashMap<Object, Object> goods = new HashMap<>();
+            GroupOnGood groupOnGood = goodsMapper.selectGroupOnGoodByGoodId(groupOnRule.getGoodsId());
+            BigDecimal retailPrice = groupOnGood.getRetailPrice();
+            BigDecimal discount = groupOnRule.getDiscount();
+            BigDecimal subtract = retailPrice.subtract(discount);
+            goods.put("goods", groupOnGood);
+            goods.put("groupon_member", groupOnRule.getDiscountMember());
+            goods.put("groupon_price", subtract);
+            list.add(goods);
+        }
+        return list;
+    }
+
 
 }

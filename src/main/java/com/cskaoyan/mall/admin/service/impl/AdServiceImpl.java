@@ -45,4 +45,9 @@ public class AdServiceImpl implements AdService {
         int id = ad.getId();
         return adMapper.deleteByAdId(id);
     }
+
+    @Override
+    public List<Ad> selectAllAd() {
+        return adMapper.selectAllAd();
+    }
 }

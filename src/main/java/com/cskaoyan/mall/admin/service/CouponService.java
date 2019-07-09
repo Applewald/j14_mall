@@ -1,8 +1,11 @@
 package com.cskaoyan.mall.admin.service;
 
+import com.cskaoyan.mall.admin.bean.wxhome.CouponList;
 import com.cskaoyan.mall.admin.bean.promotion.Coupon;
 import com.cskaoyan.mall.admin.bean.promotion.CouponUser;
 import com.github.pagehelper.PageInfo;
+
+import java.util.List;
 
 /**
  * @author 河鲍鱼
@@ -18,4 +21,6 @@ public interface CouponService {
     Coupon readById(int id);
     
     PageInfo<CouponUser> selectByCouponId(int page, int limit, Integer couponId, Integer userId ,Short status,String sort, String order);
+
+    List<CouponList> selectAllCouponList();
 }

@@ -3,8 +3,10 @@ package com.cskaoyan.mall.admin.mapper;
 
 import com.cskaoyan.mall.admin.bean.Category;
 import com.cskaoyan.mall.admin.bean.CategoryExample;
+import com.cskaoyan.mall.admin.bean.wxhome.Channel;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -39,5 +41,12 @@ public interface CategoryMapper {
     List<Category> findCategoryList();
 
     List<Category> findCategoryL1();
+
+    @Select("select * from cskaoyan_mall_category where deleted = 0")
+    List<Category> selectAllCategory();
+
+    @Select("select id, name, icon_url as iconUrl from cskaoyan_mall_category where level = 'L1' and deleted = 0")
+    List<Channel> selectAllChannel();
+
 
 }
