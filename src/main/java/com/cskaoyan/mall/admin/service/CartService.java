@@ -1,6 +1,10 @@
 package com.cskaoyan.mall.admin.service;
 
+import com.cskaoyan.mall.admin.bean.cart.Cart;
+import com.cskaoyan.mall.admin.bean.cart.CartCheckout;
 import com.cskaoyan.mall.admin.bean.cart.CartIndex;
+
+import java.util.List;
 
 /**
  * @author hx
@@ -11,5 +15,6 @@ import com.cskaoyan.mall.admin.bean.cart.CartIndex;
 public interface CartService {
     CartIndex queryCartIndex(Integer userId);
 
-    int addCart(int goodsId, int number, int productId);
+
+    int updateCartChecked(Integer userId, Integer isChecked, List<Integer> productIds);
 }

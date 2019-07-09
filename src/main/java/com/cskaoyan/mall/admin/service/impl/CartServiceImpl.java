@@ -1,8 +1,8 @@
 package com.cskaoyan.mall.admin.service.impl;
 
-import com.cskaoyan.mall.admin.bean.cart.Cart;
-import com.cskaoyan.mall.admin.bean.cart.CartIndex;
-import com.cskaoyan.mall.admin.bean.cart.CartTotal;
+import com.cskaoyan.mall.admin.bean.Address;
+import com.cskaoyan.mall.admin.bean.Order;
+import com.cskaoyan.mall.admin.bean.cart.*;
 import com.cskaoyan.mall.admin.mapper.CartMapper;
 import com.cskaoyan.mall.admin.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +21,7 @@ public class CartServiceImpl implements CartService {
     @Autowired
     CartMapper cartMapper;
 
+    //1
     @Override
     public CartIndex queryCartIndex(Integer userId) {
         CartIndex cartIndex  = new CartIndex();
@@ -51,8 +52,10 @@ public class CartServiceImpl implements CartService {
         return cartIndex;
     }
 
+//2
+
     @Override
-    public int addCart(int goodsId, int number, int productId) {
-        return cartMapper.addCart(goodsId,number,productId);
+    public int updateCartChecked(Integer userId, Integer isChecked, List<Integer> productIds) {
+        return cartMapper.updateCheckedByUidAndPids(userId,isChecked,productIds);
     }
 }
