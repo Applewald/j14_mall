@@ -43,7 +43,10 @@ public class MallShiroRealm extends AuthorizingRealm {
         String password = new String(token.getPassword());
 
         // 获取数据库中的密码
-        String passwordInDB = adminService.selectByUserName(username).getPassword();
+        //String passwordInDB = adminService.selectByUserName(username).getPassword();
+
+        Admin admin = adminService.selectByUserName(username);
+        String passwordInDB = admin.getPassword();
 
         if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
             throw new AccountException("请正确输入用户名和密码");
@@ -62,7 +65,7 @@ public class MallShiroRealm extends AuthorizingRealm {
         }
 
         // 认证信息里存放账号密码, getName() 是当前Realm的继承方法,通常返回当前类名 :MallShiroRealm
-        return new SimpleAuthenticationInfo(username, password, getName());
+        return new SimpleAuthenticationInfo(admin, password, getName());
 
     }
 

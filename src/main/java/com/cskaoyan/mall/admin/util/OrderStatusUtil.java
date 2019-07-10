@@ -21,7 +21,7 @@ public class OrderStatusUtil {
                 orderStatusText = "已取消(系统)";
                 break;
             case 201:
-                orderStatusText = "代发货";
+                orderStatusText = "已付款";
                 break;
             case 202:
                 orderStatusText = "订单生成，已付款未发货，但是退款取消";
@@ -46,6 +46,9 @@ public class OrderStatusUtil {
         }
         if (orderstatus == 103) {
             handleOption.setDelete(true);
+        }
+        if (orderstatus == 201) {
+            handleOption.setRefund(true);
         }
         if (orderstatus == 401 || orderstatus == 402) {
             handleOption.setConfirm(true);

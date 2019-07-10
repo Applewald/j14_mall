@@ -1,6 +1,8 @@
 package com.cskaoyan.mall.wx.controller;
 
 import com.cskaoyan.mall.admin.bean.CreateStorge;
+import com.cskaoyan.mall.admin.bean.Goods;
+import com.cskaoyan.mall.admin.bean.wxhome.GoodsList;
 import com.cskaoyan.mall.admin.service.CategoryService;
 import com.cskaoyan.mall.admin.service.GoodsService;
 import com.cskaoyan.mall.admin.vo.BaseRespVo;
@@ -12,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -100,7 +103,12 @@ public class WXGoodsController {
         return BaseRespVo.ok(data);
     }
 
+    @RequestMapping("goods/related")
+    public BaseRespVo goodsRelated(Integer id){
+        List<GoodsList>  goodsLists = goodsService.getRelatedGoodsById(id);
+        return BaseRespVo.ok(goodsLists);
+    }
 
-
+    //@RequestMapping
 
 }

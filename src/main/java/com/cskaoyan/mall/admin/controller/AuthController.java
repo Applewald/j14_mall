@@ -1,12 +1,17 @@
 package com.cskaoyan.mall.admin.controller;
 
 
+import com.cskaoyan.mall.admin.annotation.Log;
 import com.cskaoyan.mall.admin.bean.LoginBean;
 import com.cskaoyan.mall.admin.bean.admin.Admin;
 import com.cskaoyan.mall.admin.bean.admin.ReqAdmin;
 import com.cskaoyan.mall.admin.service.AdminService;
 import com.cskaoyan.mall.admin.service.RoleService;
+import com.cskaoyan.mall.admin.token.UserToken;
+import com.cskaoyan.mall.admin.token.UserTokenManager;
+import com.cskaoyan.mall.admin.util.JacksonUtil;
 import com.cskaoyan.mall.admin.vo.ResponseVo;
+import com.sun.corba.se.spi.ior.ObjectKey;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
@@ -28,8 +33,10 @@ import java.util.Set;
  * @description 登录、注销
  */
 @RestController
-//@RequestMapping("/admin/auth")
+@RequestMapping("/admin")
 public class AuthController {
+
+    private Map<String, Object> loginMap = new HashMap<>();
 
     @Autowired
     AdminService adminService;
@@ -40,43 +47,56 @@ public class AuthController {
     @Autowired
     com.cskaoyan.mall.service.PermissionService permissionService;
 
-    @PostMapping("/login")
-    public Object login(@RequestBody ReqAdmin reqAdmin, HttpServletRequest request) {
 
-        String username = reqAdmin.getUsername();
-        String password = reqAdmin.getPassword();
+    //@Log(value = "登录")
+    @PostMapping("/auth/login")
+    public Object login(@RequestBody String body) {
+
+        String username = JacksonUtil.parseString(body, "username");
+        String password = JacksonUtil.parseString(body, "password");
 
         if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
             return ResponseVo.fail("用户帐号或密码不正确", 605);
         }
 
         Subject currentUser = SecurityUtils.getSubject();
+
+        ResponseVo<String> responseVo = new ResponseVo<>();
         try {
             currentUser.login(new UsernamePasswordToken(username, password));
+            String id = currentUser.getSession().getId().toString();
+            responseVo.setData(id);
+            responseVo.setErrmsg("成功");
+            responseVo.setErrno(0);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseVo.fail("用户帐号或密码不正确", 605);
         }
 
-        currentUser = SecurityUtils.getSubject();
-        //Admin admin = adminService.selectByUserName(username);
+        return responseVo;
+    }
 
-        /*// userInfo
-        Map<String, Object> adminInfo = new HashMap<String, Object>();
-        adminInfo.put("name", admin.getUsername());
-        adminInfo.put("avatar", admin.getAvatar());*/
+    @GetMapping("/auth/info")
+    public Object info() {
 
-        Map<Object, Object> result = new HashMap<Object, Object>();
+        Subject subject = SecurityUtils.getSubject();
+        Admin admin = (Admin) subject.getPrincipal();
 
-        //result.put("token", currentUser.getSession().getId());
+        Integer[] roleIds = admin.getRoleIds();
+        Set<String> permissions = permissionService.queryByRoleIds(roleIds);
+        Set<String> roles = roleService.queryByIds(roleIds);
 
-        result.put("data", currentUser.getSession().getId());
-        //result.put("adminInfo", adminInfo);
+        Map<String, Object> result = new HashMap<>();
+        result.put("perms", permissions);
+        result.put("roles", roles);
+        result.put("name", admin.getUsername());
+        result.put("avatar", admin.getAvatar());
         return ResponseVo.ok(result);
     }
 
 
-    @PostMapping("/logout")
+    //@Log(value = "退出")
+    @PostMapping("/auth/logout")
     public Object logout() {
         Subject currentUser = SecurityUtils.getSubject();
         currentUser.logout();
@@ -84,27 +104,7 @@ public class AuthController {
     }
 
 
-    @Autowired
-    LoginBean loginBean;
 
-    //@GetMapping("/info")
-    /*public Object info(String token, HttpServletRequest request) {
-        Subject currentUser = SecurityUtils.getSubject();
-        Session session = currentUser.getSession();
-        session.
-        Admin admin = (Admin) currentUser.getPrincipal();
-
-        Integer[] roleIds = admin.getRoleIds();
-        loginBean.setName(admin.getUsername());
-        loginBean.setAvastar(admin.getAvatar());
-
-        Set<String> permissions = permissionService.queryByRoleIds(roleIds);
-        Set<String> roles = roleService.queryByIds(roleIds);
-        loginBean.setPerms(new ArrayList(permissions));
-        loginBean.setRoles(new ArrayList(roles));
-
-        return ResponseVo.ok(loginBean);
-    }*/
 
 
     @GetMapping("/401")

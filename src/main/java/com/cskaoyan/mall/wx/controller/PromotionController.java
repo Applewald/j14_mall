@@ -2,8 +2,8 @@ package com.cskaoyan.mall.wx.controller;
 
 import com.cskaoyan.mall.admin.bean.promotion.Topic;
 import com.cskaoyan.mall.admin.service.GroupOnService;
+import com.cskaoyan.mall.admin.service.OrderService;
 import com.cskaoyan.mall.admin.service.TopicService;
-import com.cskaoyan.mall.admin.vo.CommentsVo;
 import com.cskaoyan.mall.admin.vo.ResponseVo;
 import com.cskaoyan.mall.admin.vo.TopicVo;
 import com.cskaoyan.mall.admin.vo.WxDataVo;
@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -70,6 +71,8 @@ public class PromotionController {
     @Autowired
     GroupOnService groupOnService;
     
+    OrderService orderService;
+    
     @RequestMapping("wx/groupon/list")
     public ResponseVo<WxDataVo> groupOnList(int page,int size){
         ResponseVo<WxDataVo> vo = new ResponseVo<>();
@@ -96,16 +99,26 @@ public class PromotionController {
         return vo;
     }*/
     
-    /*@RequestMapping("wx/groupon/my")
+    @RequestMapping("wx/groupon/my")
     public ResponseVo<WxDataVo> groupOnList(int showType){
         ResponseVo<WxDataVo> vo = new ResponseVo<>();
-        PageInfo<Map> pageInfo = groupOnService.getGroupOnList(page,size);
+        List<Map> list = groupOnService.getMyGroupOnList(showType);
         WxDataVo<Map> dataVo = new WxDataVo<>();
-        dataVo.setData(pageInfo.getList());
-        dataVo.setCount(pageInfo.getTotal());
+        dataVo.setData(list);
+        dataVo.setCount((long)list.size());
         vo.setData(dataVo);
         vo.setErrno(0);
         vo.setErrmsg("成功");
         return vo;
-    }*/
+    }
+    
+    @RequestMapping("wx/groupon/detail")
+    public ResponseVo<Map> groupOnDetail(Integer grouponId){
+        ResponseVo<Map> vo = new ResponseVo<>();
+        Map<Object,Object> map = groupOnService.getMyGroupOnDetail(grouponId);
+        vo.setData(map);
+        vo.setErrno(0);
+        vo.setErrmsg("成功");
+        return vo;
+    }
 }

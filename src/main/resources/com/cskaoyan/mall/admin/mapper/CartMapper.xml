@@ -33,24 +33,25 @@
     where user_id = #{userId}
   </select>
 <!--************************************************************************-->
+<update id="updateCheckedByUidAndPids">
+  update cskaoyan_mall_cart
+  set checked = #{isChecked}
+  <where>
+    user_id = #{userId}
+    and
+    product_id in
+    <foreach collection="productIds" item="pid" separator="," open="(" close=")">
+      #{pid}
+    </foreach>
+  </where>
+</update>
+
+
+<!--********************************************************************************-->
 
 
 
 
-
-
-
-
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from cskaoyan_mall_cart
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-
-
-  <insert id="addCart" >
-    insert into cskaoyan_mall_cart ( goods_id,product_id, number)
-    values ( #{goodsId},#{productId}, #{number} )
-  </insert>
 
 
 </mapper>

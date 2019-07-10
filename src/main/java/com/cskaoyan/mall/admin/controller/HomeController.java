@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
  * description:
  */
 @RestController
-@RequestMapping("admin")
+//@RequestMapping("admin")
 public class HomeController {
 
     @RequestMapping("auth/login")
@@ -47,7 +47,7 @@ public class HomeController {
     @Autowired
     OrderService orderService;
 
-    @RequestMapping("dashboard")
+    @RequestMapping("/admin/dashboard")
     public ResponseVo dashboard() {
         TotalVo totalVo = new TotalVo();
         totalVo.setGoodsTotal(goodsService.goodsTotal());

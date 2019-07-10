@@ -220,4 +220,10 @@ public class OrderServiceImpl implements OrderService {
             return new MessageVo(-1, "失败");
         }
     }
+
+    //退款和取消订单一样，用户金额返回
+    @Override
+    public MessageVo orderRefundById(int orderId) {
+        return orderCancelById(orderId);
+    }
 }

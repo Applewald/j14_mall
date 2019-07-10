@@ -1,7 +1,6 @@
 package com.cskaoyan.mall;
 
 import com.cskaoyan.mall.admin.bean.SearchHistory;
-import com.cskaoyan.mall.admin.bean.wxhome.GoodsList;
 import com.cskaoyan.mall.admin.mapper.CategoryMapper;
 import com.cskaoyan.mall.admin.mapper.GoodsMapper;
 import com.cskaoyan.mall.admin.mapper.GroupOnRulesMapper;
@@ -14,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -38,6 +38,7 @@ public class MallApplicationTests {
         List<SearchHistory> searchHistories = searchHistoryMapper.querySearchHistoryByOrder("1", "吃", "add_time", "desc");
         System.out.println(searchHistories);
     }
+
     @Autowired
     GoodsMapper goodsMapper;
 
@@ -51,8 +52,8 @@ public class MallApplicationTests {
     GroupOnRulesMapper groupOnRulesMapper;
 
     @Test
-    public void test2() {
-        List<GoodsList> goodsLists = goodsMapper.selectAllGoodsListByCid(1036000);
-        System.out.println("goodsLists = " + goodsLists);
+    public void test2() throws NoSuchAlgorithmException {
+        String mall123 = com.cskaoyan.mall.util.MD5Util.getMD5("promotion123");
+        System.out.println("mall123 = " + mall123);
     }
 }

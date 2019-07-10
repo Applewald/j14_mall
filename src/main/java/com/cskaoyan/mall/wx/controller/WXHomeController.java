@@ -20,7 +20,7 @@ import java.util.Map;
  * @description
  */
 @RestController
-@RequestMapping("/wx/home")
+@RequestMapping("/wx")
 public class WXHomeController {
 
     @Autowired
@@ -38,14 +38,14 @@ public class WXHomeController {
     @Autowired
     CategoryService categoryService;
 
-    /*@Autowired
-    GrouponRuleService grouponRuleService;*/
-
     @Autowired
     CouponService couponService;
 
-    @GetMapping("/index")
-    public Object index() {
+    @Autowired
+    GoodsCommentService goodsCommentService;
+
+    @GetMapping("/home/index")
+    public Object homeIndex() {
         List<Ad> ads = adService.selectAllAd();
         List<BrandList> brands = brandService.selectAllBrand();
         List<Channel> channels = categoryService.selectAllChannel();
@@ -68,6 +68,24 @@ public class WXHomeController {
         map.put("topicList", topicLists);
 
         return ResponseVo.ok(map);
-
     }
+
+
+    @GetMapping("/comment/list")
+    public Object commentList(Integer valueId, Integer type, Integer size, Integer page, Integer showType) {
+        HashMap<Object, Object> map = new HashMap<>();
+        List<Object> list = goodsCommentService.selectAllCommentsList(valueId, type, size, page, showType);
+        map.put("count", list.size());
+        map.put("currentPage", page);
+        map.put("data", list);
+
+        return ResponseVo.ok(map);
+    }
+
+    /*@RequestMapping("/comment/count")
+    public Object commentCounts(Integer valueId, Integer type){
+
+    }*/
+
+
 }

@@ -41,7 +41,8 @@ public interface BrandMapper {
 
     Brand findBrandDetailById(@Param("id") int id);
 
-    @Select("select * from cskaoyan_mall_brand")
+
+    @Select("select `id`, `name`, `desc`, pic_url as picUrl, floor_price as floorPrice from cskaoyan_mall_brand where deleted = 0 ")
     List<BrandList> selectAllBrand();
 
     Brand findBrandByBrandId(@Param("id") Integer brandId);

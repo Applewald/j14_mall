@@ -30,4 +30,6 @@ public interface OrderService {
     MessageVo orderDeleteById(int orderId);
 
     MessageVo orderCancelById(int orderId);
+
+    MessageVo orderRefundById(int orderId);
 }

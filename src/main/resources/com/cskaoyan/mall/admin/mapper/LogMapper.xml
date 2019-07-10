@@ -20,7 +20,14 @@
         <if test="admin != null and admin != '' ">
             and `admin` like CONCAT('%',#{admin},'%')
         </if>
-        order by #{sort} #{order}
+        order by #{sort} DESC
     </select>
+
+
+    <insert id="insert" >
+        insert into cskaoyan_mall_log
+        (admin, ip, `type`, `action`, `status`, `result`, add_time, update_time)
+        values (#{log.admin}, #{log.ip}, 1, #{log.action}, 1, #{log.result}, now(), now())
+    </insert>
 
 </mapper>

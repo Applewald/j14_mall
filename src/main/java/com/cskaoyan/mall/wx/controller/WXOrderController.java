@@ -95,9 +95,15 @@ public class WXOrderController {
     }
 
     //OrderRefund: WxApiRoot + 'order/refund', //退款取消订单
+    @RequestMapping("wx/order/refund")
+    public MessageVo OrderRefund(@RequestBody String body) {
+        Integer orderId = JacksonUtil.parseInteger(body, "orderId");
+        MessageVo vo = orderService.orderRefundById(orderId);
+        return vo;
+    }
 
     @RequestMapping("wx/order/delete")
-    public MessageVo OrderList(@RequestBody String body) {
+    public MessageVo OrderDelete(@RequestBody String body) {
         Integer orderId = JacksonUtil.parseInteger(body, "orderId");
         MessageVo vo = orderService.orderDeleteById(orderId);
         return vo;
