@@ -77,30 +77,6 @@ public class WXCartController {
 
     @RequestMapping("wx/cart/add")
     public ResponseVo addCart(@RequestBody Cart cart,HttpServletRequest request){
-       /* //获取请求数据
-        Integer isChecked = (Integer) map.get("isChecked");
-        List<Integer> productIds = (List<Integer>) map.get("productIds");
-        //通过token 获取userId
-        String token = request.getHeader("X-Litemall-Token");
-        Integer userId = UserTokenManager.getUserId(token);
-
-        CartIndex cartIndex = cartService.queryCartIndex(userId);
-        List<Cart> cartList = cartIndex.getCartList();
-
-        //int data = cartService.getCartCount(userId,isChecked,productIds);
-
-        int data = cartList.size();
-        ResponseVo responseVo = new ResponseVo<>();
-        if (data>=0){
-            data = data+1;
-            responseVo.setData(data);
-            responseVo.setErrno(0);
-            responseVo.setErrmsg("成功");
-        }else {
-            responseVo.setErrno(1);
-            responseVo.setErrmsg("失败");
-        }
-        return responseVo;*/
 
 
         //通过token 获取userId
