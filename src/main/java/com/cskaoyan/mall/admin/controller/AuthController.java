@@ -88,7 +88,7 @@ public class AuthController {
     }
 
 
-    //@Log(value = "退出")
+    @Log(value = "退出")
     @PostMapping("/auth/logout")
     public Object logout() {
         Subject currentUser = SecurityUtils.getSubject();

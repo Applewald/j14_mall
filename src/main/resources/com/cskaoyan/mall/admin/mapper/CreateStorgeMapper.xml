@@ -42,7 +42,7 @@
     <if test="name != null and name != '' ">
       and `name` like CONCAT('%',#{name},'%')
     </if>
-    order by #{sort} #{order}
+    order by ${sort} ${order}
   </select>
 
   <!--删除-->
