@@ -54,7 +54,13 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public int deleteAddress(int id) {
-        int address = addressMapper.deleteAddress(id);
-        return address;
+        int delete = addressMapper.deleteAddress(id);
+        return delete;
+    }
+
+    @Override
+    public int insertAddress(int id) {
+        int insert= addressMapper.insertAddressById(id);
+        return insert;
     }
 }

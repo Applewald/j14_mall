@@ -43,4 +43,6 @@ public interface AddressMapper {
     List<Address> getAddressList();
 
     int deleteAddress(int id);
+
+    int insertAddressById(int id);
 }

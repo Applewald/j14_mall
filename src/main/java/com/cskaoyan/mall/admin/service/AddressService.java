@@ -18,4 +18,6 @@ public interface AddressService {
 
     List<Address> getAddressList();
     int deleteAddress(int id);
+
+    int insertAddress(int id);
 }
