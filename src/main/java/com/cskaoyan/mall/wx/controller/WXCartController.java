@@ -76,6 +76,30 @@ public class WXCartController {
     //333333333333 add添加商品到购物车
 
 
+    @RequestMapping("wx/cart/add")
+    public ResponseVo addCart(@RequestBody Cart cart,HttpServletRequest request) {
+        //通过token 获取userId
+        String token = request.getHeader("X-Litemall-Token");
+        Integer userId = UserTokenManager.getUserId(token);
+
+        cart.setChecked(true);
+        cart.setUserId(userId);
+        int add = cartService.addCart(cart);
+
+
+        CartIndex cartIndex = cartService.queryCartIndex(userId);
+        List<Cart> cartList = cartIndex.getCartList();
+        int data = 0;
+        for(Cart cart1 : cartList){
+            data += cart1.getNumber();
+        }
+        ResponseVo responseVo = new ResponseVo<>();
+        responseVo.setData(data);
+        responseVo.setErrno(0);
+        responseVo.setErrmsg("成功");
+
+        return responseVo;
+    }
 
     //44444  wx/cart/goodscount
     @RequestMapping("wx/cart/goodscount")
