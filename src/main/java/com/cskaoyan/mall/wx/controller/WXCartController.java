@@ -1,11 +1,10 @@
 package com.cskaoyan.mall.wx.controller;
 
-import com.cskaoyan.mall.admin.bean.cart.Cart;
-import com.cskaoyan.mall.admin.bean.cart.CartCheckout;
-import com.cskaoyan.mall.admin.bean.cart.CartTotal;
+import com.cskaoyan.mall.admin.bean.Goods;
+import com.cskaoyan.mall.admin.bean.cart.*;
+import com.cskaoyan.mall.admin.service.GoodsService;
 import com.cskaoyan.mall.admin.token.UserTokenManager;
 import com.cskaoyan.mall.admin.vo.ResponseVo;
-import com.cskaoyan.mall.admin.bean.cart.CartIndex;
 import com.cskaoyan.mall.admin.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,10 +75,9 @@ public class WXCartController {
     }
     //333333333333 add添加商品到购物车
 
+
     @RequestMapping("wx/cart/add")
-    public ResponseVo addCart(@RequestBody Cart cart,HttpServletRequest request){
-
-
+    public ResponseVo addCart(@RequestBody Cart cart,HttpServletRequest request) {
         //通过token 获取userId
         String token = request.getHeader("X-Litemall-Token");
         Integer userId = UserTokenManager.getUserId(token);
@@ -90,7 +89,7 @@ public class WXCartController {
 
         CartIndex cartIndex = cartService.queryCartIndex(userId);
         List<Cart> cartList = cartIndex.getCartList();
-           int data = 0;
+        int data = 0;
         for(Cart cart1 : cartList){
             data += cart1.getNumber();
         }
@@ -149,6 +148,7 @@ public class WXCartController {
     }
 
 
+
     @RequestMapping("wx/cart/fastadd")
     public ResponseVo fastAddCart(@RequestBody Cart cart,HttpServletRequest request){
 
@@ -171,37 +171,18 @@ public class WXCartController {
         return responseVo;
     }
 
-    //cart/fastadd' 立即购买商品
-/*    @RequestMapping("wx/cart/fastadd")
-    public ResponseVo cartFastadd(int goodsId,int number,int productId){
-        ResponseVo responseVo = new ResponseVo();
-        int data = cartService.fastAdd(goodsId,number,productId);
-        if (data >=1){
-            responseVo.setData(data);
-            responseVo.setErrno(0);
-            responseVo.setErrmsg("成功");
-        }else {
-            responseVo.setErrno(1);
-            responseVo.setErrmsg("失败");
-        }
-        return responseVo;
-    }*/
 
 
-    //'cart/checkout', // 下单前信息确认
+    //'cart/checkout' 下单前信息确认
 
+ @RequestMapping("wx/cart/checkout")
+    public ResponseVo cartCehckout(@RequestBody Map<String,Object> map ,HttpServletRequest request){
 
-  /*  cartId:61
-    addressId:0
-    couponId:0
-    grouponRulesId:
-*/
+     String token = request.getHeader("X-Litemall-Token");
+     Integer userId = UserTokenManager.getUserId(token);
+     return null;
+ }
 
-
-    //'cart/update', // 更新购物车的商品
-    //cart/delete', 删除购物车的商品
-    ////  'cart/checked'选择或取消选择商品
-    //'cart/goodscount', // 获取购物车商品件数
 
 
 }

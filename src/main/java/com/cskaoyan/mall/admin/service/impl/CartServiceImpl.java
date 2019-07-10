@@ -5,6 +5,7 @@ import com.cskaoyan.mall.admin.bean.Order;
 import com.cskaoyan.mall.admin.bean.cart.*;
 import com.cskaoyan.mall.admin.mapper.CartMapper;
 import com.cskaoyan.mall.admin.service.CartService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -67,7 +68,7 @@ public class CartServiceImpl implements CartService {
         return cartMapper.getCartCount(userId,isChecked,productIds);
     }*/
 
- //4
+ //4 delete
 
     @Override
     public int deleteCartItem(Integer userId, List<Integer> productIds) {
@@ -75,8 +76,23 @@ public class CartServiceImpl implements CartService {
     }
 
 
+    //5
+
     @Override
-    public int addCart(Cart cart) {
+    public int updateCartNumber(Integer id, Integer number) {
+        return cartMapper.updateCartNumber( id,number);
+    }
+
+    //6
+
+
+    @Override
+    public Integer selectCartId(Integer userId, Integer productId) {
+        return cartMapper.selectCartId(userId);
+
+    }
+    @Override
+    public int addCart(Cart cart){
         Cart cartboolean = cartMapper.findCart(cart);
 
         int add = 0;
@@ -91,10 +107,12 @@ public class CartServiceImpl implements CartService {
             add= cartMapper.add(cart);
         }else {
             cartMapper.updaCartNumber(cartboolean.getId(),cartboolean.getNumber()+cart.getNumber());
+            add++;
         }
 
 
         return add;
+
     }
 
     @Override
