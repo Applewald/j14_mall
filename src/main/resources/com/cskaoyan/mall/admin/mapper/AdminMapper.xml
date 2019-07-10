@@ -16,7 +16,7 @@
     <if test="username != null and username != '' ">
       and username like CONCAT('%',#{username},'%')
     </if>
-    order by #{sort} #{order}
+    order by ${sort} ${order}
   </select>
 
   <select id="selectByPrimaryKey" resultType="com.cskaoyan.mall.admin.bean.admin.Admin">

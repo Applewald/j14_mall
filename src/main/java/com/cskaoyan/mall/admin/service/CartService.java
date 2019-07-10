@@ -18,6 +18,20 @@ public interface CartService {
 
     int updateCartChecked(Integer userId, Integer isChecked, List<Integer> productIds);
 
+    int deleteCartItem(Integer userId, List<Integer> productIds);
+
+
+    int updateCartNumber(Integer id, Integer number);
+
+    Integer selectCartId(Integer userId, Integer productId);
+
+    int addCart(Cart cart);
+
+
+    int fastAddCart(Cart cart);
+
+
+
     //333333333333 add添加商品到购物车
 
     //int getCartCount(Integer userId, Integer isChecked, List<Integer> productIds);

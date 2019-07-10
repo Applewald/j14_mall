@@ -2,26 +2,19 @@ package com.cskaoyan.mall.admin.controller;
 
 
 import com.cskaoyan.mall.admin.annotation.Log;
-import com.cskaoyan.mall.admin.bean.LoginBean;
 import com.cskaoyan.mall.admin.bean.admin.Admin;
-import com.cskaoyan.mall.admin.bean.admin.ReqAdmin;
 import com.cskaoyan.mall.admin.service.AdminService;
+import com.cskaoyan.mall.admin.service.PermissionService;
 import com.cskaoyan.mall.admin.service.RoleService;
-import com.cskaoyan.mall.admin.token.UserToken;
-import com.cskaoyan.mall.admin.token.UserTokenManager;
 import com.cskaoyan.mall.admin.util.JacksonUtil;
 import com.cskaoyan.mall.admin.vo.ResponseVo;
-import com.sun.corba.se.spi.ior.ObjectKey;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -45,10 +38,9 @@ public class AuthController {
     RoleService roleService;
 
     @Autowired
-    com.cskaoyan.mall.service.PermissionService permissionService;
+    PermissionService permissionService;
 
 
-    //@Log(value = "登录")
     @PostMapping("/auth/login")
     public Object login(@RequestBody String body) {
 
@@ -76,6 +68,7 @@ public class AuthController {
         return responseVo;
     }
 
+    @Log(value = "登录")
     @GetMapping("/auth/info")
     public Object info() {
 
@@ -95,7 +88,7 @@ public class AuthController {
     }
 
 
-    //@Log(value = "退出")
+    @Log(value = "退出")
     @PostMapping("/auth/logout")
     public Object logout() {
         Subject currentUser = SecurityUtils.getSubject();
@@ -104,20 +97,17 @@ public class AuthController {
     }
 
 
-
-
-
-    @GetMapping("/401")
+    @GetMapping("/auth/401")
     public Object page401() {
         return ResponseVo.fail("请登录", 501);
     }
 
-    @GetMapping("/index")
+    @GetMapping("/auth/index")
     public Object pageIndex() {
         return ResponseVo.ok();
     }
 
-    @GetMapping("/403")
+    @GetMapping("/auth/403")
     public Object page403() {
         return ResponseVo.fail("无操作权限", 506);
     }

@@ -18,4 +18,7 @@ public interface GoodsCommentMapper {
 
     List<WxComment> findGoodsCommentByValueId(@Param("valueId") Integer id);
 
+
+    void insert(@Param("comment") GoodsComment comment);
+
 }
