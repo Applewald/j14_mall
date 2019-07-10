@@ -9,7 +9,7 @@ import com.cskaoyan.mall.admin.bean.HandleOption;
  */
 public class OrderStatusUtil {
     public static String toOrderStatusText(int orderStatus) {
-        String orderStatusText="";
+        String orderStatusText = "";
         switch (orderStatus) {
             case 101:
                 orderStatusText = "代付款";
@@ -39,11 +39,13 @@ public class OrderStatusUtil {
         return orderStatusText;
     }
 
-    public static HandleOption getHandleOption(int orderstatus,HandleOption handleOption) {
-        if (orderstatus == 102 || orderstatus == 103) {
+    public static HandleOption getHandleOption(int orderstatus, HandleOption handleOption) {
+        if (orderstatus == 101) {
             handleOption.setCancel(true);
-        }else if (orderstatus != 101){
             handleOption.setPay(true);
+        }
+        if (orderstatus == 103) {
+            handleOption.setDelete(true);
         }
         if (orderstatus == 401 || orderstatus == 402) {
             handleOption.setConfirm(true);

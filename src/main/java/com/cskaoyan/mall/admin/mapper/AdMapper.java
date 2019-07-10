@@ -2,6 +2,7 @@ package com.cskaoyan.mall.admin.mapper;
 
 import com.cskaoyan.mall.admin.bean.promotion.Ad;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -19,4 +20,7 @@ public interface AdMapper {
     int updateById(Ad ad);
     
     int deleteByAdId(@Param("id") int id);
+
+    @Select("select * from cskaoyan_mall_ad")
+    List<Ad> selectAllAd();
 }

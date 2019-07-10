@@ -267,4 +267,37 @@
       now() between rules.add_time and rules.expire_time
     </where>
   </select>
+
+  <resultMap id="resultHashMap" type="java.util.HashMap">
+    <result column="groupon_member" property="groupon_member"/>
+    <result column="groupon_price" property="groupon_price"/>
+    <association property="goods" javaType="java.util.Map">
+      <result column="brief" property="brief"/>
+      <result column="counter_price" property="counterPrice"/>
+      <result column="id" property="id"/>
+      <result column="name" property="name"/>
+      <result column="pic_url" property="picUrl"/>
+      <result column="retail_price" property="retailPrice"/>
+    </association>
+  </resultMap>
+
+  <select id="getGroupOnList" resultMap="resultHashMap">
+    select discount_member as groupon_member,
+           (good.retail_price * (1 - gr.discount/100)) as groupon_price,
+           good.brief,
+           good.counter_price,
+           good.id,
+           good.name,
+           good.pic_url,
+           good.retail_price
+    from cskaoyan_mall_groupon_rules gr
+    left join cskaoyan_mall_goods good on gr.goods_id = good.id
+  </select>
+
+
+  <select id="selectAllGroupOnRules" resultType="com.cskaoyan.mall.admin.bean.promotion.GroupOnRules" >
+    select goods_id as goodsId, discount, discount_member as discountMember
+    from cskaoyan_mall_groupon_rules r LEFT JOIN cskaoyan_mall_goods g on r.goods_id = g.id
+    where r.deleted = 0
+  </select>
 </mapper>

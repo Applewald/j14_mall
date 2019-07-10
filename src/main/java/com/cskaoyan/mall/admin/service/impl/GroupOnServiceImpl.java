@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author 河鲍鱼
@@ -48,5 +49,14 @@ public class GroupOnServiceImpl implements GroupOnService {
         List<GOListRecord> list = groupOnRulesMapper.findActivityByTime(goodsId,sort,order);
         PageInfo<GOListRecord> pageInfo = new PageInfo<>(list);
         return pageInfo;
+    }
+    
+    
+    /**~~~~~~~~~~~~~~~~~~~~~~以下为前台部分~~~~~~~~~~~~~~~~~~~~~~~*/
+    @Override
+    public PageInfo<Map> getGroupOnList(int page, int size) {
+        PageHelper.startPage(page,size);
+        List<Map> list =  groupOnRulesMapper.getGroupOnList();
+        return new PageInfo<>(list);
     }
 }

@@ -3,6 +3,7 @@ package com.cskaoyan.mall.admin.mapper;
 
 import com.cskaoyan.mall.admin.bean.cart.Cart;
 import com.cskaoyan.mall.admin.bean.cart.CartTotal;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public interface CartMapper {
     //**************************************
 
 
-    List<Cart> queryAllCartsByUid();
+    List<Cart> queryAllCartsByUid(@Param("userId") Integer userId);
 
     CartTotal queryCartCount();
 

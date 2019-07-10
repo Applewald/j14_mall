@@ -5,6 +5,7 @@ import com.cskaoyan.mall.admin.service.OrderService;
 import com.cskaoyan.mall.admin.service.RegionService;
 import com.cskaoyan.mall.admin.token.UserTokenManager;
 import com.cskaoyan.mall.admin.util.JacksonUtil;
+import com.cskaoyan.mall.admin.vo.MessageVo;
 import com.cskaoyan.mall.admin.vo.ResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -48,6 +49,9 @@ public class WXOrderController {
         return vo;
     }
 
+    @Autowired
+    OrderService orderService;
+
     /*提交订单*/
    /* @RequestMapping("wx/order/submit")
     public ResponseVo orderSubmit(@RequestBody String body, HttpServletRequest request) {
@@ -67,8 +71,7 @@ public class WXOrderController {
     //OrderPrepay: WxApiRoot + 'order/prepay', // 订单的预支付会话
 
 
-    //wx/order/list
-    /*品牌列表*/
+    /*订单列表*/
     @RequestMapping("wx/order/list")
     public ResponseVo OrderList(int showType, int page, int size, HttpServletRequest request) {
         String tokenKey = request.getHeader("X-Litemall-Token");
@@ -77,26 +80,32 @@ public class WXOrderController {
         return vo;
     }
 
+    /*订单列表*/
+    @RequestMapping("wx/order/detail")
+    public ResponseVo orderDetail(int orderId) {
+        ResponseVo vo = orderService.orderDetailById(orderId);
+        return vo;
+    }
 
-    //OrderDetail: WxApiRoot + 'order/detail', //订单详情
+    /*取消订单*/
+    @RequestMapping("wx/order/cancel")
+    public MessageVo orderCancel(int orderId) {
+        MessageVo vo = orderService.orderCancelById(orderId);
+        return vo;
+    }
 
-    //@RequestMapping("order/detail")
-
-    //OrderCancel: WxApiRoot + 'order/cancel', //取消订单
     //OrderRefund: WxApiRoot + 'order/refund', //退款取消订单
-    //OrderDelete: WxApiRoot + 'order/delete', //删除订单
+
+    @RequestMapping("wx/order/delete")
+    public MessageVo OrderList(@RequestBody String body) {
+        Integer orderId = JacksonUtil.parseInteger(body, "orderId");
+        MessageVo vo = orderService.orderDeleteById(orderId);
+        return vo;
+    }
+
     //OrderConfirm: WxApiRoot + 'order/confirm', //确认收货
     //OrderGoods: WxApiRoot + 'order/goods', // 代评价商品信息
     //OrderComment: WxApiRoot + 'order/comment', // 评价订单商品信息
 
-    @Autowired
-    OrderService orderService;
-
-
-    @RequestMapping("wx/order/detail")
-    public ResponseVo orderDetail(int orderId) {
-        ResponseVo vo = orderService.orderDetail(orderId);
-        return vo;
-    }
 
 }

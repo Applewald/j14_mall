@@ -1,7 +1,9 @@
 package com.cskaoyan.mall.wx.controller;
 
 import com.cskaoyan.mall.admin.bean.CreateStorge;
+import com.cskaoyan.mall.admin.service.CategoryService;
 import com.cskaoyan.mall.admin.service.GoodsService;
+import com.cskaoyan.mall.admin.vo.BaseRespVo;
 import com.cskaoyan.mall.admin.vo.ResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author iwppa
@@ -25,6 +29,9 @@ public class WXGoodsController {
 
     @Autowired
     GoodsService goodsService;
+
+    @Autowired
+    CategoryService categoryService;
 
     @RequestMapping("storage/upload")
     public ResponseVo<CreateStorge> createStorage(MultipartFile file){
@@ -47,6 +54,51 @@ public class WXGoodsController {
         return responseVo;
     }
 
+
+
+    @RequestMapping("goods/count")
+    public BaseRespVo countGoods(){
+        int goodsCount = goodsService.goodsTotal();
+        Map<Object,Object> data = new HashMap<>();
+        data.put("goodsCount",goodsCount);
+        return BaseRespVo.ok(data);
+    }
+
+    @RequestMapping("catalog/index")
+    public BaseRespVo QueryCategoryList(){
+        Map<Object,Object> data = new HashMap<>();
+        data = categoryService.findCategoryGoods();
+        return BaseRespVo.ok(data);
+    }
+
+
+    @RequestMapping("catalog/current")
+    public BaseRespVo QueryCurrentCategory(Integer id){
+        Map<Object,Object> data = new HashMap<>();
+        data = categoryService.QueryCurrentCategory(id);
+        return BaseRespVo.ok(data);
+    }
+
+    @RequestMapping("goods/category")
+    public BaseRespVo goodsCategory(Integer id){
+        Map<Object,Object> data = new HashMap<>();
+        data = categoryService.goodsCategory(id);
+        return BaseRespVo.ok(data);
+    }
+
+    @RequestMapping("goods/list")
+    public BaseRespVo goodsList(Integer categoryId,Integer page,Integer size){
+        Map<Object,Object> data = new HashMap<>();
+        data = goodsService.goodsList(categoryId,page,size);
+        return BaseRespVo.ok(data);
+    }
+
+    @RequestMapping("goods/detail")
+    public BaseRespVo goodsDetail (Integer id){
+        Map<Object,Object> data = new HashMap<>();
+        data = goodsService.wxGoodsDetailsById(id);
+        return BaseRespVo.ok(data);
+    }
 
 
 

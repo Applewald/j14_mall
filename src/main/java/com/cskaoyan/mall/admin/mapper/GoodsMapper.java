@@ -1,10 +1,14 @@
 package com.cskaoyan.mall.admin.mapper;
 
 import com.cskaoyan.mall.admin.bean.Goods;
+import com.cskaoyan.mall.admin.bean.wxhome.FloorGoodsList;
+import com.cskaoyan.mall.admin.bean.wxhome.GoodsList;
 import com.cskaoyan.mall.admin.bean.creategoods.Attribute;
 import com.cskaoyan.mall.admin.bean.creategoods.Product;
 import com.cskaoyan.mall.admin.bean.creategoods.Specification;
+import com.cskaoyan.mall.admin.bean.wxhome.GroupOnGood;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -25,6 +29,7 @@ public interface GoodsMapper {
     int goodsTotal();
 
     int productTotal();
+
     Goods findGoodsBypicUrl(@Param("picUrl") String picUrl);
 
     Goods findGoodsByName(@Param("name") String name);
@@ -64,5 +69,19 @@ public interface GoodsMapper {
     void deleteProductsByGoodsId(@Param("goodsId") int goodsId);
 
     void deleteSpecificationsbyGoodsId(@Param("goodsId") int goodsId);
+
+    @Select("select id, name, brief, counter_price as counterPrice, retail_price as retailPrice, is_new as isNew, is_hot as isHot, pic_url as picUrl from cskaoyan_mall_goods where is_hot = 1 and is_new = 0 and deleted = 0")
+    List<GoodsList> selectAllHotGoodsList();
+
+    @Select("select id, name, brief, counter_price as counterPrice, retail_price as retailPrice, is_new as isNew, is_hot as isHot, pic_url as picUrl from cskaoyan_mall_goods where is_new = 1 and is_hot = 0 and deleted = 0 ")
+    List<GoodsList> selectAllNewGoodsList();
+
+    List<GoodsList> selectAllGoodsListByCid(@Param("cid") Integer cid);
+
+    GroupOnGood selectGroupOnGoodByGoodId(@Param("id") Integer id);
+
+
+    List<Specification> findSpecificationsByGoodsIdAndSname(@Param("goodsId") Integer id, @Param("sname") String s);
 }
+
 

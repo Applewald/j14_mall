@@ -1,18 +1,17 @@
 package com.cskaoyan.mall.admin.service.impl;
 
 import com.cskaoyan.mall.admin.bean.Brand;
+import com.cskaoyan.mall.admin.bean.wxhome.BrandList;
+import com.cskaoyan.mall.admin.mapper.BrandMapper;
 import com.cskaoyan.mall.admin.service.BrandService;
 import com.cskaoyan.mall.admin.vo.DataVo;
 import com.cskaoyan.mall.admin.vo.ResponseVo;
-import com.cskaoyan.mall.admin.mapper.BrandMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class BrandServiceImpl implements BrandService {
@@ -114,5 +113,20 @@ public class BrandServiceImpl implements BrandService {
         vo.setErrno(0);
         vo.setErrmsg("成功");
         return vo;
+    }
+    public List<BrandList> selectAllBrand() {
+        List<BrandList> brands = brandMapper.selectAllBrand();
+
+        List<BrandList> brandArrayList = new ArrayList<>();
+
+        // 从中随机选4个
+        for (int i = 0; i < 4; i++) {
+            Random random = new Random();
+            int n = random.nextInt(brands.size());
+            BrandList brand = brands.get(n);
+            brandArrayList.add(brand);
+        }
+
+        return brandArrayList;
     }
 }

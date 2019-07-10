@@ -11,12 +11,14 @@ import com.cskaoyan.mall.admin.service.CouponService;
 import com.cskaoyan.mall.admin.service.GroupOnService;
 import com.cskaoyan.mall.admin.util.OrderStatusUtil;
 import com.cskaoyan.mall.admin.vo.DataVo;
+import com.cskaoyan.mall.admin.vo.MessageVo;
 import com.cskaoyan.mall.admin.vo.ResponseVo;
 import com.cskaoyan.mall.admin.service.OrderService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -34,6 +36,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     OrderMapper orderMapper;
+
     @Override
     public int orderTotal() {
         return orderMapper.orderTotal();
@@ -44,7 +47,7 @@ public class OrderServiceImpl implements OrderService {
         ResponseVo<DataVo> vo = new ResponseVo<>();
         DataVo<Order> orderDataVo = new DataVo<>();
         PageHelper.startPage(page, limit);
-        List<Order> orderList=orderMapper.orderList(sort,order,userId,orderSn,orderStatusArray);
+        List<Order> orderList = orderMapper.orderList(sort, order, userId, orderSn, orderStatusArray);
         PageInfo<Order> pageInfo = new PageInfo<>(orderList);
         orderDataVo.setTotal(pageInfo.getTotal());
         orderDataVo.setItems(pageInfo.getList());
@@ -58,6 +61,7 @@ public class OrderServiceImpl implements OrderService {
     UserMapper userMapper;
     @Autowired
     OrderGoodsMapper orderGoodsMapper;
+
     @Override
     public ResponseVo orderDetail(int id) {
         ResponseVo vo = new ResponseVo();
@@ -106,6 +110,7 @@ public class OrderServiceImpl implements OrderService {
     GroupOnMapper groupOnMapper;
     @Autowired
     GroupOnRulesMapper groupOnRulesMapper;
+
     @Override
     public ResponseVo insertOrder(int addressId, int cartId, int couponId, int grouponLinkId, int grouponRulesId, String message) {
         Address address = addressMapper.selectByPrimaryKey(addressId);
@@ -118,6 +123,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     HandleOption handleOption;
+
     @Override
     public ResponseVo findOrderList(int userId, int showType, int page, int size) {
         Map map = new HashMap();
@@ -131,9 +137,9 @@ public class OrderServiceImpl implements OrderService {
             datum.put("orderStatusText", orderStatusText);
             //判断是否用了优惠券
             BigDecimal grouponPrice = (BigDecimal) datum.get("isGroupin");
-            if (grouponPrice.compareTo(new BigDecimal(0))<=0) {
+            if (grouponPrice.compareTo(new BigDecimal(0)) <= 0) {
                 datum.put("isGroupin", false);
-            }else {
+            } else {
                 datum.put("isGroupin", true);
             }
             int orderId = ((int) datum.get("id"));
@@ -156,5 +162,62 @@ public class OrderServiceImpl implements OrderService {
         vo.setErrmsg("成功");
         vo.setErrno(0);
         return vo;
+    }
+
+    @Override
+    public ResponseVo orderDetailById(int orderId) {
+        Map map = new HashMap();
+        Map orderInfo = orderMapper.findOrderDetailById(orderId);
+        int orderStatus = ((int) orderInfo.get("orderStatusText"));
+        String orderStatusText = OrderStatusUtil.toOrderStatusText(orderStatus);
+        orderInfo.put("orderStatusText", orderStatusText);
+        //订单已评价
+        int comments = ((int) orderInfo.get("comments"));
+        if (comments <= 0) {
+            handleOption.setComment(true);
+        }
+        orderInfo.remove("comments");
+        handleOption = OrderStatusUtil.getHandleOption(orderStatus, handleOption);
+        orderInfo.put("handleOption", handleOption);
+        map.put("orderInfo", orderInfo);
+        List<OrderGoods> orderGoods = orderGoodsMapper.orderGoods(orderId);
+        map.put("orderGoods", orderGoods);
+        ResponseVo<Object> vo = new ResponseVo<>();
+        vo.setData(map);
+        vo.setErrno(0);
+        vo.setErrmsg("成功");
+        return vo;
+    }
+
+    @Override
+    public MessageVo orderDeleteById(int orderId) {
+        try {
+            orderMapper.orderDeleteById(orderId);
+            return new MessageVo(0, "成功");
+        } catch (Exception e) {
+            return new MessageVo(-1, "失败");
+        }
+    }
+
+    @Transactional
+    @Override
+    public MessageVo orderCancelById(int orderId) {
+        try {
+            /*查找订单中的商品*/
+            List<Map> productMap = orderGoodsMapper.findProductMap(orderId);
+            /*修改对应商品的库存*/
+            for (Map map : productMap) {
+                int productId = (int) map.get("productId");
+                int number = (int) map.get("number");
+                orderGoodsMapper.updateProductNumber(productId, number);
+            }
+            /*逻辑上删除订单商品中的订单商品信息*/
+            orderGoodsMapper.deleteOrderGoodsMapper(orderId);
+            /*修改订单中的状态码为102*/
+            orderMapper.orderCancelById(orderId);
+            return new MessageVo(0, "成功");
+        } catch (Exception e) {
+            return new MessageVo(-1, "失败");
+        }
     }
 }

@@ -1,8 +1,11 @@
 package com.cskaoyan.mall.admin.service;
 
 import com.cskaoyan.mall.admin.bean.Brand;
+import com.cskaoyan.mall.admin.bean.wxhome.BrandList;
 import com.cskaoyan.mall.admin.vo.DataVo;
 import com.cskaoyan.mall.admin.vo.ResponseVo;
+
+import java.util.List;
 
 /**
  * author: xiaolong
@@ -24,4 +27,5 @@ public interface BrandService {
 
     ResponseVo findBrandDetail(int id);
 
+    List<BrandList> selectAllBrand();
 }

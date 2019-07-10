@@ -2,7 +2,9 @@ package com.cskaoyan.mall.admin.mapper;
 
 import com.cskaoyan.mall.admin.bean.promotion.Coupon;
 import com.cskaoyan.mall.admin.bean.promotion.CouponUser;
+import com.cskaoyan.mall.admin.bean.wxhome.CouponList;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -28,4 +30,7 @@ public interface CouponMapper {
                                    @Param("status")Short status,
                                    @Param("sort")String sort,
                                    @Param("order")String order);
+
+    @Select("select * from cskaoyan_mall_coupon")
+    List<CouponList> selectAllCouponList();
 }

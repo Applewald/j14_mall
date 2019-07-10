@@ -36,6 +36,13 @@
         <result column="deleted" property="deleted"/>
     </resultMap>
 
+    <select id="findSpecificationsByGoodsIdAndSname" resultMap="specifications">
+        select id, goods_id, specification,
+    `value`, pic_url, add_time, update_time,deleted
+    from cskaoyan_mall_goods_specification
+    where goods_id = #{goodsId} and  deleted = 0 and specification = #{sname}
+    </select>
+
     <select id="findSpecificationsByGoodsId" resultMap="specifications">
     select id, goods_id, specification,
     `value`, pic_url, add_time, update_time,deleted
@@ -320,4 +327,33 @@
     <select id="productTotal" resultType="_int">
         SELECT count(id) FROM `cskaoyan_mall_goods_product`
     </select>
+
+    <select id="selectGroupOnGoodByGoodId" resultType="com.cskaoyan.mall.admin.bean.wxhome.GroupOnGood" >
+        select
+        `id`,
+        `name`,
+        brief,
+        counter_price as counterPrice,
+        retail_price as retailPrice,
+        pic_url as picUrl
+        from cskaoyan_mall_goods
+        where `id` = #{id} and deleted = 0
+    </select>
+
+
+    <select id="selectAllGoodsListByCid" resultType="com.cskaoyan.mall.admin.bean.wxhome.GoodsList" >
+        select
+        `id`,
+        `name`,
+        `brief`,
+        counter_price as counterPrice,
+        retail_price as retailPrice,
+        is_new as isNew,
+        is_hot as isHot,
+        pic_url as picUrl
+        from cskaoyan_mall_goods
+        where category_id = #{cid} and deleted = 0
+    </select>
+
+
 </mapper>
