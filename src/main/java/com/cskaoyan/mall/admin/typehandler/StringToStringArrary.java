@@ -69,7 +69,7 @@ public class StringToStringArrary implements TypeHandler<String[]> {
             }*/
             for (int i = 0; i < split.length; i++) {
 
-                if (i==0) {
+                if (i == 0) {
                     String substring1 = split[i].substring(1, split[i].length() - 1);
                     stringLists.add(substring1);
                 } else {
