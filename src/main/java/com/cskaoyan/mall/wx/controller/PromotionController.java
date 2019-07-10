@@ -1,17 +1,22 @@
 package com.cskaoyan.mall.wx.controller;
 
 import com.cskaoyan.mall.admin.bean.promotion.Topic;
+import com.cskaoyan.mall.admin.service.CouponService;
 import com.cskaoyan.mall.admin.service.GroupOnService;
-import com.cskaoyan.mall.admin.service.OrderService;
 import com.cskaoyan.mall.admin.service.TopicService;
+import com.cskaoyan.mall.admin.token.UserTokenManager;
+import com.cskaoyan.mall.admin.util.JacksonUtil;
+import com.cskaoyan.mall.admin.vo.MessageVo;
 import com.cskaoyan.mall.admin.vo.ResponseVo;
 import com.cskaoyan.mall.admin.vo.TopicVo;
 import com.cskaoyan.mall.admin.vo.WxDataVo;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,17 +66,10 @@ public class PromotionController {
         return vo;
     }
     
-    /*@RequestMapping("wx/comment/list")
-    public ResponseVo<CommentsVo> CommentsList(Integer valueId,int type,int showType,int page,int size){
-    
-    }*/
-    
     /**~~~~~~~~~~~~~~~~~~~~~以下为团购部分~~~~~~~~~~~~~~~~~~~~~~*/
     
     @Autowired
     GroupOnService groupOnService;
-    
-    OrderService orderService;
     
     @RequestMapping("wx/groupon/list")
     public ResponseVo<WxDataVo> groupOnList(int page,int size){
@@ -119,6 +117,95 @@ public class PromotionController {
         vo.setData(map);
         vo.setErrno(0);
         vo.setErrmsg("成功");
+        return vo;
+    }
+    
+    /*@RequestMapping("wx/groupon/join")
+    public ResponseVo<Map> groupOnDetail(Integer grouponId){
+        ResponseVo<Map> vo = new ResponseVo<>();
+        Map<Object,Object> map = groupOnService.getMyGroupOnDetail(grouponId);
+        vo.setData(map);
+        vo.setErrno(0);
+        vo.setErrmsg("成功");
+        return vo;
+    }*/
+    
+    
+    /**~~~~~~~~~~~~~~~~~~~~~以下为优惠券部分~~~~~~~~~~~~~~~~~~~~~~*/
+    
+    @Autowired
+    CouponService couponService;
+    
+    @RequestMapping("wx/coupon/list")
+    public ResponseVo<WxDataVo> couponList(int page,int size){
+        WxDataVo<Map> dataVo = new WxDataVo<>();
+        PageInfo<Map> pageInfo = couponService.getAllCouponBehind(page,size);
+        dataVo.setData(pageInfo.getList());
+        dataVo.setCount(pageInfo.getTotal());
+        ResponseVo<WxDataVo> vo = new ResponseVo<>();
+        vo.setData(dataVo);
+        vo.setErrmsg("成功");
+        vo.setErrno(0);
+        return vo;
+    }
+    
+    @RequestMapping("wx/coupon/mylist")
+    public ResponseVo<WxDataVo> couponList(int page, int size, int status, HttpServletRequest request){
+        WxDataVo<Map> dataVo = new WxDataVo<>();
+        String header = request.getHeader("X-Litemall-Token");
+        Integer userId = UserTokenManager.getUserId(header);
+        PageInfo<Map> pageInfo = couponService.getMyCoupon(page,size,status,userId);
+        dataVo.setData(pageInfo.getList());
+        dataVo.setCount(pageInfo.getTotal());
+        ResponseVo<WxDataVo> vo = new ResponseVo<>();
+        vo.setData(dataVo);
+        vo.setErrmsg("成功");
+        vo.setErrno(0);
+        return vo;
+    }
+    
+    /*这个sql语句还没写完*/
+    @RequestMapping("wx/coupon/selectlist")
+    public ResponseVo<List> selectlist(int cartId,int grouponRulesId){
+        ResponseVo<List> vo = new ResponseVo<>();
+        List<Map> list = couponService.selectlist(cartId,grouponRulesId);
+        vo.setData(list);
+        vo.setErrmsg("成功");
+        vo.setErrno(0);
+        return vo;
+    }
+    
+    @RequestMapping("wx/coupon/receive")
+    public MessageVo receive(@RequestBody String couponId, HttpServletRequest request){
+        String header = request.getHeader("X-Litemall-Token");
+        Integer userId = UserTokenManager.getUserId(header);
+        MessageVo vo = new MessageVo();
+        Integer couponId1 = JacksonUtil.parseInteger(couponId, "couponId");
+        int i = couponService.receiveCoupon(couponId1,userId);
+        if(i > 0){
+            vo.setErrmsg("成功");
+            vo.setErrno(0);
+        } else {
+            vo.setErrmsg("优惠券已经领取过");
+            vo.setErrno(740);
+        }
+        return vo;
+    }
+    
+    @RequestMapping("wx/coupon/exchange")
+    public MessageVo exchange(@RequestBody String code,HttpServletRequest request){
+        String code1 = JacksonUtil.parseString(code, "code");
+        String header = request.getHeader("X-Litemall-Token");
+        Integer userId = UserTokenManager.getUserId(header);
+        MessageVo vo = new MessageVo();
+        int i = couponService.exchange(code1,userId);
+        if(i > 0){
+            vo.setErrmsg("成功");
+            vo.setErrno(0);
+        } else {
+            vo.setErrmsg("优惠券不正确");
+            vo.setErrno(742);
+        }
         return vo;
     }
 }
