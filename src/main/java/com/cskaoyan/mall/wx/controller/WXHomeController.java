@@ -82,10 +82,15 @@ public class WXHomeController {
         return ResponseVo.ok(map);
     }
 
-    /*@RequestMapping("/comment/count")
-    public Object commentCounts(Integer valueId, Integer type){
 
-    }*/
+
+    @RequestMapping("/comment/count")
+    public Object commentCounts(Integer valueId, Integer type){
+        HashMap<Object,Object> map = new HashMap<>();
+        map = goodsCommentService.commentCount(valueId,type);
+
+        return ResponseVo.ok(map);
+    }
 
 
 }

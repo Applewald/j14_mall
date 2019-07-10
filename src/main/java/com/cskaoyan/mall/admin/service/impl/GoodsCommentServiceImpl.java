@@ -102,4 +102,29 @@ public class GoodsCommentServiceImpl implements GoodsCommentService {
 
         return dataLists;
     }
+
+
+    @Override
+    public HashMap<Object, Object> commentCount(Integer valueId, Integer type) {
+        List<GoodsComment> goodsComments = goodsCommentMapper.selectAllCommentsList(valueId, type);
+        int allCount = goodsComments.size();
+        int hasPicCount = 0;
+
+        for (GoodsComment goodsComment : goodsComments) {
+
+            if (goodsComment.getPicUrls() != null || (!"[]".equals(goodsComment.getPicUrls()))) {
+                hasPicCount +=1;
+            }
+        }
+
+        HashMap<Object,Object> data = new HashMap<>();
+
+        data.put("allCount",allCount);
+        data.put("hasPicCount",hasPicCount);
+
+        return data;
+    }
+
+
+
 }

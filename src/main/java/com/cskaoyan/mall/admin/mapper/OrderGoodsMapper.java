@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
+
 @Repository
 public interface OrderGoodsMapper {
     long countByExample(OrderGoodsExample example);
@@ -32,4 +34,12 @@ public interface OrderGoodsMapper {
     int updateByPrimaryKey(OrderGoods record);
 
     List<OrderGoods> orderGoods(@Param("orderId") int orderId);
+
+    List<Map> findGoodsList(@Param("orderId") int orderId);
+
+    List<Map> findProductMap(@Param("orderId") int orderId);
+
+    int updateProductNumber(@Param("productId") int productId, @Param("number") int number);
+
+    int deleteOrderGoodsMapper(@Param("orderId") int orderId);
 }
