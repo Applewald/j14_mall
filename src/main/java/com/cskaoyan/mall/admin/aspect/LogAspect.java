@@ -76,9 +76,13 @@ public class LogAspect {
         //log.setStatus(true);
 
         Object[] args = joinPoint.getArgs();
-        Admin arg = (Admin)args[0];
-        // 操作结果
-        log.setResult(arg.getUsername());
+        if (args.length != 0) {
+            Admin arg = (Admin) args[0];
+            if (arg != null) {
+                // 操作结果
+                log.setResult(arg.getUsername());
+            }
+        }
 
         // 调用service保存到数据库
         logService.save(log);

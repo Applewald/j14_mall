@@ -1,6 +1,7 @@
-package com.cskaoyan.mall.admin.service;
+package com.cskaoyan.mall.admin.service.impl;
 
 
+import com.cskaoyan.mall.admin.service.RoleService;
 import com.cskaoyan.mall.admin.vo.DataVo;
 import com.cskaoyan.mall.admin.bean.role.Role;
 import com.cskaoyan.mall.admin.bean.admin.AdminOptions;

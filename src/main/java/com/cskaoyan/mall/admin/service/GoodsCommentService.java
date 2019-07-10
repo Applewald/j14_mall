@@ -15,6 +15,10 @@ public interface GoodsCommentService {
 
     List<Object> selectAllCommentsList(Integer valueId, Integer type, Integer size, Integer page, Integer showType);
 
+
+    void insert(GoodsComment comment);
+
     HashMap<Object, Object> commentCount(Integer valueId, Integer type);
+
 }
 

@@ -105,6 +105,12 @@ public class GoodsCommentServiceImpl implements GoodsCommentService {
 
 
     @Override
+    public void insert(GoodsComment comment) {
+        goodsCommentMapper.insert(comment);
+    }
+
+
+    @Override
     public HashMap<Object, Object> commentCount(Integer valueId, Integer type) {
         List<GoodsComment> goodsComments = goodsCommentMapper.selectAllCommentsList(valueId, type);
         int allCount = goodsComments.size();

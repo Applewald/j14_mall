@@ -1,9 +1,9 @@
-package com.cskaoyan.mall.service.impl;
+package com.cskaoyan.mall.admin.service.impl;
 
 import com.cskaoyan.mall.admin.bean.permission.Permission;
 import com.cskaoyan.mall.admin.bean.permission.PermissionExample;
 import com.cskaoyan.mall.admin.mapper.PermissionMapper;
-import com.cskaoyan.mall.service.PermissionService;
+import com.cskaoyan.mall.admin.service.PermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
