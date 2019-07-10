@@ -16,6 +16,14 @@
     <result column="deleted" property="deleted"/>
   </resultMap>
 
+  <resultMap id="wxComments" type="com.cskaoyan.mall.admin.bean.WxComment">
+    <result column="add_time" property="addTime"/>
+    <result column="id" property="id"/>
+    <result column="pic_urls" property="picList" typeHandler="com.cskaoyan.mall.admin.typehandler.StringToStringArrary"/>
+    <result column="content" property="content"/>
+    <result column="nickname" property="nickname"/>
+    <result column="avatar" property="avatar"/>
+  </resultMap>
 
 
 
@@ -35,8 +43,29 @@
     order by #{sort} #{order}
   </select>
 
+  <select id="selectAllCommentsList" resultMap="findGoodsComments" >
+    select * from cskaoyan_mall_comment
+    where deleted = 0
+    and value_id = #{valueId}
+    and `type` = #{type}
+  </select>
 
 
+
+
+  <select id="findGoodsCommentByValueId" resultMap="wxComments">
+    select cm.add_time as add_time,
+           cm.id as id ,
+           pic_urls ,
+           content,
+           cu.nickname as nickname,
+           cu.avatar as avatar
+
+    from cskaoyan_mall_comment cm
+    left join cskaoyan_mall_user  cu
+    on cm.user_id  = cu.id
+    where cm.value_id = #{valueId} and cm.type = 0 and cm.deleted = 0
+  </select>
 
 
 </mapper>

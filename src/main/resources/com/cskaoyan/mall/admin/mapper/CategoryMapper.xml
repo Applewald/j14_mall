@@ -376,5 +376,35 @@
         <id column="id" jdbcType="INTEGER" property="value"/>
         <result column="name" jdbcType="VARCHAR" property="label"/>
     </resultMap>
-    
+
+    <!--根据Lv1Id查询L2List-->
+    <select id="findL2CategorysByL1Id" resultMap="BaseResultMap">
+        select  id, `name`, keywords,
+      `desc`, pid, icon_url,
+      pic_url, `level`, sort_order,
+      add_time, update_time, deleted
+      from cskaoyan_mall_category
+      where pid = #{L1Id} and deleted = 0
+    </select>
+
+    <!--查询L1List-->
+    <select id="findL1CategoryList" resultMap="BaseResultMap">
+        select  id, `name`, keywords,
+      `desc`, pid, icon_url,
+      pic_url, `level`, sort_order,
+      add_time, update_time, deleted
+      from cskaoyan_mall_category
+      where  `level` = 'L1' and deleted = 0
+    </select>
+
+    <select id="findCategoryById" resultMap="BaseResultMap">
+        select  id, `name`, keywords,
+      `desc`, pid, icon_url,
+      pic_url, `level`, sort_order,
+      add_time, update_time, deleted
+      from cskaoyan_mall_category
+      where  id = #{id} and deleted = 0
+    </select>
+
+
 </mapper>

@@ -294,4 +294,12 @@
         </where>
         order by #{sort} #{order}
     </select>
+
+    <select id="findBrandByBrandId" resultMap="BaseResultMap">
+        SELECT
+        id,`name`,`desc`,pic_url,sort_order,floor_price,add_time,update_time, deleted
+        FROM
+        `cskaoyan_mall_brand`
+        where id = #{id} and deleted = 0
+    </select>
 </mapper>

@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface GroupOnRulesMapper {
@@ -28,4 +29,12 @@ public interface GroupOnRulesMapper {
     List<GOListRecord> findActivityByTime(@Param("goodsId")Integer goodsId,
                                           @Param("sort")String sort,
                                           @Param("order")String order);
+    
+    List<Map> getGroupOnList();
+
+    List<GroupOnRules> selectAllGroupOnRules();
+    
+    List<Map> getMyGroupOnList(@Param("show") int showType);
+    
+    Map<Object,Object> getMyGroupOnDetail(@Param("id")Integer grouponId);
 }

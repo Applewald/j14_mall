@@ -36,6 +36,6 @@ public class LogServiceImpl implements LogService {
 
     @Override
     public void save(Log log) {
-
+        logMapper.insert(log);
     }
 }

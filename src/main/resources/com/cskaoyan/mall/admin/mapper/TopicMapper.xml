@@ -88,4 +88,29 @@
     where title like #{title} and subtitle like #{subtitle}
     order by #{sort} #{order}
   </select>
+
+
+  <!--~~~~~~~~~~~~~~~分~~~~~~~~~~~~~~~~~~~割~~~~~~~~~~~~~~~~~~~~~~线~~~~~~~~~~~~~~~-->
+  <!--以下为前台方法-->
+  <select id="getTopics" resultType="java.util.HashMap">
+    select id,
+           pic_url as picUrl,
+           price,
+           read_count as readCount,
+           subtitle,
+           title
+    from cskaoyan_mall_topic
+  </select>
+
+  <select id="selectRelatedTopic" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from cskaoyan_mall_topic
+    where id in
+    <foreach collection="ids" separator="," open="(" close=")" item="id">
+      #{id}
+    </foreach>
+  </select>
 </mapper>

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author 河鲍鱼
@@ -48,5 +49,38 @@ public class GroupOnServiceImpl implements GroupOnService {
         List<GOListRecord> list = groupOnRulesMapper.findActivityByTime(goodsId,sort,order);
         PageInfo<GOListRecord> pageInfo = new PageInfo<>(list);
         return pageInfo;
+    }
+    
+    
+    /**~~~~~~~~~~~~~~~~~~~~~~以下为前台部分~~~~~~~~~~~~~~~~~~~~~~~*/
+    @Override
+    public PageInfo<Map> getGroupOnList(int page, int size) {
+        PageHelper.startPage(page,size);
+        List<Map> list =  groupOnRulesMapper.getGroupOnList();
+        return new PageInfo<>(list);
+    }
+    
+    @Override
+    public List<Map> getMyGroupOnList(int showType) {
+        List<Map> list = groupOnRulesMapper.getMyGroupOnList(showType);
+        boolean flag;
+        for (Map map:list) {
+            Long isCreator = (Long) map.get("isCreator");
+            if(isCreator == 0){
+                flag = false;
+            } else {
+                flag = true;
+            }
+            System.out.println(isCreator);
+            System.out.println(flag);
+            map.put("isCreator",flag);
+        }
+        return list;
+    }
+    
+    @Override
+    public Map<Object,Object> getMyGroupOnDetail(Integer grouponId) {
+        Map<Object,Object> list = groupOnRulesMapper.getMyGroupOnDetail(grouponId);
+        return list;
     }
 }
