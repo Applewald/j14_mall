@@ -1,5 +1,6 @@
 package com.cskaoyan.mall.admin.service;
 
+import com.cskaoyan.mall.admin.vo.MessageVo;
 import com.cskaoyan.mall.admin.vo.ResponseVo;
 
 import java.util.Map;
@@ -20,4 +21,15 @@ public interface OrderService {
 
     Map<Object, Object> findOrderStatusByUserId(Integer userId);
 
+    ResponseVo insertOrder(int addressId, int cartId, int couponId, int grouponLinkId, int grouponRulesId, String message);
+
+    ResponseVo findOrderList(int userId, int showType, int page, int size);
+
+    ResponseVo orderDetailById(int orderId);
+
+    MessageVo orderDeleteById(int orderId);
+
+    MessageVo orderCancelById(int orderId);
+
+    MessageVo orderRefundById(int orderId);
 }
