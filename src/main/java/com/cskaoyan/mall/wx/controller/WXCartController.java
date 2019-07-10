@@ -147,32 +147,29 @@ public class WXCartController {
 
     }
 
-    //5 update
-    @RequestMapping("wx/cart/update")
-    public ResponseVo cartUpdate(@RequestBody Map<String,Object> map,HttpServletRequest request){
 
-        //获取请求参数
-        Integer productId = (Integer) map.get("productId");
-        Integer id =(Integer) map.get("id");
-        Integer goodsId = (Integer) map.get("goodsId");
-        Integer number = (Integer) map.get("number");
 
+    @RequestMapping("wx/cart/fastadd")
+    public ResponseVo fastAddCart(@RequestBody Cart cart,HttpServletRequest request){
+
+
+        //通过token 获取userId
         String token = request.getHeader("X-Litemall-Token");
-        Integer uid = UserTokenManager.getUserId(token);
-        ResponseVo responseVo = new ResponseVo();
-        int update = cartService.updateCartNumber(id,number);
-        if(update>0){
-            responseVo.setErrno(0);
-            responseVo.setErrmsg("成功");
-            return responseVo;
-        }else{
-            responseVo.setErrno(1);
-            responseVo.setErrmsg("error");
-            return responseVo;
-        }
-    }
+        Integer userId = UserTokenManager.getUserId(token);
 
-    //66cart/fastadd' 立即购买商品
+        cart.setChecked(true);
+        cart.setUserId(userId);
+        int cartId = cartService.fastAddCart(cart);
+
+
+
+        ResponseVo responseVo = new ResponseVo<>();
+        responseVo.setData(cartId);
+        responseVo.setErrno(0);
+        responseVo.setErrmsg("成功");
+
+        return responseVo;
+    }
 
 
 
@@ -183,10 +180,12 @@ public class WXCartController {
  @RequestMapping("wx/cart/checkout")
     public ResponseVo cartCehckout(@RequestBody Map<String,Object> map ,HttpServletRequest request){
 
+<<<<<<< HEAD
         String token = request.getHeader("X-Litemall-Token");
         Integer userId = UserTokenManager.getUserId(token);
     }
 */
+
 
 
 
