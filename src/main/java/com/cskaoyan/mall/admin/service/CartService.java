@@ -5,6 +5,7 @@ import com.cskaoyan.mall.admin.bean.cart.CartCheckout;
 import com.cskaoyan.mall.admin.bean.cart.CartIndex;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author hx
@@ -30,6 +31,7 @@ public interface CartService {
 
     int fastAddCart(Cart cart);
 
+    Map<Object, Object> cartCehckout(Integer userId, Integer cartId, Integer addressId, Integer couponId, Integer grouponRelesId);
 
 
     //333333333333 add添加商品到购物车

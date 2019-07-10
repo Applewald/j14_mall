@@ -176,11 +176,19 @@ public class WXCartController {
     //'cart/checkout' 下单前信息确认
 
  @RequestMapping("wx/cart/checkout")
-    public ResponseVo cartCehckout(@RequestBody Map<String,Object> map ,HttpServletRequest request){
+    public Object cartCehckout(@RequestBody Map<String,Object> map ,HttpServletRequest request){
 
      String token = request.getHeader("X-Litemall-Token");
      Integer userId = UserTokenManager.getUserId(token);
-     return null;
+     Integer cartId =(Integer) map.get("cartId");
+     Integer addressId =(Integer) map.get("addressId");
+     Integer couponId =(Integer) map.get("couponId");
+     Integer grouponRelesId =(Integer) map.get("grouponRelesId");
+
+    Map<Object,Object> data = new HashMap<>();
+    data = cartService.cartCehckout(userId,cartId,addressId,couponId,grouponRelesId);
+    return ResponseVo.ok(data);
+
  }
 
 
