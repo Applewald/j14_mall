@@ -205,6 +205,7 @@ public class WXCartController {
 
      String token = request.getHeader("X-Litemall-Token");
      Integer userId = UserTokenManager.getUserId(token);
+     return null;
  }
 
 
