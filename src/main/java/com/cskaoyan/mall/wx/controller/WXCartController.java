@@ -174,7 +174,7 @@ public class WXCartController {
 
     //66cart/fastadd' 立即购买商品
 
-    @RequestMapping("wx/cart/fastadd")
+   /* @RequestMapping("wx/cart/fastadd")
     public ResponseVo cartFastadd(@RequestBody Map<String,Object> map,HttpServletRequest request){
         ResponseVo responseVo = new ResponseVo();
 
@@ -195,23 +195,18 @@ public class WXCartController {
             responseVo.setErrmsg("失败");
         }
         return responseVo;
-    }
+    }*/
 
 
-    //'cart/checkout', // 下单前信息确认
+    //'cart/checkout' 下单前信息确认
 
+ @RequestMapping("wx/cart/checkout")
+    public ResponseVo cartCehckout(@RequestBody Map<String,Object> map ,HttpServletRequest request){
 
-  /*  cartId:61
-    addressId:0
-    couponId:0
-    grouponRulesId:
-*/
+     String token = request.getHeader("X-Litemall-Token");
+     Integer userId = UserTokenManager.getUserId(token);
+ }
 
-
-    //'cart/update', // 更新购物车的商品
-    //cart/delete', 删除购物车的商品
-    ////  'cart/checked'选择或取消选择商品
-    //'cart/goodscount', // 获取购物车商品件数
 
 
 }
