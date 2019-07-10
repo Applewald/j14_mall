@@ -137,5 +137,8 @@ public class GoodsCommentServiceImpl implements GoodsCommentService {
     }
 
 
-
+    @Override
+    public void deleteGoodsComent(GoodsComment comment) {
+        goodsCommentMapper.deletebyId(comment.getId());
+    }
 }

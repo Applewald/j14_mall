@@ -20,5 +20,6 @@ public interface GoodsCommentService {
 
     HashMap<Object, Object> commentCount(Integer valueId, Integer type);
 
+    void deleteGoodsComent(GoodsComment comment);
 }
 

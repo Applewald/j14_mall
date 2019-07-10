@@ -6,6 +6,7 @@ import com.cskaoyan.mall.admin.vo.DataVo;
 import com.cskaoyan.mall.admin.vo.MessageVo;
 import com.cskaoyan.mall.admin.vo.ResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,8 +29,9 @@ public class GoodsCommentsController {
     }
 
 
-    /*@RequestMapping("comment/delete")
-    public Object deletedComment(){
-
-    }*/
+    @RequestMapping("comment/delete")
+    public Object deletedComment(@RequestBody GoodsComment comment){
+        goodsCommentService.deleteGoodsComent(comment);
+        return MessageVo.getSuccessMeg();
+    }
 }

@@ -2,6 +2,7 @@ package com.cskaoyan.mall.admin.mapper;
 
 import com.cskaoyan.mall.admin.bean.GoodsComment;
 import com.cskaoyan.mall.admin.bean.WxComment;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,4 +22,6 @@ public interface GoodsCommentMapper {
 
     void insert(@Param("comment") GoodsComment comment);
 
+    @Delete("delete from cskaoyan_mall_comment where id = #{id}")
+    void deletebyId(@Param("id") Integer id);
 }
