@@ -66,4 +66,11 @@ public class CartServiceImpl implements CartService {
     public int getCartCount(Integer userId, Integer isChecked, List<Integer> productIds) {
         return cartMapper.getCartCount(userId,isChecked,productIds);
     }*/
+
+ //4
+
+    @Override
+    public int deleteCartItem(Integer userId, List<Integer> productIds) {
+        return cartMapper.deleteCartItem(userId,productIds);
+    }
 }

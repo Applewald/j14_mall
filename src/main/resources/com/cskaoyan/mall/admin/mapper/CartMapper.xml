@@ -48,8 +48,19 @@
 
 
 <!--********************************************************************************-->
-
-
+<!--444-->
+  <delete id="deleteCartItem" >
+    delete
+    from cskaoyan_mall_cart
+    <where>
+      user_id = #{userId}
+      and
+      product_id in
+      <foreach collection="productIds" item="pid" separator="," open="(" close=")">
+        #{pid}
+      </foreach>
+    </where>
+  </delete>
 
 
 

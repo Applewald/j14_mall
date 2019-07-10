@@ -74,6 +74,7 @@ public class WXCartController {
 
     }
     //333333333333 add添加商品到购物车
+
     @RequestMapping("wx/cart/add")
     public ResponseVo addCart(@RequestBody Map<String,Object> map,HttpServletRequest request){
         //获取请求数据
@@ -87,9 +88,11 @@ public class WXCartController {
         List<Cart> cartList = cartIndex.getCartList();
 
         //int data = cartService.getCartCount(userId,isChecked,productIds);
+
         int data = cartList.size();
         ResponseVo responseVo = new ResponseVo<>();
         if (data>=0){
+            data = data+1;
             responseVo.setData(data);
             responseVo.setErrno(0);
             responseVo.setErrmsg("成功");
@@ -121,7 +124,32 @@ public class WXCartController {
         return responseVo;
     }
 
+//4 wx/cart/delete
+    @RequestMapping("wx/cart/delete")
+    public ResponseVo<CartIndex> delete(@RequestBody Map<String,Object> map,HttpServletRequest request){
+        //获取请求数据
+        List<Integer> productIds = (List<Integer>) map.get("productIds");
+        //通过token 获取userId
+        String token = request.getHeader("X-Litemall-Token");
+        Integer userId = UserTokenManager.getUserId(token);
+        //
+        int delete = cartService.deleteCartItem(userId,productIds);
 
+        ResponseVo<CartIndex> responseVo = new ResponseVo<>();
+        CartIndex cartIndex = cartService.queryCartIndex(userId);
+
+        if (delete>0){
+            responseVo.setData(cartIndex);
+            responseVo.setErrno(0);
+            responseVo.setErrmsg("成功");
+        }else {
+            responseVo.setErrno(1);
+            responseVo.setErrmsg("失败");
+        }
+        return responseVo;
+
+
+    }
 
     //cart/fastadd' 立即购买商品
 /*    @RequestMapping("wx/cart/fastadd")
