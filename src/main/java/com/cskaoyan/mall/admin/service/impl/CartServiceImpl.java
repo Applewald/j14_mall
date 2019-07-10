@@ -156,7 +156,11 @@ public class CartServiceImpl implements CartService {
         if (addressId == null || addressId == 0){
             //查默认地址
             checkedAddress = addressMapper.findDefaultAddress(userId);
-            map.put("addressId",checkedAddress.getId());
+            if (checkedAddress == null) {
+                map.put("addressId", 0);
+            } else {
+                map.put("addressId", checkedAddress.getId());
+            }
 
         }else {
             checkedAddress = addressMapper.findAddressById(addressId);
@@ -168,14 +172,18 @@ public class CartServiceImpl implements CartService {
         map.put("checkedGoodsList",checkedGoodsList);
 
         BigDecimal goodsTotalPrice = new BigDecimal(0);
+
         for (Cart cart : checkedGoodsList){
-            for (int i = 0 ;i <cart.getNumber() ;i++){
+            BigDecimal price = cart.getPrice();
+            price = price.multiply(new BigDecimal(cart.getNumber()));
+            /*for (int i = 0 ;i <cart.getNumber() ;i++){
                 goodsTotalPrice .add(cart.getPrice());
-            }
+            }*/
+            goodsTotalPrice = goodsTotalPrice.add(price);
         }
 
         //运费0000000000
-        map.put("freightPrice",0);
+        map.put("freightPrice",8);
         //
         map.put("goodsTotalPrice",goodsTotalPrice);
         //商品+运费
@@ -193,7 +201,7 @@ public class CartServiceImpl implements CartService {
             map.put("couponPrice",0);
         }
         map.put("availableCouponLength",0);
-
+        map.put("grouponRulesId",0);
 
         return map;
 

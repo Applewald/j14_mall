@@ -3,6 +3,7 @@ package com.cskaoyan.mall.admin.controller;
 import com.cskaoyan.mall.admin.bean.GoodsComment;
 import com.cskaoyan.mall.admin.service.GoodsCommentService;
 import com.cskaoyan.mall.admin.vo.DataVo;
+import com.cskaoyan.mall.admin.vo.MessageVo;
 import com.cskaoyan.mall.admin.vo.ResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,4 +26,10 @@ public class GoodsCommentsController {
         responseVo.setData(comments);
         return responseVo;
     }
+
+
+    /*@RequestMapping("comment/delete")
+    public Object deletedComment(){
+
+    }*/
 }

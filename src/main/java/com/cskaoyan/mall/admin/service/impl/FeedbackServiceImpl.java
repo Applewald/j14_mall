@@ -11,7 +11,9 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * author : summer
@@ -43,5 +45,16 @@ public class FeedbackServiceImpl implements FeedbackService {
             pageVoResponseVo.setErrno(-1);
         }
         return pageVoResponseVo;
+    }
+
+    @Override
+    public int  submitFeedback(Feedback feedback) {
+        int i = feedbackMapper.submitFeedback(feedback);
+        return i;
+    }
+
+    @Override
+    public String findUsernameByUserId() {
+      return   feedbackMapper.findUserNameByUserId();
     }
 }

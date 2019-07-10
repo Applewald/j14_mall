@@ -8,6 +8,8 @@ import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
+
 @Repository
 public interface AddressMapper {
     long countByExample(AddressExample example);
@@ -45,4 +47,11 @@ public interface AddressMapper {
 
     @Select("select * from cskaoyan_mall_address where id = #{id} and  deleted = 0  ")
     Address findAddressById(@Param("id") Integer addressId);
+
+    List<Address> getAddressList();
+
+    int deleteAddress(int id);
+
+    int insertAddress(Address address);
+
 }

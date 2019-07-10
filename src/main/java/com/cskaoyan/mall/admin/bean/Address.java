@@ -34,6 +34,16 @@ public class Address {
 
     private Boolean deleted;
 
+    private String detailedAddress;
+
+    public String getDetailedAddress() {
+        return detailedAddress;
+    }
+
+    public void setDetailedAddress(String detailedAddress) {
+        this.detailedAddress = detailedAddress;
+    }
+
     public String getProvince() {
         return province;
     }

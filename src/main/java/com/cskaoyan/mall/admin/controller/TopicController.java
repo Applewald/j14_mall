@@ -46,4 +46,34 @@ public class TopicController {
         }
         return vo;
     }
+    
+    @RequestMapping("topic/create")
+    public ResponseVo<Topic> create(@RequestBody Topic topic){
+        ResponseVo<Topic> vo = new ResponseVo<>();
+        int i = topicService.insert(topic);
+        vo.setData(topic);
+        if(i > 0){
+            vo.setErrno(0);
+            vo.setErrmsg("OK");
+        } else {
+            vo.setErrmsg("失败");
+            vo.setErrno(500);
+        }
+        return vo;
+    }
+    
+    @RequestMapping("topic/update")
+    public ResponseVo<Topic> update(@RequestBody Topic topic){
+        ResponseVo<Topic> vo = new ResponseVo<>();
+        int i = topicService.updateById(topic);
+        vo.setData(topic);
+        if(i > 0){
+            vo.setErrmsg("成功");
+            vo.setErrno(0);
+        } else {
+            vo.setErrno(500);
+            vo.setErrmsg("失败");
+        }
+        return vo;
+    }
 }

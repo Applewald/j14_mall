@@ -21,11 +21,14 @@ public interface TopicService {
 
     List<TopicList> selectAllTopicList();
     
+    int insert(Topic topic);
+    
+    int updateById(Topic topic);
+    
     /**以下为前台方法*/
     PageInfo<Map> getTopics(int page, int size);
     
     Topic getTopicById(Integer id);
     
     List<Topic> getRelatedTopic(int id);
-
 }

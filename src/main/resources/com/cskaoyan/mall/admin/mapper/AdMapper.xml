@@ -56,4 +56,13 @@
     <delete id="deleteByAdId">
         delete from cskaoyan_mall_ad where id = #{id}
     </delete>
+
+    <insert id="insertAd" parameterType="java.util.Map">
+        insert into cskaoyan_mall_ad (id, name, link,
+                                      url, position, content,
+                                      enabled, add_time, update_time)
+        values (#{id}, #{name}, #{link},
+                #{url},#{position},#{content},
+                #{enabled},#{addTime},#{updateTime})
+    </insert>
 </mapper>

@@ -1,9 +1,15 @@
 package com.cskaoyan.mall;
 
+
+
+import com.cskaoyan.mall.admin.bean.Address;
 import com.cskaoyan.mall.admin.bean.SearchHistory;
+import com.cskaoyan.mall.admin.mapper.AddressMapper;
+
 import com.cskaoyan.mall.admin.mapper.CategoryMapper;
 import com.cskaoyan.mall.admin.mapper.GoodsMapper;
 import com.cskaoyan.mall.admin.mapper.GroupOnRulesMapper;
+
 import com.cskaoyan.mall.admin.mapper.SearchHistoryMapper;
 import com.cskaoyan.mall.admin.service.CategoryService;
 import org.junit.Test;
@@ -40,6 +46,15 @@ public class MallApplicationTests {
     }
 
     @Autowired
+
+    AddressMapper addressMapper;
+    @Test
+    public void test11(){
+        List<Address> addressList = addressMapper.getAddressList();
+        System.out.println(addressList);
+    }
+
+
     GoodsMapper goodsMapper;
 
     @Autowired
@@ -56,4 +71,5 @@ public class MallApplicationTests {
         String mall123 = com.cskaoyan.mall.util.MD5Util.getMD5("promotion123");
         System.out.println("mall123 = " + mall123);
     }
+
 }

@@ -44,8 +44,17 @@ public class TopicServiceImpl implements TopicService {
         Integer id = topic.getId();
         return topicMapper.deleteByPrimaryKey(id);
     }
-
-
+    
+    @Override
+    public int insert(Topic topic) {
+        return topicMapper.insert(topic);
+    }
+    
+    @Override
+    public int updateById(Topic topic) {
+        return topicMapper.updateByPrimaryKey(topic);
+    }
+    
     @Override
     public List<TopicList> selectAllTopicList() {
         List<TopicList> temp = topicMapper.selectAllTopicList();
@@ -59,8 +68,6 @@ public class TopicServiceImpl implements TopicService {
     }
 
 
-
-    
     
     /**以下为前台方法*/
     @Override

@@ -1,6 +1,9 @@
 package com.cskaoyan.mall.admin.service.impl;
 
 
+import com.cskaoyan.mall.admin.bean.Keyword;
+import com.cskaoyan.mall.admin.bean.Search;
+import com.cskaoyan.mall.admin.bean.SearchHotHistory;
 import com.cskaoyan.mall.admin.service.SearchHistoryService;
 import com.cskaoyan.mall.admin.bean.SearchHistory;
 import com.cskaoyan.mall.admin.mapper.SearchHistoryMapper;
@@ -42,5 +45,17 @@ public class SearchHistoryServiceImpl implements SearchHistoryService {
             pageVoResponseVo.setErrno(-1);
         }
         return pageVoResponseVo;
+    }
+
+    @Override
+    public Search querySearchHistory(Integer userId) {
+        Search search = new Search();
+        SearchHistory searchHistory = searchHistoryMapper.querySearchHistory();
+        search.setDefaultKeyword(searchHistory);
+        List<Keyword> keywords = searchHistoryMapper.queryHistoryByKeyword(userId);
+        search.setHistoryKeywordList(keywords);
+        List<Keyword> hotHistories = searchHistoryMapper.querySearchHotHistory();
+        search.setHotKeywordList(hotHistories);
+        return search;
     }
 }

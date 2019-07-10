@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+
 /**
  * @author 河鲍鱼
  * 建立于 2019/7/4 22:11
@@ -89,6 +91,22 @@ public class CouponController {
         vo.setErrno(0);
         vo.setData(dataVo);
         vo.setErrmsg("成功");
+        return vo;
+    }
+    
+    @RequestMapping("coupon/create")
+    public ResponseVo<Coupon> create(@RequestBody Coupon coupon){
+        System.out.println(coupon);
+        ResponseVo<Coupon> vo = new ResponseVo<>();
+        int i = couponService.insert(coupon);
+        vo.setData(coupon);
+        if(i > 0){
+            vo.setErrno(0);
+            vo.setErrmsg("OK");
+        } else {
+            vo.setErrmsg("失败");
+            vo.setErrno(500);
+        }
         return vo;
     }
 }
