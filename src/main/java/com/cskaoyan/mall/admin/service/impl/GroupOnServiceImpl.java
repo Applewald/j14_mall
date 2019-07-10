@@ -59,4 +59,28 @@ public class GroupOnServiceImpl implements GroupOnService {
         List<Map> list =  groupOnRulesMapper.getGroupOnList();
         return new PageInfo<>(list);
     }
+    
+    @Override
+    public List<Map> getMyGroupOnList(int showType) {
+        List<Map> list = groupOnRulesMapper.getMyGroupOnList(showType);
+        boolean flag;
+        for (Map map:list) {
+            Long isCreator = (Long) map.get("isCreator");
+            if(isCreator == 0){
+                flag = false;
+            } else {
+                flag = true;
+            }
+            System.out.println(isCreator);
+            System.out.println(flag);
+            map.put("isCreator",flag);
+        }
+        return list;
+    }
+    
+    @Override
+    public Map<Object,Object> getMyGroupOnDetail(Integer grouponId) {
+        Map<Object,Object> list = groupOnRulesMapper.getMyGroupOnDetail(grouponId);
+        return list;
+    }
 }
