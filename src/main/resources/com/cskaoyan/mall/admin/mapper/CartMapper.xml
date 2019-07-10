@@ -62,7 +62,14 @@
     </where>
   </delete>
 
-
-
+<!--55555555555555555555555555-->
+<update id="updateCartNumber">
+  update cskaoyan_mall_cart
+  set number = #{number}
+  <where>
+    id = #{id}
+  </where>
+</update>
+<!--6666666666666666666-->
 
 </mapper>

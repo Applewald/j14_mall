@@ -6,6 +6,7 @@ import com.cskaoyan.mall.admin.bean.cart.Cart;
 import com.cskaoyan.mall.admin.bean.cart.CartExample;
 import com.cskaoyan.mall.admin.bean.cart.CartTotal;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -34,6 +35,12 @@ public interface CartMapper {
 
     //4
     int deleteCartItem(@Param("userId") Integer userId,@Param("productIds") List<Integer> productIds);
+//5
+    int updateCartNumber(@Param("id") Integer id,@Param("number") Integer number);
+//6
+    @Select("select id from cskaoyan_mall_cart where user_id=#{userId}")
+
+    Integer selectCartId(@Param("userId") Integer userId);
 
 //3
    /* int getCartCount(@Param("userId") Integer userId, @Param("isChecked") Integer isChecked,

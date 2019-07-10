@@ -151,13 +151,47 @@ public class WXCartController {
 
     }
 
-    //cart/fastadd' 立即购买商品
-/*    @RequestMapping("wx/cart/fastadd")
-    public ResponseVo cartFastadd(int goodsId,int number,int productId){
+    //5 update
+    @RequestMapping("wx/cart/update")
+    public ResponseVo cartUpdate(@RequestBody Map<String,Object> map,HttpServletRequest request){
+
+        //获取请求参数
+        Integer productId = (Integer) map.get("productId");
+        Integer id =(Integer) map.get("id");
+        Integer goodsId = (Integer) map.get("goodsId");
+        Integer number = (Integer) map.get("number");
+
+        String token = request.getHeader("X-Litemall-Token");
+        Integer uid = UserTokenManager.getUserId(token);
         ResponseVo responseVo = new ResponseVo();
-        int data = cartService.fastAdd(goodsId,number,productId);
-        if (data >=1){
-            responseVo.setData(data);
+        int update = cartService.updateCartNumber(id,number);
+        if(update>0){
+            responseVo.setErrno(0);
+            responseVo.setErrmsg("成功");
+            return responseVo;
+        }else{
+            responseVo.setErrno(1);
+            responseVo.setErrmsg("error");
+            return responseVo;
+        }
+    }
+
+    //66cart/fastadd' 立即购买商品
+
+    @RequestMapping("wx/cart/fastadd")
+    public ResponseVo cartFastadd(@RequestBody Map<String,Object> map,HttpServletRequest request){
+        ResponseVo responseVo = new ResponseVo();
+
+        Integer productId = (Integer) map.get("productId");
+        Integer goodsId = (Integer) map.get("goodsId");
+        Integer number = (Integer) map.get("number");
+
+        String token = request.getHeader("X-Litemall-Token");
+        Integer userId = UserTokenManager.getUserId(token);
+
+        int cartId = cartService.selectCartId(userId,productId);
+        if (cartId!=0){
+            responseVo.setData(cartId);
             responseVo.setErrno(0);
             responseVo.setErrmsg("成功");
         }else {
@@ -165,7 +199,7 @@ public class WXCartController {
             responseVo.setErrmsg("失败");
         }
         return responseVo;
-    }*/
+    }
 
 
     //'cart/checkout', // 下单前信息确认
