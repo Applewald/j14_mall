@@ -94,7 +94,30 @@ public class CartServiceImpl implements CartService {
         }
 
 
-
         return add;
+    }
+
+    @Override
+    public int fastAddCart(Cart cart) {
+        Cart cartboolean = cartMapper.findCart(cart);
+
+        int add = 0;
+        if (cartboolean == null ){
+
+            Cart cart1 = cartMapper.findFieldFromGoodsAndProduct(cart.getGoodsId(),cart.getProductId());
+            cart.setGoodsName(cart1.getGoodsName());
+            cart.setGoodsSn(cart1.getGoodsSn());
+            cart.setPrice(cart1.getPrice());
+            cart.setPicUrl(cart1.getPicUrl());
+            cart.setSpecifications(cart1.getSpecifications());
+            add= cartMapper.add(cart);
+
+            return cartMapper.findCart(cart).getId();
+        }else {
+            return cartboolean.getId();
+        }
+
+
+
     }
 }

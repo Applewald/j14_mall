@@ -22,6 +22,8 @@ public interface CartService {
 
     int addCart(Cart cart);
 
+    int fastAddCart(Cart cart);
+
     //333333333333 add添加商品到购物车
 
     //int getCartCount(Integer userId, Integer isChecked, List<Integer> productIds);

@@ -148,6 +148,29 @@ public class WXCartController {
 
     }
 
+
+    @RequestMapping("wx/cart/fastadd")
+    public ResponseVo fastAddCart(@RequestBody Cart cart,HttpServletRequest request){
+
+
+        //通过token 获取userId
+        String token = request.getHeader("X-Litemall-Token");
+        Integer userId = UserTokenManager.getUserId(token);
+
+        cart.setChecked(true);
+        cart.setUserId(userId);
+        int cartId = cartService.fastAddCart(cart);
+
+
+
+        ResponseVo responseVo = new ResponseVo<>();
+        responseVo.setData(cartId);
+        responseVo.setErrno(0);
+        responseVo.setErrmsg("成功");
+
+        return responseVo;
+    }
+
     //cart/fastadd' 立即购买商品
 /*    @RequestMapping("wx/cart/fastadd")
     public ResponseVo cartFastadd(int goodsId,int number,int productId){
