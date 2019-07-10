@@ -1,11 +1,10 @@
 package com.cskaoyan.mall.wx.controller;
 
-import com.cskaoyan.mall.admin.bean.cart.Cart;
-import com.cskaoyan.mall.admin.bean.cart.CartCheckout;
-import com.cskaoyan.mall.admin.bean.cart.CartTotal;
+import com.cskaoyan.mall.admin.bean.Goods;
+import com.cskaoyan.mall.admin.bean.cart.*;
+import com.cskaoyan.mall.admin.service.GoodsService;
 import com.cskaoyan.mall.admin.token.UserTokenManager;
 import com.cskaoyan.mall.admin.vo.ResponseVo;
-import com.cskaoyan.mall.admin.bean.cart.CartIndex;
 import com.cskaoyan.mall.admin.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,33 +75,7 @@ public class WXCartController {
     }
     //333333333333 add添加商品到购物车
 
-    @RequestMapping("wx/cart/add")
-    public ResponseVo addCart(@RequestBody Map<String,Object> map,HttpServletRequest request){
-        //获取请求数据
-        Integer isChecked = (Integer) map.get("isChecked");
-        List<Integer> productIds = (List<Integer>) map.get("productIds");
-        //通过token 获取userId
-        String token = request.getHeader("X-Litemall-Token");
-        Integer userId = UserTokenManager.getUserId(token);
 
-        CartIndex cartIndex = cartService.queryCartIndex(userId);
-        List<Cart> cartList = cartIndex.getCartList();
-
-        //int data = cartService.getCartCount(userId,isChecked,productIds);
-
-        int data = cartList.size();
-        ResponseVo responseVo = new ResponseVo<>();
-        if (data>=0){
-            data = data+1;
-            responseVo.setData(data);
-            responseVo.setErrno(0);
-            responseVo.setErrmsg("成功");
-        }else {
-            responseVo.setErrno(1);
-            responseVo.setErrmsg("失败");
-        }
-        return responseVo;
-    }
 
     //44444  wx/cart/goodscount
     @RequestMapping("wx/cart/goodscount")
@@ -111,16 +85,14 @@ public class WXCartController {
         Integer userId = UserTokenManager.getUserId(token);
         CartIndex cartIndex = cartService.queryCartIndex(userId);
         List<Cart> cartList = cartIndex.getCartList();
-        int data = cartList.size();
-        ResponseVo responseVo = new ResponseVo<>();
-        if (data>=0){
-            responseVo.setData(data);
-            responseVo.setErrno(0);
-            responseVo.setErrmsg("成功");
-        }else {
-            responseVo.setErrno(1);
-            responseVo.setErrmsg("失败");
+        int data = 0;
+        for(Cart cart : cartList){
+            data += cart.getNumber();
         }
+        ResponseVo responseVo = new ResponseVo<>();
+        responseVo.setData(data);
+        responseVo.setErrno(0);
+        responseVo.setErrmsg("成功");
         return responseVo;
     }
 

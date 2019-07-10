@@ -75,6 +75,7 @@ public class CartServiceImpl implements CartService {
         return cartMapper.deleteCartItem(userId,productIds);
     }
 
+
     //5
 
     @Override
@@ -88,5 +89,30 @@ public class CartServiceImpl implements CartService {
     @Override
     public Integer selectCartId(Integer userId, Integer productId) {
         return cartMapper.selectCartId(userId);
+
+    }
+    @Override
+    public int addCart(Cart cart){
+        Cart cartboolean = cartMapper.findCart(cart);
+
+        int add = 0;
+        if (cartboolean == null ){
+
+            Cart cart1 = cartMapper.findFieldFromGoodsAndProduct(cart.getGoodsId(),cart.getProductId());
+            cart.setGoodsName(cart1.getGoodsName());
+            cart.setGoodsSn(cart1.getGoodsSn());
+            cart.setPrice(cart1.getPrice());
+            cart.setPicUrl(cart1.getPicUrl());
+            cart.setSpecifications(cart1.getSpecifications());
+            add= cartMapper.add(cart);
+        }else {
+            cartMapper.updaCartNumber(cartboolean.getId(),cartboolean.getNumber()+cart.getNumber());
+            add++;
+        }
+
+
+
+        return add;
+
     }
 }

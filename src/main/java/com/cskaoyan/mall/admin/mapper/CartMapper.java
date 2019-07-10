@@ -5,8 +5,13 @@ import com.cskaoyan.mall.admin.bean.Order;
 import com.cskaoyan.mall.admin.bean.cart.Cart;
 import com.cskaoyan.mall.admin.bean.cart.CartExample;
 import com.cskaoyan.mall.admin.bean.cart.CartTotal;
+import com.cskaoyan.mall.admin.typehandler.StringToStringArrary;
 import org.apache.ibatis.annotations.Param;
+
 import org.apache.ibatis.annotations.Select;
+
+import org.apache.ibatis.annotations.Update;
+
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -41,6 +46,16 @@ public interface CartMapper {
     @Select("select id from cskaoyan_mall_cart where user_id=#{userId}")
 
     Integer selectCartId(@Param("userId") Integer userId);
+
+    Cart findFieldFromGoodsAndProduct(@Param("goodsId") Integer goodsId, @Param("productId") Integer productId);
+
+    int add(Cart cart);
+
+    Cart findCart( Cart cart);
+
+    @Update("update cskaoyan_mall_cart set number = #{number} where id = #{id} ")
+    void updaCartNumber(@Param("id") Integer id, @Param("number") int i);
+
 
 //3
    /* int getCartCount(@Param("userId") Integer userId, @Param("isChecked") Integer isChecked,
