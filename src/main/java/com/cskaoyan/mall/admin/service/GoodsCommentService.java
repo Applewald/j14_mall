@@ -4,6 +4,7 @@ import com.cskaoyan.mall.admin.vo.DataVo;
 import com.cskaoyan.mall.admin.bean.GoodsComment;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +16,9 @@ public interface GoodsCommentService {
     List<Object> selectAllCommentsList(Integer valueId, Integer type, Integer size, Integer page, Integer showType);
 
 
-
     void insert(GoodsComment comment);
+
+    HashMap<Object, Object> commentCount(Integer valueId, Integer type);
+
 }
 

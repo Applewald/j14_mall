@@ -59,7 +59,7 @@ public class WXHomeController {
         Map<String, Object> map = new HashMap<>();
         map.put("banner", ads);
         map.put("brandList", brands);
-        map.put("channel",channels);
+        map.put("channel", channels);
         map.put("couponList", couponLists);
         map.put("floorGoodsList", floorGoodsLists);
         map.put("grouponList", grouponLists);
@@ -95,11 +95,13 @@ public class WXHomeController {
 
     }
 
-    /*@RequestMapping("/comment/count")
+    @RequestMapping("/comment/count")
     public Object commentCounts(Integer valueId, Integer type){
+        HashMap<Object,Object> map = new HashMap<>();
+        map = goodsCommentService.commentCount(valueId,type);
 
-    }*/
-
-
+        return ResponseVo.ok(map);
+    }
 
 }
+
