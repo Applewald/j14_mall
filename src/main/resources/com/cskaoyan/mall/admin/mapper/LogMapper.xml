@@ -20,7 +20,7 @@
         <if test="admin != null and admin != '' ">
             and `admin` like CONCAT('%',#{admin},'%')
         </if>
-        order by #{sort} DESC
+        order by ${sort} DESC
     </select>
 
 

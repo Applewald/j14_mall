@@ -13,5 +13,9 @@ public interface GoodsCommentService {
     DataVo<GoodsComment> findGoodsComments(int page, int limit, String sort, String order, String userId, String valueId);
 
     List<Object> selectAllCommentsList(Integer valueId, Integer type, Integer size, Integer page, Integer showType);
+
+
+
+    void insert(GoodsComment comment);
 }
 

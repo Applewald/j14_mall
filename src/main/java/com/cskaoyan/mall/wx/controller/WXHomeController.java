@@ -1,13 +1,13 @@
 package com.cskaoyan.mall.wx.controller;
 
+import com.cskaoyan.mall.admin.bean.GoodsComment;
 import com.cskaoyan.mall.admin.bean.promotion.Ad;
 import com.cskaoyan.mall.admin.bean.wxhome.*;
 import com.cskaoyan.mall.admin.service.*;
 import com.cskaoyan.mall.admin.vo.ResponseVo;
+import org.apache.tomcat.util.http.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -80,5 +80,17 @@ public class WXHomeController {
         map.put("data", list);
 
         return ResponseVo.ok(map);
+    }
+
+    @PostMapping("/comment/post")
+    public Object commentPost(Integer userId, @RequestBody GoodsComment comment) {
+        if (userId == null) {
+            return ResponseVo.fail("请登录", -1);
+        }
+
+        comment.setUserId(userId);
+        goodsCommentService.insert(comment);
+        return ResponseVo.ok(comment);
+
     }
 }

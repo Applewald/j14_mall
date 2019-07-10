@@ -102,4 +102,9 @@ public class GoodsCommentServiceImpl implements GoodsCommentService {
 
         return dataLists;
     }
+
+    @Override
+    public void insert(GoodsComment comment) {
+        goodsCommentMapper.insert(comment);
+    }
 }
