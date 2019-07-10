@@ -286,8 +286,14 @@ public class GoodsServiceImpl implements GoodsService {
         Goods info = goodsMapper.findGoodsById(id);
         List<Attribute> attributes =  goodsMapper.findAttributesByGoodsId(id);
         Brand brand = brandMapper.findBrandByBrandId(info.getBrandId()) ;
-        List<WxComment> comments = goodsCommentMapper.findGoodsCommentByValueId(id);  ;
-        WxDataVo<WxComment> comment = new WxDataVo<>((long)comments.size(),comments);
+        List<WxComment> comments = goodsCommentMapper.findGoodsCommentByValueId(id);
+        WxDataVo<WxComment> comment;
+        if (comments .size() >6){
+            comment = new WxDataVo<>((long)6,comments.subList(0,6));
+        }
+        else {
+            comment = new WxDataVo<>((long)comments.size(),comments);
+        }
 
         List<Issue> issue = issueMapper.findAllIssues() ;
         List<Product> productList = goodsMapper.findProductsByGoodsId(id);
