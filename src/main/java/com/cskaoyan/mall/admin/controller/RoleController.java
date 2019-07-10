@@ -1,14 +1,22 @@
 package com.cskaoyan.mall.admin.controller;
 
 
+
 import com.cskaoyan.mall.admin.bean.role.Role;
 import com.cskaoyan.mall.admin.bean.admin.AdminOptions;
 import com.cskaoyan.mall.admin.service.RoleService;
+import com.cskaoyan.mall.admin.util.PermissionsUtil;
 import com.cskaoyan.mall.admin.vo.DataVo;
 import com.cskaoyan.mall.admin.vo.ResponseVo;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.tomcat.util.http.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 
 /**
@@ -64,4 +72,18 @@ public class RoleController {
         roleService.updateByRole(role);
         return ResponseVo.ok();
     }
+
+
+    /*查看权限*/
+    /*@GetMapping("/permissions")
+    public Object getPermissions(Integer roleId) {
+        List<String> systemPermissions = PermissionsUtil.getSystemPermissions;
+        Set<String> assignedPermissions = PermissionsUtil.getAssignedPermissions(roleId);
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("systemPermissions", systemPermissions);
+        data.put("assignedPermissions", assignedPermissions);
+        return ResponseVo.ok(data);
+    }*/
+
 }

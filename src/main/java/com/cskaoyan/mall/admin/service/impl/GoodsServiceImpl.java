@@ -288,8 +288,8 @@ public class GoodsServiceImpl implements GoodsService {
         Brand brand = brandMapper.findBrandByBrandId(info.getBrandId()) ;
         List<WxComment> comments = goodsCommentMapper.findGoodsCommentByValueId(id);
         WxDataVo<WxComment> comment;
-        if (comments .size() >6){
-            comment = new WxDataVo<>((long)6,comments.subList(0,6));
+        if (comments .size() > 6){
+            comment = new WxDataVo<>((long)comments.size(),comments.subList(0,6));
         }
         else {
             comment = new WxDataVo<>((long)comments.size(),comments);
