@@ -73,4 +73,28 @@ public class CartServiceImpl implements CartService {
     public int deleteCartItem(Integer userId, List<Integer> productIds) {
         return cartMapper.deleteCartItem(userId,productIds);
     }
+
+
+    @Override
+    public int addCart(Cart cart) {
+        Cart cartboolean = cartMapper.findCart(cart);
+
+        int add = 0;
+        if (cartboolean == null ){
+
+            Cart cart1 = cartMapper.findFieldFromGoodsAndProduct(cart.getGoodsId(),cart.getProductId());
+            cart.setGoodsName(cart1.getGoodsName());
+            cart.setGoodsSn(cart1.getGoodsSn());
+            cart.setPrice(cart1.getPrice());
+            cart.setPicUrl(cart1.getPicUrl());
+            cart.setSpecifications(cart1.getSpecifications());
+            add= cartMapper.add(cart);
+        }else {
+            cartMapper.updaCartNumber(cartboolean.getId(),cartboolean.getNumber()+cart.getNumber());
+        }
+
+
+
+        return add;
+    }
 }
