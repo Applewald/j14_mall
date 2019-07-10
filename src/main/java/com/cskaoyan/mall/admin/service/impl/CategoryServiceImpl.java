@@ -150,16 +150,35 @@ public class CategoryServiceImpl implements CategoryService {
 
         //当前分类
         Category currentCategory = categoryMapper.findCategoryById(id);
-        //父分类
-        Category parentCategory = categoryMapper.findCategoryById(currentCategory.getPid());
-        //同级分类，包括自己
-        List<Category> brotherCategory = categoryMapper.findL2CategorysByL1Id(currentCategory.getPid());
-        //删除当前分类
-        boolean remove = brotherCategory.remove(currentCategory);
 
-        data.put("currentCategory",currentCategory);
-        data.put("parentCategory",parentCategory);
-        data.put("brotherCategory",brotherCategory);
+        if ("L2".equals(currentCategory.getLevel())){
+            //父分类
+            Category parentCategory = categoryMapper.findCategoryById(currentCategory.getPid());
+            //同级分类，包括自己
+            List<Category> brotherCategory = categoryMapper.findL2CategorysByL1Id(currentCategory.getPid());
+            //删除当前分类
+            boolean remove = brotherCategory.remove(currentCategory);
+
+
+            data.put("currentCategory",currentCategory);
+            data.put("parentCategory",parentCategory);
+            data.put("brotherCategory",brotherCategory);
+        }
+        else {
+            data.put("parentCategory",currentCategory);
+
+            List<Category> brotherCategory = categoryMapper.findL2CategorysByL1Id(id);
+
+            data.put("currentCategory",brotherCategory.get(0));
+
+            brotherCategory.remove(0);
+
+            data.put("brotherCategory",brotherCategory);
+
+
+        }
+
+
 
         return data;
 

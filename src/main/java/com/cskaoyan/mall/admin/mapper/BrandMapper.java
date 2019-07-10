@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface BrandMapper {
@@ -35,6 +36,11 @@ public interface BrandMapper {
     int updateByPrimaryKey(Brand record);
 
     List<Brand> findBrandList(@Param("id") Integer id, @Param("name") String name, @Param("sort") String sort, @Param("order") String order);
+
+    List<Map> findBrandListMap();
+
+    Brand findBrandDetailById(@Param("id") int id);
+
 
     @Select("select `id`, `name`, `desc`, pic_url as picUrl, floor_price as floorPrice from cskaoyan_mall_brand where deleted = 0 ")
     List<BrandList> selectAllBrand();

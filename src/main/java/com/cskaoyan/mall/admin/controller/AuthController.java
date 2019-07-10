@@ -87,7 +87,8 @@ public class AuthController {
         return ResponseVo.ok(result);
     }
 
-    @Log(value = "退出")
+
+    //@Log(value = "退出")
     @PostMapping("/auth/logout")
     public Object logout() {
         Subject currentUser = SecurityUtils.getSubject();
@@ -96,20 +97,17 @@ public class AuthController {
     }
 
 
-
-
-
-    @GetMapping("/401")
+    @GetMapping("/auth/401")
     public Object page401() {
         return ResponseVo.fail("请登录", 501);
     }
 
-    @GetMapping("/index")
+    @GetMapping("/auth/index")
     public Object pageIndex() {
         return ResponseVo.ok();
     }
 
-    @GetMapping("/403")
+    @GetMapping("/auth/403")
     public Object page403() {
         return ResponseVo.fail("无操作权限", 506);
     }

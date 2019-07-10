@@ -82,6 +82,7 @@ public class WXHomeController {
         return ResponseVo.ok(map);
     }
 
+
     @PostMapping("/comment/post")
     public Object commentPost(Integer userId, @RequestBody GoodsComment comment) {
         if (userId == null) {
@@ -93,4 +94,12 @@ public class WXHomeController {
         return ResponseVo.ok(comment);
 
     }
+
+    /*@RequestMapping("/comment/count")
+    public Object commentCounts(Integer valueId, Integer type){
+
+    }*/
+
+
+
 }
