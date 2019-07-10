@@ -4,7 +4,6 @@ import com.cskaoyan.mall.admin.bean.Address;
 
 import com.cskaoyan.mall.admin.bean.Feedback;
 import com.cskaoyan.mall.admin.bean.Search;
-import com.cskaoyan.mall.admin.bean.SearchHistory;
 import com.cskaoyan.mall.admin.service.AddressService;
 import com.cskaoyan.mall.admin.service.FeedbackService;
 import com.cskaoyan.mall.admin.service.FootprintService;
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -36,7 +36,10 @@ public class WXUserController {
 
     @RequestMapping("address/list")
     @ResponseBody
-    public ResponseVo getList() {
+    public ResponseVo getList(HttpServletRequest request) {
+        String tokenKey = request.getHeader("X-Litemall-Token");
+        Integer userId = UserTokenManager.getUserId(tokenKey);
+
         ResponseVo<Object> objectResponseVo = new ResponseVo<>();
         List<Address> addressList = (List<Address>) addressService.getAddressList();
         if (addressList.size() > -1){
@@ -53,15 +56,45 @@ public class WXUserController {
 
     @RequestMapping("address/save")
     @ResponseBody
-    public ResponseVo insertAddress(@RequestBody Map<String,Integer> map) {
+    public ResponseVo insertAddress(HttpServletRequest request,@RequestBody Map<String,Object> map) {
+        String tokenKey = request.getHeader("X-Litemall-Token");
+        Integer userId = UserTokenManager.getUserId(tokenKey);
+        //获取address的参数
+        Integer provinceId = (Integer) map.get("provinceId");
+        Integer cityId = (Integer) map.get("cityId");
+        Integer areaId = (Integer) map.get("areaId");
+        String address1 = (String) map.get("address");
+        //String detailedAddress = (String) map.get("detailedAddress");
+        String name = (String) map.get("name");
+        String mobile = (String) map.get("mobile");
+        Integer isDefault = (Integer) map.get("isDefault");
+
+        Address address = new Address();
+        address.setAddress(address1);
+        address.setProvinceId(provinceId);
+        address.setCityId(cityId);
+        address.setAreaId(areaId);
+        //address.setDetailedAddress(detailedAddress);
+        address.setName(name);
+        address.setMobile(mobile);
+        address.setUserId(userId);
+        address.setAddTime(new Date());
+        address.setUpdateTime(new Date());
+        if(isDefault == 1){
+            address.setIsDefault(true);
+        }else {
+            address.setIsDefault(false);
+        }
+
+        int addressId = addressService.insertAddress(address);
+
         ResponseVo vo= new ResponseVo<>();
-        int insert = addressService.insertAddress(map.get("id"));
-        if(insert == 1) {
-            vo.setData(map.get("id"));
+        if(address != null) {
+            vo.setData(addressId);
             vo.setErrmsg("成功");
             vo.setErrno(0);
         } else {
-            vo.setData(null);
+            vo.setData(addressId);
             vo.setErrmsg("系统内部错误");
             vo.setErrno(502);
         }
@@ -95,12 +128,40 @@ public class WXUserController {
 
     @Autowired
     FeedbackService feedbackService;
-     @RequestMapping("feedback/submit")
+    @RequestMapping("feedback/submit")
     @ResponseBody
-    public ResponseVo submitFeedback(@RequestBody Map<String, Feedback> map) {
+    public ResponseVo submitFeedback(HttpServletRequest request, @RequestBody Map<String, Object> map) {
+         String tokenKey = request.getHeader("X-Litemall-Token");
+         Integer userId = UserTokenManager.getUserId(tokenKey);
+
+         String mobile = (String) map.get("mobile");
+         Boolean hasPicture = (Boolean) map.get("hasPicture");
+         String feedType = (String) map.get("feedType");
+         String content = (String) map.get("content");
+        Object picUrls = map.get("picUrls");
+        List<String> picList = (List<String>) picUrls;
+
+        String[] pics = new String[picList.size()];
+
+        for (int i = 0; i < picList.size(); i++) {
+            pics[i] = picList.get(i);
+        }
+        //String[] picUrls = (String[]) map.get("picUrls");
+
+         Feedback feedback = new Feedback();
+         feedback.setAddTime(new Date());
+         feedback.setMobile(mobile);
+         feedback.setHasPicture(hasPicture);
+         feedback.setFeedType(feedType);
+         feedback.setContent(content);
+         feedback.setPicUrls(pics);
+         feedback.setUpdateTime(new Date());
+         feedback.setUserId(userId);
+         feedback.setStatus(0);
+         feedback.setUsername(feedbackService.findUsernameByUserId());
          ResponseVo vo= new ResponseVo<>();
-        int submit = feedbackService.submitFeedback(map.get("feedback"));
-         if(submit == 1) {
+        int submit = feedbackService.submitFeedback(feedback);
+         if(feedback != null) {
              vo.setErrmsg("成功");
              vo.setErrno(0);
          } else {
@@ -114,20 +175,5 @@ public class WXUserController {
     @Autowired
     SearchHistoryService searchHistoryService;
 
-    @RequestMapping("search/index")
-    @ResponseBody
-    public ResponseVo historyList(HttpServletRequest request) {
-        String tokenKey = request.getHeader("X-Litemall-Token");
-        Integer userId = UserTokenManager.getUserId(tokenKey);
-        Search search = searchHistoryService.querySearchHistory(userId);
-        ResponseVo vo= new ResponseVo<>();
-        if(search != null) {
-            vo.setErrmsg("成功");
-            vo.setErrno(0);
-        } else {
-            vo.setErrmsg("系统内部错误");
-            vo.setErrno(502);
-        }
-        return vo;
-    }
+
 }

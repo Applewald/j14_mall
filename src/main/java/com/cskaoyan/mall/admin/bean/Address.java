@@ -37,7 +37,7 @@ public class Address {
     private String detailedAddress;
 
     public String getDetailedAddress() {
-        return this.province+this.city+this.area + this.address;
+        return detailedAddress;
     }
 
     public void setDetailedAddress(String detailedAddress) {

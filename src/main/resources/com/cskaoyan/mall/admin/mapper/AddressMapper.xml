@@ -351,13 +351,30 @@
     select
     concat(r1.name,r2.name,r3.name,a.address)  as detailedAddress,a.id,a.is_default,a.mobile, a.name
     from cskaoyan_mall_address a
-    left join cskaoyan_mall_region r3 on a.area_id = r3.code
-    left join cskaoyan_mall_region r1 on a.province_id = r1.code
-    left join cskaoyan_mall_region r2 on a.city_id = r2.code
+    left join cskaoyan_mall_region r3 on a.area_id = r3.id
+    left join cskaoyan_mall_region r1 on a.province_id = r1.id
+    left join cskaoyan_mall_region r2 on a.city_id = r2.id
   </select>
 
   <delete id="deleteAddress" >
     delete from cskaoyan_mall_address
     where id = #{id}
   </delete>
+  <insert id="insertAddress" parameterType="com.cskaoyan.mall.admin.bean.Address">
+    <selectKey order="AFTER" resultType="_int" keyProperty="id">
+      select last_insert_id()
+    </selectKey>
+    insert into cskaoyan_mall_address
+    (name, user_id,
+    province_id, city_id, area_id,
+    address, mobile, is_default,
+    add_time, update_time, deleted
+    )
+    values
+    (#{name,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER},
+    #{provinceId,jdbcType=INTEGER}, #{cityId,jdbcType=INTEGER}, #{areaId,jdbcType=INTEGER},
+    #{address,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{isDefault,jdbcType=BIT},
+    #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}
+    )
+  </insert>
 </mapper>

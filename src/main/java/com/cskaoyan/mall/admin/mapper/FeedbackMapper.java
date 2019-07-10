@@ -5,6 +5,7 @@ import com.cskaoyan.mall.admin.bean.Feedback;
 import com.cskaoyan.mall.admin.bean.FeedbackExample;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+import com.cskaoyan.mall.admin.typehandler.StringToStringArrary;
 
 import java.util.List;
 import java.util.Map;
@@ -37,5 +38,7 @@ public interface FeedbackMapper {
                                  @Param("sort")String sort,
                                  @Param("order")String order);
 
-    Map submitFeedBack();
+    int submitFeedback(Feedback feedback);
+
+    String findUserNameByUserId();
 }

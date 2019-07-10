@@ -1,7 +1,7 @@
 package com.cskaoyan.mall.admin.service;
 
-import com.cskaoyan.mall.admin.bean.Region;
 import com.cskaoyan.mall.admin.bean.RegionChildren;
+import com.cskaoyan.mall.admin.vo.ResponseVo;
 
 import java.util.List;
 
@@ -14,4 +14,6 @@ import java.util.List;
 public interface RegionService {
 
     List<RegionChildren> findRegionList();
+
+    ResponseVo findRegionListByPid(int pid);
 }

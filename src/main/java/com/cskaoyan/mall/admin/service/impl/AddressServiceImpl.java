@@ -59,8 +59,17 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public int insertAddress(int id) {
-        int insert= addressMapper.insertAddressById(id);
-        return insert;
+    /**
+     * 插入成功返回新插入地址的id
+     * 失败返回0
+     */
+    public int insertAddress(Address address) {
+        int insert = addressMapper.insertAddress(address);
+        if (insert == 1){
+            return address.getId();
+        }else
+            return insert;
     }
+
+
 }

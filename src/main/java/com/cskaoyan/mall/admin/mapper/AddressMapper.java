@@ -44,5 +44,5 @@ public interface AddressMapper {
 
     int deleteAddress(int id);
 
-    int insertAddressById(int id);
+    int insertAddress(Address address);
 }

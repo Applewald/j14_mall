@@ -49,10 +49,12 @@ public class FeedbackServiceImpl implements FeedbackService {
 
     @Override
     public int  submitFeedback(Feedback feedback) {
-        //feedback.setAddTime();
-        Feedback feedback1= new Feedback();
+        int i = feedbackMapper.submitFeedback(feedback);
+        return i;
+    }
 
-        // hashMap.put()
-        return 0;
+    @Override
+    public String findUsernameByUserId() {
+      return   feedbackMapper.findUserNameByUserId();
     }
 }

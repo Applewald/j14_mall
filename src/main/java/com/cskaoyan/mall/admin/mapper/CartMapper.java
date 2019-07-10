@@ -6,9 +6,10 @@ import com.cskaoyan.mall.admin.bean.cart.Cart;
 import com.cskaoyan.mall.admin.bean.cart.CartExample;
 import com.cskaoyan.mall.admin.bean.cart.CartTotal;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+@Repository
 public interface CartMapper {
     int deleteByPrimaryKey(Integer id);
 
