@@ -3,7 +3,7 @@ package com.cskaoyan.mall.wx.controller;
 import com.cskaoyan.mall.admin.bean.Address;
 
 import com.cskaoyan.mall.admin.bean.Feedback;
-import com.cskaoyan.mall.admin.bean.Search;
+
 import com.cskaoyan.mall.admin.service.AddressService;
 import com.cskaoyan.mall.admin.service.FeedbackService;
 import com.cskaoyan.mall.admin.service.FootprintService;
@@ -174,6 +174,5 @@ public class WXUserController {
 
     @Autowired
     SearchHistoryService searchHistoryService;
-
 
 }
