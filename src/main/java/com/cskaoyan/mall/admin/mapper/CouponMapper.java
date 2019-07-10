@@ -1,8 +1,8 @@
 package com.cskaoyan.mall.admin.mapper;
 
-import com.cskaoyan.mall.admin.bean.wxhome.CouponList;
 import com.cskaoyan.mall.admin.bean.promotion.Coupon;
 import com.cskaoyan.mall.admin.bean.promotion.CouponUser;
+import com.cskaoyan.mall.admin.bean.wxhome.CouponList;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;

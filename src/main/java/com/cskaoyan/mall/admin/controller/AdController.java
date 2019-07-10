@@ -22,7 +22,7 @@ public class AdController {
     
     @Autowired
     AdService adService;
-    
+
     @RequestMapping("ad/list")
     public ResponseVo<DataVo> list(int page, int limit, String name, String content, String sort, String order){
         ResponseVo<DataVo> vo = new ResponseVo<>();
@@ -35,7 +35,7 @@ public class AdController {
         vo.setErrmsg("成功");
         return vo;
     }
-    
+
     @RequestMapping("ad/update")
     public ResponseVo<Ad> update(@RequestBody Ad ad){
         ResponseVo<Ad> vo = new ResponseVo<>();
@@ -50,7 +50,7 @@ public class AdController {
         }
         return vo;
     }
-    
+
     @RequestMapping("ad/delete")
     public ResponseVo<Ad> delete(@RequestBody Ad ad){
         ResponseVo<Ad> vo = new ResponseVo<>();

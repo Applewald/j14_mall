@@ -3,7 +3,7 @@ package com.cskaoyan.mall.admin.shiro;
 import com.cskaoyan.mall.admin.bean.admin.Admin;
 import com.cskaoyan.mall.admin.service.AdminService;
 import com.cskaoyan.mall.admin.service.RoleService;
-import com.cskaoyan.mall.service.PermissionService;
+import com.cskaoyan.mall.admin.service.PermissionService;
 import com.cskaoyan.mall.util.MD5Util;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;

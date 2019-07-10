@@ -11,10 +11,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class GoodsCommentServiceImpl implements GoodsCommentService {
@@ -54,7 +51,10 @@ public class GoodsCommentServiceImpl implements GoodsCommentService {
             List<GoodsComment> showType1 = new ArrayList<>();
 
             for (GoodsComment goodsComment : goodsComments) {
-                if (!"[]".equals(goodsComment.getPicUrls())) {
+                /*if (!"[]".equals(goodsComment.getPicUrls())) {
+                    showType1.add(goodsComment);
+                }*/
+                if (goodsComment.isHasPicture()) {
                     showType1.add(goodsComment);
                 }
             }
@@ -70,10 +70,11 @@ public class GoodsCommentServiceImpl implements GoodsCommentService {
                 userInfoMap.put("avatarUrl", user.getAvatar());
 
                 String[] picUrls = goodsComment.getPicUrls();
+                List<String> picUrlsList = Arrays.asList(picUrls);
 
                 map.put("addTime", goodsComment.getAddTime());
                 map.put("content", goodsComment.getContent());
-                map.put("picList", picUrls);
+                map.put("picList", picUrlsList);
                 map.put("userInfo", userInfoMap);
 
                 dataLists.add(map);
@@ -90,10 +91,11 @@ public class GoodsCommentServiceImpl implements GoodsCommentService {
                 userInfoMap.put("avatarUrl", user.getAvatar());
 
                 String[] picUrls = goodsComment.getPicUrls();
+                List<String> picUrlsList = Arrays.asList(picUrls);
 
                 map.put("addTime", goodsComment.getAddTime());
                 map.put("content", goodsComment.getContent());
-                map.put("picList", picUrls);
+                map.put("picList", picUrlsList);
                 map.put("userInfo", userInfoMap);
 
                 dataLists.add(map);
@@ -102,4 +104,38 @@ public class GoodsCommentServiceImpl implements GoodsCommentService {
 
         return dataLists;
     }
+
+
+    @Override
+    public void insert(GoodsComment comment) {
+        goodsCommentMapper.insert(comment);
+    }
+
+
+    @Override
+    public HashMap<Object, Object> commentCount(Integer valueId, Integer type) {
+        List<GoodsComment> goodsComments = goodsCommentMapper.selectAllCommentsList(valueId, type);
+        int allCount = goodsComments.size();
+        int hasPicCount = 0;
+
+        for (GoodsComment goodsComment : goodsComments) {
+
+            /*if (goodsComment.getPicUrls() != null || (!"[]".equals(goodsComment.getPicUrls()))) {
+                hasPicCount +=1;
+            }*/
+            if (goodsComment.isHasPicture()) {
+                hasPicCount += 1;
+            }
+        }
+
+        HashMap<Object,Object> data = new HashMap<>();
+
+        data.put("allCount",allCount);
+        data.put("hasPicCount",hasPicCount);
+
+        return data;
+    }
+
+
+
 }

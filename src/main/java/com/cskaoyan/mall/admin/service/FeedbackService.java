@@ -10,4 +10,8 @@ import com.cskaoyan.mall.admin.vo.ResponseVo;
  */
 public interface FeedbackService {
     ResponseVo<PageVo<Feedback>> list1(int page, int limit, String sort, String order, String username, String id);
+
+    int submitFeedback(Feedback feedback);
+
+    String findUsernameByUserId();
 }

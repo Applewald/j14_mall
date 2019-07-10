@@ -196,20 +196,6 @@
       code = #{code,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
-    <!--<select id="findRegionList" resultMap="RegionListMap">
-     SELECT
-         c1.id as c1id,c1.name as c1name,c1.type as c1type,c1.`code` as c1code,
-         c2.id as c2id,c2.name as c2name,c2.type as c2type,c2.`code` as c2code,
-         c3.id as c3id,c3.name as c3name,c3.type as c3type,c3.`code` as c3code
-     FROM
-         `cskaoyan_mall_region` c1
-     LEFT JOIN
-         `cskaoyan_mall_region` c2 on c2.`code` like concat(c1.`code`,"__") and c2.`code` !=c1.`code`
-     LEFT JOIN
-         `cskaoyan_mall_region` c3 on c3.`code` like concat(c2.`code`,"%") and c3.`code` !=c2.`code`
-     where
-         c1.`code`!=c2.`code` and c1.`code`!=c3.`code` and c2.`code` !=c3.`code` ORDER BY c3.id
-   </select>-->
     <select id="findRegionList" resultMap="RegionListMap">
         SELECT
         c1.id as c1id,c1.name as c1name,c1.type as c1type,c1.`code` as c1code,
@@ -237,46 +223,8 @@
             </collection>
         </collection>
     </resultMap>
-    <!--
-        <select id="findRegionList" resultMap="RegionListMap">
-            SELECT
-            id,name,type,code
-            from
-            `cskaoyan_mall_region`
-            where
-            code<=65
-        </select>
-        <resultMap id="RegionListMap" type="com.cskaoyan.mall.admin.bean.RegionChildren">
-            <id column="id" jdbcType="INTEGER" property="id"/>
-            <result column="name" jdbcType="VARCHAR" property="name"/>
-            <result column="type" jdbcType="TINYINT" property="type"/>
-            <result column="code" jdbcType="INTEGER" property="code"/>
-            <association column="code" property="children"
-                         select="com.cskaoyan.mall.admin.mapper.RegionMapper.queryRegionShiByCode"/>
-        </resultMap>
-        <select id="queryRegionShiByCode" resultMap="RegionLeft">
-            SELECT
-              id,name,type,code
-            from
-              `cskaoyan_mall_region`
-            where
-              code like concat(#{code},"__")
-        </select>
-        <resultMap id="RegionLeft" type="com.cskaoyan.mall.admin.bean.RegionChildren">
-            <id column="id" jdbcType="INTEGER" property="id"/>
-            <result column="name" jdbcType="VARCHAR" property="name"/>
-            <result column="type" jdbcType="TINYINT" property="type"/>
-            <result column="code" jdbcType="INTEGER" property="code"/>
-            <collection property="children" column="code"
-                        select="com.cskaoyan.mall.admin.mapper.RegionMapper.queryRegionQuByCode"/>
-        </resultMap>
-        <select id="queryRegionQuByCode" resultMap="BaseResultMap">
-            SELECT
-              id,name,type,code
-            from
-              `cskaoyan_mall_region`
-            where
-              code like concat(#{code},"__")
-        </select>-->
+    <select id="findRegionListByPid" resultType="java.util.HashMap">
+      select id, pid, `name`, `type`, code from `cskaoyan_mall_region` where pid = #{pid}
+    </select>
 
 </mapper>

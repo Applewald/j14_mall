@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * author : summer
@@ -42,4 +43,33 @@ public class AddressServiceImpl implements AddressService {
         }
         return pageVoResponseVo;
     }
+
+    @Override
+    public List<Address> getAddressList() {
+       List<Address>  addresses= addressMapper.getAddressList();
+
+        return  addresses;
+
+    }
+
+    @Override
+    public int deleteAddress(int id) {
+        int delete = addressMapper.deleteAddress(id);
+        return delete;
+    }
+
+    @Override
+    /**
+     * 插入成功返回新插入地址的id
+     * 失败返回0
+     */
+    public int insertAddress(Address address) {
+        int insert = addressMapper.insertAddress(address);
+        if (insert == 1){
+            return address.getId();
+        }else
+            return insert;
+    }
+
+
 }

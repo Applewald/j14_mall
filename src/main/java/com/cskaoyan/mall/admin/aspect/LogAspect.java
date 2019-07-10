@@ -67,7 +67,11 @@ public class LogAspect {
         Subject currentUser = SecurityUtils.getSubject();
         Admin principal = (Admin) currentUser.getPrincipal();
         // 操作管理员
-        log.setAdmin(principal.getUsername());
+        if (principal != null) {
+            log.setAdmin(principal.getUsername());
+        } else {
+            log.setAdmin("admin123");
+        }
         // ip地址
         log.setIp(ip);
         // 操作时间
@@ -76,9 +80,15 @@ public class LogAspect {
         //log.setStatus(true);
 
         Object[] args = joinPoint.getArgs();
-        Admin arg = (Admin)args[0];
-        // 操作结果
-        log.setResult(arg.getUsername());
+        if (args.length == 0) {
+            return;
+        } else {
+            Admin arg = (Admin) args[0];
+            if (arg != null) {
+                // 操作结果
+                log.setResult(arg.getUsername());
+            }
+        }
 
         // 调用service保存到数据库
         logService.save(log);

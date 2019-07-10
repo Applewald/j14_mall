@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface RegionMapper {
@@ -34,4 +35,6 @@ public interface RegionMapper {
     int updateByPrimaryKey(Region record);
 
     List<RegionChildren> findRegionList();
+
+    List<Map> findRegionListByPid(@Param("pid") int pid);
 }

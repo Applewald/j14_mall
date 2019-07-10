@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
+
 @Repository
 public interface AddressMapper {
     long countByExample(AddressExample example);
@@ -37,4 +39,10 @@ public interface AddressMapper {
                                       @Param("userId")String userId,
                                       @Param("sort")String sort,
                                       @Param("order")String order);
+
+    List<Address> getAddressList();
+
+    int deleteAddress(int id);
+
+    int insertAddress(Address address);
 }

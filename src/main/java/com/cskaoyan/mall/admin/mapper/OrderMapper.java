@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface OrderMapper {
@@ -49,4 +50,12 @@ public interface OrderMapper {
 
     @Select("SELECT count(id) FROM `cskaoyan_mall_order`  where deleted = 0 and user_id = 1 and order_status = 201")
     int findUnship(@Param("userId") Integer userId);
+
+    List<Map> findOrderList(@Param("userId") int userId, @Param("showType") int showType);
+
+    Map findOrderDetailById(@Param("orderId") int orderId);
+
+    int orderDeleteById(@Param("orderId") int orderId);
+
+    int orderCancelById(@Param("orderId") int orderId);
 }

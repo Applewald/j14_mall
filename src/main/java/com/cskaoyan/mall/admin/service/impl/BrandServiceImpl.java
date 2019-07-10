@@ -2,18 +2,16 @@ package com.cskaoyan.mall.admin.service.impl;
 
 import com.cskaoyan.mall.admin.bean.Brand;
 import com.cskaoyan.mall.admin.bean.wxhome.BrandList;
+import com.cskaoyan.mall.admin.mapper.BrandMapper;
 import com.cskaoyan.mall.admin.service.BrandService;
 import com.cskaoyan.mall.admin.vo.DataVo;
 import com.cskaoyan.mall.admin.vo.ResponseVo;
-import com.cskaoyan.mall.admin.mapper.BrandMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @Service
 public class BrandServiceImpl implements BrandService {
@@ -90,6 +88,32 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
+    public ResponseVo findBrandList(int page, int size) {
+        PageHelper.startPage(page, size);
+        Map map = new HashMap();
+        List<Map> brandList = brandMapper.findBrandListMap();
+        PageInfo pageInfo = new PageInfo(brandList);
+        //int totalPages = ((int) Math.ceil(1.0 * pageInfo.getTotal() / size));
+        map.put("totalPages", pageInfo.getPages());
+        map.put("brandList", pageInfo.getList());
+        ResponseVo<Object> vo = new ResponseVo<>();
+        vo.setData(map);
+        vo.setErrno(0);
+        vo.setErrmsg("成功");
+        return vo;
+    }
+
+    @Override
+    public ResponseVo findBrandDetail(int id) {
+        Brand brand = brandMapper.findBrandDetailById(id);
+        ResponseVo<Object> vo = new ResponseVo<>();
+        Map map = new HashMap();
+        map.put("brand", brand);
+        vo.setData(map);
+        vo.setErrno(0);
+        vo.setErrmsg("成功");
+        return vo;
+    }
     public List<BrandList> selectAllBrand() {
         List<BrandList> brands = brandMapper.selectAllBrand();
 
@@ -105,5 +129,4 @@ public class BrandServiceImpl implements BrandService {
 
         return brandArrayList;
     }
-
 }

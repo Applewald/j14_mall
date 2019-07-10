@@ -4,22 +4,14 @@ import java.util.Date;
 
 public class Feedback {
     private Integer id;
-
     private Integer userId;
-
     private String username;
-
     private String mobile;
-
     private String feedType;
-
     private String content;
-
     private Integer status;
-
     private Boolean hasPicture;
-
-    private String picUrls;
+    private String[] picUrls;
 
     private Date addTime;
 
@@ -48,7 +40,7 @@ public class Feedback {
     }
 
     public void setUsername(String username) {
-        this.username = username == null ? null : username.trim();
+        this.username = username;
     }
 
     public String getMobile() {
@@ -56,7 +48,7 @@ public class Feedback {
     }
 
     public void setMobile(String mobile) {
-        this.mobile = mobile == null ? null : mobile.trim();
+        this.mobile = mobile;
     }
 
     public String getFeedType() {
@@ -64,7 +56,7 @@ public class Feedback {
     }
 
     public void setFeedType(String feedType) {
-        this.feedType = feedType == null ? null : feedType.trim();
+        this.feedType = feedType;
     }
 
     public String getContent() {
@@ -72,7 +64,7 @@ public class Feedback {
     }
 
     public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
+        this.content = content;
     }
 
     public Integer getStatus() {
@@ -91,12 +83,12 @@ public class Feedback {
         this.hasPicture = hasPicture;
     }
 
-    public String getPicUrls() {
+    public String[] getPicUrls() {
         return picUrls;
     }
 
-    public void setPicUrls(String picUrls) {
-        this.picUrls = picUrls == null ? null : picUrls.trim();
+    public void setPicUrls(String[] picUrls) {
+        this.picUrls = picUrls;
     }
 
     public Date getAddTime() {

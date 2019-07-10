@@ -68,4 +68,11 @@
   </select>
 
 
+  <insert id="insert" >
+      insert into cskaoyan_mall_comment
+      (value_id, `type`, `content`, user_id, has_picture, star, add_time, update_time)
+      values
+      (#{comment.valueId}, #{comment.type}, #{comment.content}, #{comment.userId}, #{comment.hasPicture}, #{comment.star}, now(), now())
+
+  </insert>
 </mapper>
