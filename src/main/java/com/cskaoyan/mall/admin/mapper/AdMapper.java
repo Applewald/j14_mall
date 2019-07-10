@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author 河鲍鱼
@@ -23,4 +24,6 @@ public interface AdMapper {
 
     @Select("select * from cskaoyan_mall_ad")
     List<Ad> selectAllAd();
+    
+    int insertAd(Map ad);
 }

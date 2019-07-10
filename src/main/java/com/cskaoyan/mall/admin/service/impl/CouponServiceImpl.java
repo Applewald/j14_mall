@@ -10,7 +10,9 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author 河鲍鱼
@@ -61,5 +63,47 @@ public class CouponServiceImpl implements CouponService {
     @Override
     public List<CouponList> selectAllCouponList() {
         return couponMapper.selectAllCouponList();
+    }
+    
+    @Override
+    public PageInfo<Map> getAllCouponBehind(int page, int size) {
+        PageHelper.startPage(page,size);
+        List<Map> list = couponMapper.getCoupons();
+        PageInfo<Map> pageInfo = new PageInfo<>(list);
+        return pageInfo;
+    }
+    
+    @Override
+    public PageInfo<Map> getMyCoupon(int page, int size, int status,Integer userId) {
+        PageHelper.startPage(page,size);
+        List<Map> list = couponMapper.getMyCoupons(status,userId);
+        System.out.println(userId);
+        PageInfo<Map> pageInfo = new PageInfo<>(list);
+        return pageInfo;
+    }
+    
+    @Override
+    public List<Map> selectlist(int cartId, int grouponRulesId) {
+        return couponMapper.selectlist(cartId,grouponRulesId);
+    }
+    
+    @Override
+    public int receiveCoupon(Integer couponId,Integer userId) {
+        return couponMapper.insertByUserId(userId,couponId);
+    }
+    
+    @Override
+    public int exchange(String code, Integer userId) {
+        Coupon coupon = couponMapper.selectCouponByCode(code);
+        if(coupon != null){
+            return couponMapper.insertByUserId2(userId,code);
+        } else {
+            return 0;
+        }
+    }
+    
+    @Override
+    public int insert(Coupon coupon) {
+        return couponMapper.insert(coupon);
     }
 }

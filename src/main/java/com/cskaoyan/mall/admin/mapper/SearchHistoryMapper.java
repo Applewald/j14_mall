@@ -1,8 +1,10 @@
 package com.cskaoyan.mall.admin.mapper;
 
 
+import com.cskaoyan.mall.admin.bean.Keyword;
 import com.cskaoyan.mall.admin.bean.SearchHistory;
 import com.cskaoyan.mall.admin.bean.SearchHistoryExample;
+import com.cskaoyan.mall.admin.bean.SearchHotHistory;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -35,4 +37,10 @@ public interface SearchHistoryMapper {
                                                   @Param("keyword")String keyword,
                                                   @Param("sort")String sort,
                                                   @Param("order")String order);
+
+    SearchHistory querySearchHistory();
+
+    List<Keyword> queryHistoryByKeyword(Integer userId);
+
+    List<Keyword> querySearchHotHistory();
 }

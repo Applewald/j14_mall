@@ -46,6 +46,8 @@ public class Goods {
 
     private String detail;
 
+
+
     public Integer getId() {
         return id;
     }

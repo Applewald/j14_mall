@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author 河鲍鱼
@@ -49,5 +50,10 @@ public class AdServiceImpl implements AdService {
     @Override
     public List<Ad> selectAllAd() {
         return adMapper.selectAllAd();
+    }
+    
+    @Override
+    public int insert(Map ad) {
+        return adMapper.insertAd(ad);
     }
 }

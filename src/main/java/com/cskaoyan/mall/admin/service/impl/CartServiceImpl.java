@@ -3,14 +3,18 @@ package com.cskaoyan.mall.admin.service.impl;
 import com.cskaoyan.mall.admin.bean.Address;
 import com.cskaoyan.mall.admin.bean.Order;
 import com.cskaoyan.mall.admin.bean.cart.*;
+import com.cskaoyan.mall.admin.mapper.AddressMapper;
 import com.cskaoyan.mall.admin.mapper.CartMapper;
+import com.cskaoyan.mall.admin.mapper.CouponMapper;
 import com.cskaoyan.mall.admin.service.CartService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author hx
@@ -21,6 +25,12 @@ import java.util.List;
 public class CartServiceImpl implements CartService {
     @Autowired
     CartMapper cartMapper;
+
+    @Autowired
+    AddressMapper addressMapper;
+
+    @Autowired
+    CouponMapper couponMapper;
 
     //1
     @Override
@@ -134,6 +144,66 @@ public class CartServiceImpl implements CartService {
         }else {
             return cartboolean.getId();
         }
+
+    }
+
+
+    @Override
+    public Map<Object, Object> cartCehckout(Integer userId, Integer cartId, Integer addressId, Integer couponId, Integer grouponRelesId) {
+
+        Map<Object,Object> map = new HashMap<>();
+        Address checkedAddress = null;
+        if (addressId == null || addressId == 0){
+            //查默认地址
+            checkedAddress = addressMapper.findDefaultAddress(userId);
+            if (checkedAddress == null) {
+                map.put("addressId", 0);
+            } else {
+                map.put("addressId", checkedAddress.getId());
+            }
+
+        }else {
+            checkedAddress = addressMapper.findAddressById(addressId);
+            map.put("addressId",addressId);
+        }
+        map.put("checkedAddress",checkedAddress);
+
+        List<Cart>  checkedGoodsList = cartMapper.findCheckedGoodsListBuUserId(userId);
+        map.put("checkedGoodsList",checkedGoodsList);
+
+        BigDecimal goodsTotalPrice = new BigDecimal(0);
+
+        for (Cart cart : checkedGoodsList){
+            BigDecimal price = cart.getPrice();
+            price = price.multiply(new BigDecimal(cart.getNumber()));
+            /*for (int i = 0 ;i <cart.getNumber() ;i++){
+                goodsTotalPrice .add(cart.getPrice());
+            }*/
+            goodsTotalPrice = goodsTotalPrice.add(price);
+        }
+
+        //运费0000000000
+        map.put("freightPrice",8);
+        //
+        map.put("goodsTotalPrice",goodsTotalPrice);
+        //商品+运费
+        map.put("orderTotalPrice",goodsTotalPrice);
+        //实际价格
+        map.put("actualPrice",goodsTotalPrice);
+
+
+        //优惠券 乱写
+        if (couponId == 0){
+            map.put("couponId",0);
+            map.put("couponPrice",0);
+        }else {
+            map.put("couponId",couponId);
+            map.put("couponPrice",0);
+        }
+        map.put("availableCouponLength",0);
+        map.put("grouponRulesId",0);
+
+        return map;
 
 
 

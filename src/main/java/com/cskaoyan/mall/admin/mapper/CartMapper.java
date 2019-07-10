@@ -56,6 +56,8 @@ public interface CartMapper {
     @Update("update cskaoyan_mall_cart set number = #{number} where id = #{id} ")
     void updaCartNumber(@Param("id") Integer id, @Param("number") int i);
 
+    List<Cart> findCheckedGoodsListBuUserId(@Param("userId") Integer userId);
+
 
 //3
    /* int getCartCount(@Param("userId") Integer userId, @Param("isChecked") Integer isChecked,

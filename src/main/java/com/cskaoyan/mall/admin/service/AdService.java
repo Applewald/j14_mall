@@ -4,6 +4,7 @@ import com.cskaoyan.mall.admin.bean.promotion.Ad;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author 河鲍鱼
@@ -17,4 +18,6 @@ public interface AdService {
     int deleteByAdId(Ad ad);
 
     List<Ad> selectAllAd();
+    
+    int insert(Map ad);
 }

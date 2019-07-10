@@ -7,7 +7,9 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface CouponMapper {
@@ -33,4 +35,16 @@ public interface CouponMapper {
 
     @Select("select * from cskaoyan_mall_coupon")
     List<CouponList> selectAllCouponList();
+    
+    List<Map> getCoupons();
+    
+    List<Map> getMyCoupons(@Param("status")int status, @Param("userId")Integer userId);
+    
+    List<Map> selectlist(@Param("cartId")int cartId, @Param("rulesId")int grouponRulesId);
+    
+    int insertByUserId(@Param("userId")Integer userId, @Param("couponId")Integer couponId);
+    
+    int insertByUserId2(@Param("userId")Integer userId, @Param("code")String code);
+    
+    Coupon selectCouponByCode(@Param("code")String code);
 }

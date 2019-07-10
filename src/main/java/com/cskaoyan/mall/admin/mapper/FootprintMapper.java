@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
+
 @Repository
 public interface FootprintMapper {
     long countByExample(FootprintExample example);
@@ -35,4 +37,7 @@ public interface FootprintMapper {
                                  @Param("goodsId")String goodsId,
                                  @Param("sort")String sort,
                                  @Param("order")String order);
+
+   List< Map> queryFootprints();
+
 }

@@ -241,4 +241,17 @@
     </where>
     order by #{sort} #{order}
   </select>
+
+  <select id="queryFootprints" resultType="java.util.Map">
+    select
+      f.add_time as addTime,
+      f.goods_id as goodsId,
+      g.brief as brief,
+      g.id as id,
+      g.name as name,
+      g.pic_url as picUrl,
+      g.retail_price as retailPrice
+    from cskaoyan_mall_footprint f
+    left join cskaoyan_mall_goods g on f.goods_id = g.id
+  </select>
 </mapper>

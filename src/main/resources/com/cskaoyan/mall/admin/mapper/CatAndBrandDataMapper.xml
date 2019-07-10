@@ -7,18 +7,18 @@
     <result property="label" column="name"/>
   </resultMap>
   <select id="findChildren" resultMap="children">
-      select id,`name` from cskaoyan_mall_category where `level` = 'L2' and sort_order = #{abc}
+      select id,`name` from cskaoyan_mall_category where pid = #{l1id}
   </select>
 
 
 <resultMap id="categoryList" type="com.cskaoyan.mall.admin.bean.catandbrand.CategoryNeed">
-  <result property="value" column="id"/>
+  <result property="value" column="l1id"/>
   <result property="label" column="name"/>
-  <collection property="children" column="sort_order" select="com.cskaoyan.mall.admin.mapper.CatAndBrandDataMapper.findChildren"/>
+  <collection property="children" column="l1id" select="com.cskaoyan.mall.admin.mapper.CatAndBrandDataMapper.findChildren"/>
 </resultMap>
 
   <select id="findCategoryList" resultMap="categoryList">
-    select id,`name` ,sort_order from cskaoyan_mall_category where `level` = 'L1'
+    select id as l1id,`name`  from cskaoyan_mall_category where `level` = 'L1'
   </select>
 
 
