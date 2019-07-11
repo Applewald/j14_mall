@@ -2,6 +2,7 @@ package com.cskaoyan.mall.wx.controller;
 
 import com.cskaoyan.mall.admin.bean.User;
 import com.cskaoyan.mall.admin.bean.UserInfo;
+import com.cskaoyan.mall.admin.mapper.UserMapper;
 import com.cskaoyan.mall.admin.service.OrderService;
 import com.cskaoyan.mall.admin.service.UserService;
 import com.cskaoyan.mall.admin.token.UserToken;
@@ -28,6 +29,8 @@ public class WxAuthController {
 	@Autowired
 	UserService userService;
 
+	@Autowired
+	UserMapper userMapper;
 
 	@Autowired
 	OrderService orderService;
@@ -89,7 +92,6 @@ public class WxAuthController {
 
 		return data;
 
-
 	}
 
 	//
@@ -103,4 +105,14 @@ public class WxAuthController {
 	public Object regCaptcha() {
 		return ResponseVo.fail("小程序后台验证码服务不支持", 701);
 	}
+
+	/*@PostMapping("auth/register")
+	// 因手机验证码原因，暂时做不了带手机验证码，其本质是向User表插入一条数据
+	public Object register(@RequestBody User user) {
+		userMapper.insert(user);
+		return ResponseVo.ok();
+	}*/
+
+
+
 }
